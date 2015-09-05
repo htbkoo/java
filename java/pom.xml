@@ -11,8 +11,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <mavenVersion>2.1</mavenVersion>
-        <mockito-all.version>1.9.5</mockito-all.version>
+        <mockito-core.version>1.10.19</mockito-core.version>
+        <apache-commons-lang3.version>3.3.2</apache-commons-lang3.version>
+        <google-guava.version>18.0</google-guava.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <build>
@@ -33,7 +35,25 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
+            <version>${mockito-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google-guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
         </dependency>
 
     </dependencies>
