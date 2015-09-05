@@ -19,4 +19,11 @@ public class PracticeTest {
     public void shouldGetLambdaResult() throws Exception {
         assertEquals("a", practice.getLambdaResult());
     }
+
+    @Test
+    public void shouldTransformListToMap() throws Exception {
+
+//        assertEquals();
+
+    }
 }
