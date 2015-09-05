@@ -15,6 +15,7 @@
         <apache-commons-lang3.version>3.3.2</apache-commons-lang3.version>
         <google-guava.version>18.0</google-guava.version>
         <junit.version>4.12</junit.version>
+        <gson.version>2.3.1</gson.version>
     </properties>
 
     <build>
@@ -54,6 +55,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
         </dependency>
 
     </dependencies>
