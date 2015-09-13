@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Hey on 13/9/15.
+ * Created by Hey on 13/9/15
  */
 public class PracticeSinglyLinkedListTest {
 

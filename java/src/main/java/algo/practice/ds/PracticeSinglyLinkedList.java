@@ -6,7 +6,7 @@ import java.util.ListIterator;
 import java.util.Optional;
 
 /**
- * Created by Hey on 9/9/15.
+ * Created by Hey on 9/9/15
  */
 public class PracticeSinglyLinkedList<K>
 //extends AbstractSequentialList<K>
@@ -43,7 +43,7 @@ public class PracticeSinglyLinkedList<K>
     }
 
     public void setHead(K head) {
-        this.head = Optional.ofNullable(Node.<K>createNode(head));
+        this.head = Optional.ofNullable(Node.createNode(head));
     }
 
     private class PracticeSinglyLinkedListIterator implements ListIterator<K> {

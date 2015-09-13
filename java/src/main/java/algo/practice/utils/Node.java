@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 /**
- * Created by Hey on 12/9/15.
+ * Created by Hey on 12/9/15
  */
 public class Node<T> {
     Optional<Node<? extends T>> next = Optional.empty();
