@@ -17,6 +17,11 @@ public class Node<T> {
         this.value = value;
     }
 
+    private Node(Node<T> node) {
+        this.next = node.next;
+        this.value = node.value;
+    }
+
     public T getValue() {
         return value;
     }
@@ -44,8 +49,12 @@ public class Node<T> {
         return new Node<>(Optional.<Node<? extends T>>empty(), value);
     }
 
-    public static <T> Node<? extends T> createNodes(Iterable<T> values) {
-        Iterator<T> valuesIterator = values.iterator();
+    public static <T> Node<T> defensiveCopyNode(Node<T> node) {
+        return new Node<>(node);
+    }
+
+    public static <T> Node<? extends T> createNodes(Iterable<? extends T> values) {
+        Iterator<? extends T> valuesIterator = values.iterator();
         if (!valuesIterator.hasNext()) {
             throw new IllegalArgumentException("valus is empty");
         } else {
@@ -54,11 +63,22 @@ public class Node<T> {
                 return createNode(first);
             } else {
                 Node<? extends T> next = createNodes(Iterables.skip(values, 1));
-                return new Node<>(Optional.of(next), valuesIterator.next());
+                return new Node<>(Optional.of(next), first);
             }
         }
     }
 
-
+//    toString is built recursively upon calling, may suffer from the bad O(n) performace
+//    If this is needed frequently, it would be better to keep a cache of toString value in the list implementation and update upon any operation
+    @Override
+    public String toString() {
+        String nextString;
+        if (next.isPresent()) {
+            nextString = next.get().toString();
+        } else {
+            nextString = "end";
+        }
+        return String.format("Node{value: %s} -> %s", value.toString(), nextString);
+    }
 }
 
