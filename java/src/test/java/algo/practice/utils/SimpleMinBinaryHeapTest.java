@@ -1,6 +1,5 @@
 package algo.practice.utils;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +29,19 @@ public class SimpleMinBinaryHeapTest {
         assertEquals(6, simpleMinBinaryHeap.size());
     }
 
-    @Ignore
+    @Test
+    public void shouldPopMinInHeap2() throws Exception {
+        SimpleMinBinaryHeap<Integer> simpleMinBinaryHeap = new SimpleMinBinaryHeap<>();
+        simpleMinBinaryHeap.push(5);
+        simpleMinBinaryHeap.push(3);
+
+        assertEquals(2, simpleMinBinaryHeap.size());
+        assertEquals((Integer) 3, simpleMinBinaryHeap.pop());
+        assertEquals(1, simpleMinBinaryHeap.size());
+        assertEquals((Integer) 5, simpleMinBinaryHeap.pop());
+        assertEquals(0, simpleMinBinaryHeap.size());
+    }
+
     @Test
     public void shouldPopMinInHeap() throws Exception {
         SimpleMinBinaryHeap<Integer> simpleMinBinaryHeap = new SimpleMinBinaryHeap<>();
@@ -41,12 +52,19 @@ public class SimpleMinBinaryHeapTest {
         simpleMinBinaryHeap.push(1);
         simpleMinBinaryHeap.push(4);
 
+        assertEquals(6, simpleMinBinaryHeap.size());
         assertEquals((Integer) 1, simpleMinBinaryHeap.pop());
         assertEquals(5, simpleMinBinaryHeap.size());
         assertEquals((Integer) 2, simpleMinBinaryHeap.pop());
         assertEquals(4, simpleMinBinaryHeap.size());
         assertEquals((Integer) 2, simpleMinBinaryHeap.pop());
         assertEquals(3, simpleMinBinaryHeap.size());
+        assertEquals((Integer) 3, simpleMinBinaryHeap.pop());
+        assertEquals(2, simpleMinBinaryHeap.size());
+        assertEquals((Integer) 4, simpleMinBinaryHeap.pop());
+        assertEquals(1, simpleMinBinaryHeap.size());
+        assertEquals((Integer) 5, simpleMinBinaryHeap.pop());
+        assertEquals(0, simpleMinBinaryHeap.size());
     }
 
     @Test

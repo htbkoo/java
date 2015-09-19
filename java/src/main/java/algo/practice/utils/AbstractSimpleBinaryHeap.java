@@ -12,29 +12,31 @@ import java.util.Optional;
 public abstract class AbstractSimpleBinaryHeap<T extends Comparable<T>> extends AbstractSimpleHeap<T> {
     private static Logger logger = LogManager.getLogger(AbstractSimpleBinaryHeap.class);
 
-    protected Optional<AbstractSimpleBinaryHeap<T>> left = Optional.of(createEmptyHeap());
-    protected Optional<AbstractSimpleBinaryHeap<T>> right = Optional.of(createEmptyHeap());
+    protected Optional<AbstractSimpleBinaryHeap<T>> left = Optional.empty();
+    protected Optional<AbstractSimpleBinaryHeap<T>> right = Optional.empty();
 
     @Override
     public void push(@NotNull T node) {
         logger.info(String.format("Starting to push %s into the heap.", node));
+
         if (!isEmpty()) {
+            if (!keepTop(node)) {
+                logger.debug(String.format("Swapping top (%s) with %s.", getValue(), node));
+                T temp = node;
+                node = getValue();
+                setValue(temp);
+            }
+
             if (left.isPresent()) {
                 AbstractSimpleBinaryHeap<T> leftHeap = left.get();
                 if (right.isPresent()) {
                     AbstractSimpleBinaryHeap<T> rightHeap = right.get();
-                    if (!keepTop(node)) {
-                        logger.info(String.format("Swapping top (%s) with %s.", getValue(), node));
-                        T temp = node;
-                        node = getValue();
-                        setValue(temp);
-                    }
 //                    Assumed order of filling heap is left-right
                     if (leftHeap.size() <= rightHeap.size()) {
-                        logger.info(String.format("Push %s to left child heap.", node));
+                        logger.debug(String.format("Push %s to left child heap.", node));
                         leftHeap.push(node);
                     } else {
-                        logger.info(String.format("Push %s to right child heap.", node));
+                        logger.debug(String.format("Push %s to right child heap.", node));
                         rightHeap.push(node);
                     }
                 } else {
@@ -61,7 +63,7 @@ public abstract class AbstractSimpleBinaryHeap<T extends Comparable<T>> extends 
 
         if (!isEmpty()) {
             T returnValue = getValue();
-            logger.info(String.format("Return value would be top = %s.", returnValue));
+            logger.debug(String.format("Return value would be top = %s.", returnValue));
 
             if (left.isPresent()) {
                 AbstractSimpleBinaryHeap<T> leftHeap = left.get();
@@ -74,20 +76,36 @@ public abstract class AbstractSimpleBinaryHeap<T extends Comparable<T>> extends 
 
                     if (leftIsTopper(leftTop, rightTop)) {
                         setValue(leftHeap.pop());
+                        logger.debug(String.format("Replacing top value by the top value of the left child, which is now %s.", getValue()));
                     } else {
                         setValue(rightHeap.pop());
+                        logger.debug(String.format("Replacing top value by the top value of the right child, which is now %s.", getValue()));
                     }
 
 // May not need loop  - every pop() operation only alter size by 1, and we do rebalancing everytime
 //                    while (childrenSizeDiff(leftHeap.size(), rightHeap.size()) >= 2) {
-                    if (childrenSizeDiff(leftHeap.size(), rightHeap.size()) > 1) {
+                    int childrenSizeDiff = childrenSizeDiff(leftHeap.size(), rightHeap.size());
+                    if (childrenSizeDiff > 1) {
+                        logger.info(String.format("Children size diff is %s, performing rebalancing.", childrenSizeDiff));
                         rebalanceHeap(leftHeap, rightHeap);
+                    }
+
+                    if (rightHeap.size() == 0) {
+                        logger.debug("Right child heap is empty, making it and empty Optional.");
+                        right = Optional.empty();
                     }
 
                 } else {
                     setValue(leftHeap.pop());
+
+                    if (leftHeap.size() == 0) {
+                        logger.debug("Left child heap is empty, making it and empty Optional.");
+                        left = Optional.empty();
+                    }
+
                 }
             }
+
 
             logger.info(String.format("Popping %s, size--.", returnValue));
             decrementSizeByOne();
