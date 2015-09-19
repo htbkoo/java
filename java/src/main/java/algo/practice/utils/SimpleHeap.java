@@ -11,4 +11,9 @@ public interface SimpleHeap<T extends Comparable<T>> {
     void push(T node);
 
     void replaceRoot(T node);
+
+//    implementation-dependent, but a data structure should provide the API for size?
+    int size();
+
+    boolean isEmpty();
 }

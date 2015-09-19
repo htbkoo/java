@@ -8,6 +8,40 @@ package algo.practice.utils;
  * A very simple heap (can be used as a priority queue)
  */
 public abstract class AbstractSimpleHeap<T extends Comparable<T>> implements SimpleHeap<T> {
+
+    private int size = 0;
+
+    //    Again size is computed recursively, may be inefficient
+//    public int size() {
+//        return (value.isPresent() ? 1 : 0) + getChildrenSize(left) + getChildrenSize(right);
+//    }
+    @Override
+    public int size() {
+        return size;
+    }
+
+    protected void changeSizeBy(int delta) {
+        size += delta;
+    }
+
+    protected void incrementSizeByOne() {
+        changeSizeBy(1);
+    }
+
+    protected void decrementSizeByOne() {
+        changeSizeBy(-1);
+    }
+
+    protected abstract AbstractSimpleHeap<T> createEmptyHeap();
+    protected abstract AbstractSimpleHeap<T> createHeap(T node);
+
+    @Override
+    public boolean isEmpty() {
+//        return !value.isPresent();
+        return size==0;
+    }
+
+
     @Override
     public T peek() {
         if (isEmpty()) {
@@ -17,11 +51,8 @@ public abstract class AbstractSimpleHeap<T extends Comparable<T>> implements Sim
         }
     }
 
-    protected abstract boolean currentIsTopper(T current, T comp);
-
     public abstract T getValue() ;
 
     public abstract void setValue(T value);
 
-    public abstract boolean isEmpty();
 }
