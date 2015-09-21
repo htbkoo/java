@@ -30,10 +30,20 @@ public class UniquePath {
         }
 
         private int dp(int i, int j) {
-//            if (i==1 || j==1)
-//                return
-            throw new UnsupportedOperationException("Not yet implemented");
-//            return 0;
+            if (i == 1 || j == 1) {
+                if (!dpTable.get(i, j).isPresent()) {
+                    dpTable.put(i, j, 1);
+                }
+                return dpTable.get(i, j).get();
+            } else {
+                if (!dpTable.get(i - 1, j).isPresent()) {
+                    dpTable.put(i - 1, j, dp(i - 1, j));
+                }
+                if (!dpTable.get(i, j - 1).isPresent()) {
+                    dpTable.put(i, j - 1, dp(i, j - 1));
+                }
+                return dpTable.get(i - 1, j).get() + dpTable.get(i, j - 1).get();
+            }
         }
     }
 
@@ -72,8 +82,27 @@ public class UniquePath {
     public static class UniquePathByNaiveDFS implements UniquePathStrategy {
         @Override
         public int find(int m, int n) {
-            throw new UnsupportedOperationException("Not yet implemented");
-//            return 0;
+            return dfs(0,0,m,n);
+        }
+
+        public int dfs(int i, int j, int m, int n){
+            if(i==m-1 && j==n-1){
+                return 1;
+            }
+
+            if(i<m-1 && j<n-1){
+                return dfs(i+1,j,m,n) + dfs(i,j+1,m,n);
+            }
+
+            if(i<m-1){
+                return dfs(i+1,j,m,n);
+            }
+
+            if(j<n-1){
+                return dfs(i,j+1,m,n);
+            }
+
+            return 0;
         }
     }
 
