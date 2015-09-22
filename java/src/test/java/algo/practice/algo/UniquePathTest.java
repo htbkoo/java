@@ -27,10 +27,10 @@ public class UniquePathTest {
         assertEquals(6, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 3, 3));
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 5, 5));
         Instant before = new DateTime().toInstant();
-        int numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 17, 17);
+        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 30, 30);
         Instant after = new DateTime().toInstant();
 
-        assertEquals(601080390, numberOfUniquePaths);
+        assertEquals(30067266499541040l, numberOfUniquePaths);
         logger.info("Time needed by RecursiveDP: " + (after.getMillis() - before.getMillis()));
     }
 
@@ -41,10 +41,10 @@ public class UniquePathTest {
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 5, 5));
 
         Instant before = new DateTime().toInstant();
-        int numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 17, 17);
+        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 30, 30);
         Instant after = new DateTime().toInstant();
 
-        assertEquals(601080390, numberOfUniquePaths);
+        assertEquals(30067266499541040l, numberOfUniquePaths);
         logger.info("Time needed by IterationDP: " + (after.getMillis() - before.getMillis()));
     }
 
@@ -55,7 +55,7 @@ public class UniquePathTest {
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 5, 5));
 
         Instant before = new DateTime().toInstant();
-        int numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 17, 17);
+        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 17, 17);
         Instant after = new DateTime().toInstant();
 
         assertEquals(601080390, numberOfUniquePaths);

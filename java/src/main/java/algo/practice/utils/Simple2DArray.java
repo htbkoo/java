@@ -10,7 +10,7 @@ import java.util.Optional;
 public class Simple2DArray<T> {
     private final Optional<T>[][] matrix;
 
-    public Simple2DArray(Class<T> clazz, int m, int n) {
+    public Simple2DArray(int m, int n) {
         //noinspection unchecked
         this.matrix = new Optional[m + 1][n + 1];
     }

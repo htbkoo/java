@@ -17,22 +17,22 @@ import algo.practice.utils.Simple2DArray;
 public class UniquePath {
 
     private interface UniquePathStrategy {
-        int find(int m, int n);
+        long find(int m, int n);
     }
 
     public static class UniquePathByRecursiveDP implements UniquePathStrategy {
-        Simple2DArray<Integer> dpTable;
+        Simple2DArray<Long> dpTable;
 
         @Override
-        public int find(int m, int n) {
-            dpTable = new Simple2DArray<>(Integer.class, m, n);
+        public long find(int m, int n) {
+            dpTable = new Simple2DArray<>(m, n);
             return dp(m, n);
         }
 
-        private int dp(int i, int j) {
+        private long dp(int i, int j) {
             if (i == 1 || j == 1) {
                 if (!dpTable.get(i, j).isPresent()) {
-                    dpTable.put(i, j, 1);
+                    dpTable.put(i, j, 1l);
                 }
                 return dpTable.get(i, j).get();
             } else {
@@ -48,17 +48,17 @@ public class UniquePath {
     }
 
     public static class UniquePathByIterationDP implements UniquePathStrategy {
-        Simple2DArray<Integer> dpTable;
+        Simple2DArray<Long> dpTable;
 
         @Override
-        public int find(int m, int n) {
-            dpTable = new Simple2DArray<>(Integer.class, m, n);
+        public long find(int m, int n) {
+            dpTable = new Simple2DArray<>(m, n);
 
             for (int i = 1; i <= m; i++) {
-                dpTable.put(i, 1, 1);
+                dpTable.put(i, 1, 1l);
             }
             for (int j = 1; j <= n; j++) {
-                dpTable.put(1, j, 1);
+                dpTable.put(1, j, 1l);
             }
 
             for (int i = 2; i <= m; i++) {
@@ -69,23 +69,15 @@ public class UniquePath {
             return dpTable.get(m, n).get();
         }
 
-        private int dp(int i, int j) {
-
-
-//            if (i==1 || j==1)
-//                return
-            throw new UnsupportedOperationException("Not yet implemented");
-//            return 0;
-        }
     }
 
     public static class UniquePathByNaiveDFS implements UniquePathStrategy {
         @Override
-        public int find(int m, int n) {
+        public long find(int m, int n) {
             return dfs(0,0,m,n);
         }
 
-        public int dfs(int i, int j, int m, int n){
+        public long dfs(int i, int j, int m, int n){
             if(i==m-1 && j==n-1){
                 return 1;
             }
@@ -106,7 +98,7 @@ public class UniquePath {
         }
     }
 
-    public int getNumberOfUniquePaths(UniquePathStrategy strategy, int m, int n) {
+    public long getNumberOfUniquePaths(UniquePathStrategy strategy, int m, int n) {
         return strategy.find(m, n);
     }
 }
