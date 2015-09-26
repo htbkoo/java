@@ -1,9 +1,8 @@
 package algo.practice.algo;
 
+import common.test.utils.SimpleTestingTimer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Instant;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,12 +25,12 @@ public class UniquePathTest {
         assertEquals(2, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 2, 2));
         assertEquals(6, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 3, 3));
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 5, 5));
-        Instant before = new DateTime().toInstant();
-        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByRecursiveDP(), 30, 30);
-        Instant after = new DateTime().toInstant();
+
+        SimpleTestingTimer.SimpleTestingTimerResult<Long> result = SimpleTestingTimer.<Long>time(uniquePath, "getNumberOfUniquePaths", new UniquePath.UniquePathByRecursiveDP(), 30, 30);
+        long numberOfUniquePaths = result.getReturnValue();
 
         assertEquals(30067266499541040l, numberOfUniquePaths);
-        logger.info("Time needed by RecursiveDP: " + (after.getMillis() - before.getMillis()));
+        logger.info("Time needed by IterationDP: " + result.getTimeNeeded());
     }
 
     @Test
@@ -40,12 +39,11 @@ public class UniquePathTest {
         assertEquals(6, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 3, 3));
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 5, 5));
 
-        Instant before = new DateTime().toInstant();
-        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByIterationDP(), 30, 30);
-        Instant after = new DateTime().toInstant();
+        SimpleTestingTimer.SimpleTestingTimerResult<Long> result = SimpleTestingTimer.<Long>time(uniquePath, "getNumberOfUniquePaths", new UniquePath.UniquePathByIterationDP(), 30, 30);
+        long numberOfUniquePaths = result.getReturnValue();
 
         assertEquals(30067266499541040l, numberOfUniquePaths);
-        logger.info("Time needed by IterationDP: " + (after.getMillis() - before.getMillis()));
+        logger.info("Time needed by IterationDP: " + result.getTimeNeeded());
     }
 
     @Test
@@ -54,11 +52,12 @@ public class UniquePathTest {
         assertEquals(6, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 3, 3));
         assertEquals(70, uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 5, 5));
 
-        Instant before = new DateTime().toInstant();
-        long numberOfUniquePaths = uniquePath.getNumberOfUniquePaths(new UniquePath.UniquePathByNaiveDFS(), 17, 17);
-        Instant after = new DateTime().toInstant();
+        SimpleTestingTimer.SimpleTestingTimerResult<Long> result = SimpleTestingTimer.<Long>time(uniquePath, "getNumberOfUniquePaths", new UniquePath.UniquePathByNaiveDFS(), 17, 17);
+
+        long numberOfUniquePaths = result.getReturnValue();
 
         assertEquals(601080390, numberOfUniquePaths);
-        logger.info("Time needed by DFS: " + (after.getMillis() - before.getMillis()));
+        logger.info("Time needed by IterationDP: " + result.getTimeNeeded());
+
     }
 }
