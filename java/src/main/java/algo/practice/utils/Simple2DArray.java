@@ -1,7 +1,5 @@
 package algo.practice.utils;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.Optional;
 
 /**
@@ -15,7 +13,7 @@ public class Simple2DArray<T> {
         this.matrix = new Optional[m + 1][n + 1];
     }
 
-    public void put(int i, int j, @NotNull T element) {
+    public void put(int i, int j, T element) {
         this.matrix[i][j] = Optional.of(element);
     }
 

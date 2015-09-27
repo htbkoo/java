@@ -1,6 +1,5 @@
 package algo.practice.utils;
 
-import com.sun.istack.internal.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +15,7 @@ public abstract class AbstractSimpleBinaryHeap<T extends Comparable<T>> extends 
     protected Optional<AbstractSimpleBinaryHeap<T>> right = Optional.empty();
 
     @Override
-    public void push(@NotNull T node) {
+    public void push(T node) {
         logger.info(String.format("Starting to push %s into the heap.", node));
 
         if (!isEmpty()) {
