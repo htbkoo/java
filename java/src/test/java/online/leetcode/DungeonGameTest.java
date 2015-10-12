@@ -57,27 +57,7 @@ public class DungeonGameTest {
                                 {100}
                         }, 1)
                 });
-        /*
-//                , { 1, 1 }, { 2, 1 }, { 3, 2 }, { 4, 3 }, { 5, 5 },{ 6, 8 }
-                }
-        });*/
     }
-
-    //       return Arrays.asList(new Pair<Simple2DArray, Integer>[]{{
-//
-//       }});
-
-//    return Arrays.asList(new Integer[][]{{1, 2}, {4, 5}});
-
-        /*return Arrays.asList(new Object[][][]{{
-                        {-2, -3, 3},
-                        {-5, -10, 1},
-                        {10, 30, -5}
-        },{
-                {-2, -3, 3},
-                {-5, -10, 1},
-                {10, 30, -5}
-        }*/
 
     private int[][] fInput;
     private int fExpected;
@@ -92,16 +72,8 @@ public class DungeonGameTest {
         fExpected = inputExpectedPair.getRight();
     }
 
-/*
-    public DungeonGameTest(int input, int expected) {
-        fInput = null;
-        fExpected = expected;
-    }
-*/
-
     @Test
     public void test() {
-//        fail(ArrayUtils.toString(fInput));
         assertEquals(fExpected, new DungeonGame().calculateMinimumHP(fInput));
     }
 }
