@@ -73,7 +73,7 @@ public class DungeonGameTest {
     }
 
     @Test
-    public void test() {
+    public void shouldCalculateMinimumHP() {
         assertEquals(fExpected, new DungeonGame().calculateMinimumHP(fInput));
     }
 }

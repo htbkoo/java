@@ -47,7 +47,7 @@ public class SingleNumberTest {
     }
 
     @Test
-    public void test() {
+    public void shouldFindSingleNumber() {
         assertEquals(fExpected, new SingleNumber().singleNumber(fInput));
     }
 }
