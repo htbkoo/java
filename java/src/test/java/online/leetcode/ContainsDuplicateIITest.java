@@ -18,10 +18,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class ContainsDuplicateIITest {
     private enum ParameterType {
-        NUMS, K, ANSWER;
-
+        NUMS, K, ANSWER
     }
-
 
     @Parameterized.Parameters
     public static Collection<Map<ParameterType, Object>[]> data() {
