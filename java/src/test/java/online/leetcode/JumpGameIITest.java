@@ -72,7 +72,7 @@ public class JumpGameIITest {
     }
 
     @Test
-    public void shouldGetMaxProfit() {
+    public void shouldGetMinNumberOfJump() {
         assertEquals(fExpected, new JumpGameII().jump(fInput));
     }
 }

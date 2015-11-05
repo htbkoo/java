@@ -58,7 +58,7 @@ public class CountPrimesTest {
     }
 
     @Test
-    public void shouldAddDigits() {
+    public void shouldCountPrimes() {
         assertEquals(fExpected, new CountPrimes().countPrimes(fInput));
     }
 }

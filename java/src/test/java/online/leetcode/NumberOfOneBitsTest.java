@@ -78,7 +78,7 @@ public class NumberOfOneBitsTest {
     }
 
     @Test
-    public void shouldAddDigits() {
+    public void shouldGetHammingWeight() {
         assertEquals(fExpected, new NumberOfOneBits().hammingWeight(fInput));
     }
 

@@ -94,7 +94,7 @@ public class ExcelSheetColumnTitleTest {
     }
 
     @Test
-    public void shouldAddDigits() {
+    public void shouldConvertToTitle() {
         assertEquals(fExpected, new ExcelSheetColumnTitle().convertToTitle(fInput));
     }
 }

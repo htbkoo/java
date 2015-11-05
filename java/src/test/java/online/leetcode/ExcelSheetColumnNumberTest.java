@@ -133,7 +133,7 @@ public class ExcelSheetColumnNumberTest {
     }
 
     @Test
-    public void shouldAddDigits() {
+    public void shouldConvertTitleToNumber() {
         assertEquals(fExpected, new ExcelSheetColumnNumber().titleToNumber(fInput));
     }
 }

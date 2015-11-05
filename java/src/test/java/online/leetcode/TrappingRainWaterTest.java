@@ -87,7 +87,7 @@ public class TrappingRainWaterTest {
     }
 
     @Test
-    public void shouldFindSingleNumber() {
+    public void shouldCountWaterTrapped() {
         assertEquals(fExpected, new TrappingRainWater().trap(fInput));
     }
 }

@@ -55,7 +55,7 @@ public class ContainsDuplicateTest {
     }
 
     @Test
-    public void shouldFindSingleNumber() {
+    public void shouldCheckIfContainsDuplicate() {
         assertEquals(fExpected, new ContainsDuplicate().containsDuplicate(fInput));
     }
 }

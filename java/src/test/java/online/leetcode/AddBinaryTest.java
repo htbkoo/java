@@ -84,12 +84,12 @@ public class AddBinaryTest {
     }
 
     @Test
-    public void shouldFindSingleNumber() {
+    public void shouldAddBinary() {
         assertEquals(fExpected, new AddBinary().addBinary(fInputA, fInputB));
     }
 
     @Test
-    public void shouldFindSingleNumberUsingParseLongButFailedDueToOverflow() {
+    public void shouldAddBinaryUsingParseLongButFailedDueToOverflow() {
         try {
             assertEquals(fExpected, new AddBinary.WrongAttempt().addBinary(fInputA, fInputB));
         } catch (NumberFormatException e) {

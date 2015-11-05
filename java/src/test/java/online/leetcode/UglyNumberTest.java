@@ -76,7 +76,7 @@ public class UglyNumberTest {
     }
 
     @Test
-    public void shouldAddDigits() {
+    public void shouldTestIsUgly() {
         assertEquals(fExpected, new UglyNumber().isUgly(fInput));
     }
 }

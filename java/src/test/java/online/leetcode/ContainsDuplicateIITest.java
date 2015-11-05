@@ -74,7 +74,7 @@ public class ContainsDuplicateIITest {
     }
 
     @Test
-    public void shouldFindSingleNumber() {
+    public void shouldCheckIfContainsNearbyDuplicate() {
         assertEquals(fExpected, new ContainsDuplicateII().containsNearbyDuplicate(fInput, fK));
     }
 }
