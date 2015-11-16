@@ -1,6 +1,5 @@
 package online.leetcode;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
@@ -11,13 +10,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static java.lang.Boolean.TRUE;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Hey on 19/10/15
  */
 @RunWith(Parameterized.class)
-public class ContainsDuplicateTest {
+public class ContainsDuplicateTest{
+    final LeetCodeUnitTestInfrastructure leetCodeUnitTestInfrastructure;
+
     @Parameterized.Parameters
     public static Collection<Pair<Integer[], Boolean>[]> data() {
         //noinspection unchecked
@@ -45,17 +45,18 @@ public class ContainsDuplicateTest {
                 });
     }
 
-    private int[] fInput;
-    private boolean fExpected;
-
-    public ContainsDuplicateTest(Pair<Integer[], Boolean> inputExpectedPair) {
+    public ContainsDuplicateTest(Pair<Integer[], Boolean> inputExpectedPair) throws ClassNotFoundException {
 //        This method may be nasty and it should be improved
-        fInput = ArrayUtils.toPrimitive(inputExpectedPair.getLeft());
-        fExpected = inputExpectedPair.getRight();
+        leetCodeUnitTestInfrastructure = LeetCodeUnitTestInfrastructureForOneInput.
+                <Integer[], Boolean>createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
+                        LeetCodeUnitTestInfrastructureForOneInput.getClassUnderTest(this.getClass()),
+                        inputExpectedPair
+                );
     }
 
     @Test
     public void shouldCheckIfContainsDuplicate() {
-        assertEquals(fExpected, new ContainsDuplicate().containsDuplicate(fInput));
+        leetCodeUnitTestInfrastructure.test();
     }
+
 }
