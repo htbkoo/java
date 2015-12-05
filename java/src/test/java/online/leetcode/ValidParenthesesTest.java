@@ -76,7 +76,7 @@ public class ValidParenthesesTest {
     }
 
     @Test
-    public void shouldCheckIfContainsDuplicate() {
+    public void shouldCheckIsValidParentheses() {
         leetCodeUnitTestInfrastructure.test();
     }
 

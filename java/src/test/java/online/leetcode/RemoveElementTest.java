@@ -95,7 +95,7 @@ public class RemoveElementTest {
     }
 
     @Test
-    public void shouldRemoveDuplicates() {
+    public void shouldRemoveElement() {
         assertEquals(fExpected, new RemoveElement().removeElement(fInputNums, fValue));
         assertArrayEquals(fOutputNums, Arrays.copyOf(fInputNums, fExpected));
     }
