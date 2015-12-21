@@ -1,4 +1,4 @@
-package online.leetcode;
+package online.leetcode.infrastructure;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;

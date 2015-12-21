@@ -1,4 +1,4 @@
-package online.leetcode;
+package online.leetcode.infrastructure;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,7 @@
 package online.leetcode;
 
-import org.apache.commons.lang3.ArrayUtils;
+import online.leetcode.infrastructure.LeetCodeUnitTestInfrastructure;
+import online.leetcode.infrastructure.LeetCodeUnitTestInfrastructureForOneInput;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
@@ -11,13 +12,13 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Created by Hey on 9/10/15
  */
 @RunWith(Parameterized.class)
 public class SingleNumberTest {
+    final LeetCodeUnitTestInfrastructure leetCodeUnitTestInfrastructure;
+
     @Parameters
     public static Collection<Pair<Integer[], Integer>[]> data() {
         //noinspection unchecked
@@ -37,17 +38,17 @@ public class SingleNumberTest {
                 });
     }
 
-    private int[] fInput;
-    private int fExpected;
-
-    public SingleNumberTest(Pair<Integer[], Integer> inputExpectedPair) {
+    public SingleNumberTest(Pair<Integer[], Integer> inputExpectedPair) throws ClassNotFoundException {
 //        This method may be nasty and it should be improved
-        fInput = ArrayUtils.toPrimitive(inputExpectedPair.getLeft());
-        fExpected = inputExpectedPair.getRight();
+        leetCodeUnitTestInfrastructure = LeetCodeUnitTestInfrastructureForOneInput.
+                <Integer[], Integer>createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
+                        LeetCodeUnitTestInfrastructureForOneInput.getClassUnderTest(this.getClass()),
+                        inputExpectedPair
+                );
     }
 
     @Test
     public void shouldFindSingleNumber() {
-        assertEquals(fExpected, new SingleNumber().singleNumber(fInput));
+        leetCodeUnitTestInfrastructure.test();
     }
 }
