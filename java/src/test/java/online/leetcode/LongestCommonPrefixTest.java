@@ -59,7 +59,7 @@ public class LongestCommonPrefixTest {
     }
 
     @Test
-    public void shouldFindMajorityElement() {
+    public void shouldFindLongestCommonPrefix() {
         leetCodeUnitTestInfrastructure.test();
     }
 
