@@ -20,6 +20,7 @@ Subscribe to see which companies asked this question
 */
 
 public class HouseRobber {
+//    0ms after redundant max check removal
     public int rob(int[] nums) {
         final int length = nums.length;
         int[] f = new int[length + 2];
@@ -30,6 +31,7 @@ public class HouseRobber {
         return f[0];
     }
 
+//    First Iterative Approach attempt, with last redundant max check causing running time to become 1ms
     private class IterativeApproach {
         public int rob(int[] nums) {
             final int length = nums.length;
