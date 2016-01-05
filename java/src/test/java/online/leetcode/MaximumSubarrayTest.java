@@ -72,7 +72,7 @@ public class MaximumSubarrayTest {
     }
 
     @Test
-    public void shouldFindSingleNumber() {
+    public void shouldFindMaxSubArray() {
         leetCodeUnitTestInfrastructure.test();
     }
 }

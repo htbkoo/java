@@ -6,19 +6,25 @@ package online.leetcode;
 
 /*
 
-https://leetcode.com/problems/maximum-product-subarray/
+https://leetcode.com/problems/maximum-subarray/
 
-Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 
-For example, given the array [2,3,-2,4],
-the contiguous subarray [2,3] has the largest product = 6.
+For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
+the contiguous subarray [4,−1,2,1] has the largest sum = 6.
+
+click to show more practice.
+
+More practice:
+
+If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 
 Subscribe to see which companies asked this question
 
 */
 
 public class MaximumSubarray {
-    public int maxProduct(int[] nums) {
+    public int maxSubArray(int[] nums) {
         final int length = nums.length;
         int curSubArray = nums[0];
         int best = nums[0];
