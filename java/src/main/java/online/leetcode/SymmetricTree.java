@@ -35,6 +35,8 @@ Subscribe to see which companies asked this question
 
 */
 
+import online.leetcode.util.TreeNode;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -49,16 +51,6 @@ import java.util.Deque;
  */
 
 public class SymmetricTree {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     //    First Attempt is Recursive Approach
     public boolean isSymmetric(TreeNode root) {
         return root == null || (areTwoTreesSymmetric(root.left, root.right));

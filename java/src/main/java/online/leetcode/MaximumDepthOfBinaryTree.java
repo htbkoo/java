@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 13/10/15
  */
@@ -25,16 +27,6 @@ The maximum depth is the number of nodes along the longest path from the root no
  */
 
 public class MaximumDepthOfBinaryTree {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;

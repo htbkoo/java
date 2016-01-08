@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 19/12/15
  */
@@ -45,17 +47,6 @@ import java.util.List;
 // [6,2,7,1,4,null,9,null,null,3,5,8]
 
 public class BinaryTreePreorderTraversal {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();

@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 1/1/16
  */
@@ -57,17 +59,6 @@ import java.util.List;
  */
 
 public class FlattenBinaryTreeToLinkedList {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public void flatten(TreeNode root) {
         List<TreeNode> preorder = preorderTraversal(root);
         if (!preorder.isEmpty()) {

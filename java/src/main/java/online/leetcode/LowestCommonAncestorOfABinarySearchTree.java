@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 11/12/15
  */
@@ -36,17 +38,6 @@ Subscribe to see which companies asked this question
  */
 
 public class LowestCommonAncestorOfABinarySearchTree {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if ((root == null) || (p == null) || (q == null)) {
             return root;

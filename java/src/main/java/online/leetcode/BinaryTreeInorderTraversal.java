@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 19/12/15
  */
@@ -45,17 +47,6 @@ import java.util.List;
  */
 
 public class BinaryTreeInorderTraversal {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();

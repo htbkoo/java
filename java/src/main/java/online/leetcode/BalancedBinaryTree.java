@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 12/12/15
  */
@@ -27,16 +29,6 @@ Subscribe to see which companies asked this question
  */
 
 public class BalancedBinaryTree {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     private class FailedAttempt {
         public boolean isBalanced(TreeNode root) {
             if (root == null) {

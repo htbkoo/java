@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 27/12/15
  */
@@ -46,17 +48,6 @@ import java.util.List;
 // [6,2,7,1,4,null,9,null,null,3,5,8]
 
 public class BinaryTreePostorderTraversal {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
 //    My first iterative approach is by reversing the preorder (right child first) traversal result list
     public List<Integer> postorderTraversal(TreeNode root) {
 

@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 30/12/15
  */
@@ -33,17 +35,6 @@ Subscribe to see which companies asked this question
  */
 
 public class ValidateBinarySearchTree {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public boolean isValidBST(TreeNode root) {
         //        return isValidBSSubTree(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
         return root == null || isValidBSSubTree(root.left, ((long) Integer.MIN_VALUE - 1), root.val) && isValidBSSubTree(root.right, root.val, ((long) Integer.MAX_VALUE) + 1);

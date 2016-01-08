@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 13/10/15
  */
@@ -42,17 +44,6 @@ Google: 90% of our engineers use the software you wrote (Homebrew), but you canâ
  */
 
 public class InvertBinaryTree {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public TreeNode invertTree(TreeNode root) {
         if (root == null) return null;
 

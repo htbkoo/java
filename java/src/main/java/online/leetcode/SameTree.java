@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.TreeNode;
+
 /**
  * Created by Hey on 13/10/15
  */
@@ -24,16 +26,6 @@ Two binary trees are considered equal if they are structurally identical and the
  * }
  */
 public class SameTree {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     //        check if java short circuit
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null) {
