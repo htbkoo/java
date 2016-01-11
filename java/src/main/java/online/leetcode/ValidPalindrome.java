@@ -31,12 +31,30 @@ public class ValidPalindrome {
         if (length <= 1) {
             return true;
         }
-
+        final char[] chars = s.toCharArray();
         for (int i = 0; i < length / 2; ++i) {
-            if (s.charAt(i) != s.charAt(length - i - 1)) {
+            if (chars[i] != chars[length - i - 1]) {
                 return false;
             }
         }
         return true;
+    }
+
+    private class SlowApproachUsingString {
+        public boolean isPalindrome(String s) {
+//        s = s.replace(" ", "").toLowerCase();
+            s = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+            final int length = s.length();
+            if (length <= 1) {
+                return true;
+            }
+
+            for (int i = 0; i < length / 2; ++i) {
+                if (s.charAt(i) != s.charAt(length - i - 1)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
