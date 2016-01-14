@@ -1,9 +1,10 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 14/11/15
  */
-
 /*
 
 https://leetcode.com/problems/reverse-linked-list/
@@ -26,16 +27,6 @@ Subscribe to see which companies asked this question
  */
 
 public class ReverseLinkedList {
-
-    private class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
 //    First attempt is recursive approach
     public ListNode reverseList(ListNode head) {
         if (head == null) {

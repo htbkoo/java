@@ -1,9 +1,10 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 13/10/15
  */
-
 /*
 
 https://leetcode.com/problems/remove-linked-list-elements/
@@ -29,16 +30,6 @@ Special thanks to @mithmatt for adding this problem and creating all test cases.
  */
 
 public class RemoveLinkedListElements {
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode removeElements(ListNode head, int val) {
         if (head == null) return null;
         if (head.val == val) {

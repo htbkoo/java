@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 17/11/15
  */
@@ -33,16 +35,6 @@ Subscribe to see which companies asked this question
  */
 
 public class ReverseLinkedListII {
-
-    private class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     private boolean isNeedReverse(int nowCount, int m, int n) {
         return (m <= nowCount) && (nowCount <= n);
     }

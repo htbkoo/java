@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 20/11/15
  */
@@ -26,16 +28,6 @@ import java.util.PriorityQueue;
  */
 
 public class MergeKSortedLists {
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     //    First attempt is Priority Queue approach
     public ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<ListNode> priorityQueue;

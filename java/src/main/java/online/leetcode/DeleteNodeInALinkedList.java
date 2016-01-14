@@ -14,6 +14,8 @@ Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node wi
 
 */
 
+import online.leetcode.util.ListNode;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -24,15 +26,6 @@ Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node wi
  */
 
 public class DeleteNodeInALinkedList {
-
-    private class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
 
     public void deleteNode(ListNode node) {
         node.val = node.next.val;

@@ -1,5 +1,7 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 29/10/15
  */
@@ -27,16 +29,6 @@ Subscribe to see which companies asked this question
  */
 
 public class AddTwoNumbers {
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int carry = 0;
 

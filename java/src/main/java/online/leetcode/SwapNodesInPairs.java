@@ -1,9 +1,10 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 21/12/15
  */
-
 /*
 
 https://leetcode.com/problems/swap-nodes-in-pairs/
@@ -29,16 +30,6 @@ Subscribe to see which companies asked this question
  */
 
 public class SwapNodesInPairs {
-
-    private class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode swapPairs(ListNode head) {
         if (head == null) {
             return null;

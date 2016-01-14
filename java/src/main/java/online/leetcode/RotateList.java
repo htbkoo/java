@@ -1,9 +1,10 @@
 package online.leetcode;
 
+import online.leetcode.util.ListNode;
+
 /**
  * Created by Hey on 22/12/15
  */
-
 /*
 
 https://leetcode.com/problems/rotate-list/
@@ -28,16 +29,6 @@ Subscribe to see which companies asked this question
  */
 
 public class RotateList {
-
-    private class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode rotateRight(ListNode head, int k) {
         if (k == 0) {
             return head;
