@@ -25,7 +25,7 @@ Hint:
     Think of "looking ahead". You want to cache the next element.
     Is one variable sufficient? Why or why not?
     Test your design with call order of peek() before next() vs next() before peek().
-    For a clean implementation, check out Google's guava library source code.
+    For a clean implementation, check out Google's guava library source code (https://github.com/google/guava/blob/703ef758b8621cfbab16814f01ddcc5324bdea33/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Iterators.java#L1125).
 
 Follow up: How would you extend your design to be generic and work with all types, not just integer?
 
