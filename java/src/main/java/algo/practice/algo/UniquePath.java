@@ -32,7 +32,7 @@ public class UniquePath {
         private long dp(int i, int j) {
             if (i == 1 || j == 1) {
                 if (!dpTable.get(i, j).isPresent()) {
-                    dpTable.put(i, j, 1l);
+                    dpTable.put(i, j, 1L);
                 }
                 return dpTable.get(i, j).get();
             } else {
@@ -55,10 +55,10 @@ public class UniquePath {
             dpTable = new Simple2DArray<>(m, n);
 
             for (int i = 1; i <= m; i++) {
-                dpTable.put(i, 1, 1l);
+                dpTable.put(i, 1, 1L);
             }
             for (int j = 1; j <= n; j++) {
-                dpTable.put(1, j, 1l);
+                dpTable.put(1, j, 1L);
             }
 
             for (int i = 2; i <= m; i++) {

@@ -21,16 +21,16 @@ public class SimpleQuickSortTest {
     @Test
     public void shoulSortByLomutoPartitionScheme() throws Exception {
         assertEquals(
-                Arrays.asList(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l, 9l, 10l),
-                simpleQuickSort.inplaceSort(Arrays.asList(2l, 9l, 5l, 7l, 1l, 10l, 4l, 3l, 6l, 8l), SimpleQuickSort.LomutoQuickSortPartitionScheme.createPartitionScheme(), (-1))
+                Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L),
+                simpleQuickSort.inplaceSort(Arrays.asList(2L, 9L, 5L, 7L, 1L, 10L, 4L, 3L, 6L, 8L), SimpleQuickSort.LomutoQuickSortPartitionScheme.createPartitionScheme(), (-1))
         );
     }
 
     @Test
     public void shoulSortByHoarePartitionScheme() throws Exception {
         assertEquals(
-                Arrays.asList(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l, 9l, 10l),
-                simpleQuickSort.inplaceSort(Arrays.asList(2l, 9l, 5l, 7l, 1l, 10l, 4l, 3l, 6l, 8l), SimpleQuickSort.HoareQuickSortPartitionScheme.createPartitionScheme(), 0)
+                Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L),
+                simpleQuickSort.inplaceSort(Arrays.asList(2L, 9L, 5L, 7L, 1L, 10L, 4L, 3L, 6L, 8L), SimpleQuickSort.HoareQuickSortPartitionScheme.createPartitionScheme(), 0)
         );
     }
 }

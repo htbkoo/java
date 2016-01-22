@@ -29,7 +29,7 @@ public class UniquePathTest {
         SimpleTestingTimer.SimpleTestingTimerResult<Long> result = SimpleTestingTimer.<Long>time(uniquePath, "getNumberOfUniquePaths", new UniquePath.UniquePathByRecursiveDP(), 30, 30);
         long numberOfUniquePaths = result.getReturnValue();
 
-        assertEquals(30067266499541040l, numberOfUniquePaths);
+        assertEquals(30067266499541040L, numberOfUniquePaths);
         logger.info("Time needed by RecursiveDP: " + result.getTimeNeeded());
     }
 
@@ -42,7 +42,7 @@ public class UniquePathTest {
         SimpleTestingTimer.SimpleTestingTimerResult<Long> result = SimpleTestingTimer.<Long>time(uniquePath, "getNumberOfUniquePaths", new UniquePath.UniquePathByIterationDP(), 30, 30);
         long numberOfUniquePaths = result.getReturnValue();
 
-        assertEquals(30067266499541040l, numberOfUniquePaths);
+        assertEquals(30067266499541040L, numberOfUniquePaths);
         logger.info("Time needed by IterationDP: " + result.getTimeNeeded());
     }
 

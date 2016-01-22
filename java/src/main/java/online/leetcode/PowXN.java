@@ -34,7 +34,7 @@ public class PowXN {
         double[] map = new double[1000];
         int cur = 1;
         map[pointer] = x;
-        while (2l * (long) cur <= (long) n) {
+        while (2L * (long) cur <= (long) n) {
             final double last = map[pointer];
             map[pointer+1] = last * last;
             cur *= 2;
@@ -68,7 +68,7 @@ public class PowXN {
 
             int cur = 1;
             map.put(cur, x);
-            while (2l * (long) cur <= (long) n) {
+            while (2L * (long) cur <= (long) n) {
                 final double last = map.get(cur);
                 map.put(cur * 2, last * last);
                 cur *= 2;
@@ -97,7 +97,7 @@ public class PowXN {
 
             int cur = 1;
             map.put(cur, bdx);
-            while (2l * (long) cur <= (long) n) {
+            while (2L * (long) cur <= (long) n) {
                 final BigDecimal last = map.get(cur);
                 map.put(cur * 2, last.multiply(last));
                 cur *= 2;
