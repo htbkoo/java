@@ -43,6 +43,9 @@ Subscribe to see which companies asked this question
 */
 
 public class LetterCombinationsOfAPhoneNumber {
+    public List<String> letterCombinations(String digits) {
+        return Collections.emptyList();
+    }
 
     private static class FailedComplicatedSlowApproachUsingCollections {
         private static Map<Character, List<Character>> MAPPING = new HashMap<Character, List<Character>>() {{
@@ -114,7 +117,7 @@ public class LetterCombinationsOfAPhoneNumber {
         }
     }
 
-//    4ms
+    //    4ms
     private static class SlowApproachUsingCollections {
         private static Map<Character, List<Character>> MAPPING = new HashMap<Character, List<Character>>() {{
             put('2', Arrays.asList('a', 'b', 'c'));
@@ -135,13 +138,13 @@ public class LetterCombinationsOfAPhoneNumber {
             for (int i = 0; i < length; i++) {
                 combinations = new ArrayList<>();
                 final char digit = digits.charAt(i);
-                if (!MAPPING.containsKey(digit)){
+                if (!MAPPING.containsKey(digit)) {
                     return Collections.emptyList();
                 }
                 final List<Character> characters = MAPPING.get(digit);
-                for (Character character: characters){
-                    for (String str:prevCombinations){
-                        combinations.add(str+character);
+                for (Character character : characters) {
+                    for (String str : prevCombinations) {
+                        combinations.add(str + character);
                     }
                 }
                 prevCombinations = combinations;
