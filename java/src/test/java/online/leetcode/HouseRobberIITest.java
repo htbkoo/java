@@ -89,7 +89,7 @@ public class HouseRobberIITest {
     public HouseRobberIITest(Pair<Integer[], Integer> inputExpectedPair) throws ClassNotFoundException {
 //        This method may be nasty and it should be improved
         leetCodeUnitTestInfrastructure = LeetCodeUnitTestInfrastructureForOneInput.
-                <Integer[], Integer>createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
+                createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
                         LeetCodeUnitTestInfrastructureForOneInput.getClassUnderTest(this.getClass()),
                         inputExpectedPair
                 );

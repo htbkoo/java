@@ -50,7 +50,7 @@ public class ContainsDuplicateTest{
     public ContainsDuplicateTest(Pair<Integer[], Boolean> inputExpectedPair) throws ClassNotFoundException {
 //        This method may be nasty and it should be improved
         leetCodeUnitTestInfrastructure = LeetCodeUnitTestInfrastructureForOneInput.
-                <Integer[], Boolean>createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
+                createLeetCodeUnitTestPairInfrastructureWithListOfInteger(
                         LeetCodeUnitTestInfrastructureForOneInput.getClassUnderTest(this.getClass()),
                         inputExpectedPair
                 );
