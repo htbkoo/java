@@ -5,11 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by Hey on 20/1/16
@@ -38,16 +40,19 @@ public class LeetCodeUnitTestInfrastructureForCollectionsInputOutput<L, R> exten
         return new LeetCodeUnitTestInfrastructureForCollectionsInputOutput<T, T>(classUnderTest, inputExpectedPair.getLeft(), inputExpectedPair.getRight()) {
             @Override
             protected void assertExpectedEqualsToResult(Collection<? extends T> expected, Object returnValue) {
-                if (!(returnValue instanceof Collection<?>)) {
+                if (!(returnValue instanceof Collection)) {
                     assertEquals(expected, returnValue);
-//                    fail(String.format("Return Value (%s) is not a Collection and thus would be different from expected (%s).", returnValue.toString(), Arrays.toString(expected.toArray())));
                 }
-                //noinspection ConstantConditions // Checked returnValue is instanceof Collection<?>
-                final List<?> returnValueInList = new ArrayList<>((Collection<?>) returnValue);
-                final List<T> expectedInList = new ArrayList<>(expected);
-                Collections.sort(expectedInList);
-//                Collections.sort(returnValueInList);
-                assertEquals(expectedInList, returnValueInList);
+                try {
+                    final List<T> expectedInList = new ArrayList<>(expected);
+                    //noinspection unchecked,ConstantConditions  // Caught to give a more meaningful error message to user
+                    final List<T> returnValueInList = new ArrayList<>((Collection<? extends T>) returnValue);
+                    Collections.sort(expectedInList);
+                    Collections.sort(returnValueInList);
+                    assertEquals(expectedInList, returnValueInList);
+                } catch (ClassCastException e) {
+                    fail(String.format("Return Value (%s) is not a Collection and thus would be different from expected (%s).", returnValue.toString(), Arrays.toString(expected.toArray())));
+                }
             }
         };
     }
