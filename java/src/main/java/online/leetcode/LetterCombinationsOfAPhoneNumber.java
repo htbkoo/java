@@ -43,8 +43,61 @@ Subscribe to see which companies asked this question
 */
 
 public class LetterCombinationsOfAPhoneNumber {
+//    2ms, will be 3ms if ArrayList instead of char[] is used
     public List<String> letterCombinations(String digits) {
-        return Collections.emptyList();
+        final int length = digits.length();
+        List<String> prevCombinations = new ArrayList<>();
+        prevCombinations.add("");
+        List<String> combinations = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            combinations = new ArrayList<>();
+            final char digit = digits.charAt(i);
+            char[] characters;
+            switch (digit) {
+                case '2': {
+                    characters = new char[]{'a', 'b', 'c'};
+                    break;
+                }
+                case '3': {
+                    characters = new char[]{'d', 'e', 'f'};
+                    break;
+                }
+                case '4': {
+                    characters = new char[]{'g', 'h', 'i'};
+                    break;
+                }
+                case '5': {
+                    characters = new char[]{'j', 'k', 'l'};
+                    break;
+                }
+                case '6': {
+                    characters = new char[]{'m', 'n', 'o'};
+                    break;
+                }
+                case '7': {
+                    characters = new char[]{'p', 'q', 'r', 's'};
+                    break;
+                }
+                case '8': {
+                    characters = new char[]{'t', 'u', 'v'};
+                    break;
+                }
+                case '9': {
+                    characters = new char[]{'w', 'x', 'y', 'z'};
+                    break;
+                }
+                default: {
+                    return Collections.emptyList();
+                }
+            }
+            for (char character : characters) {
+                for (String str : prevCombinations) {
+                    combinations.add(str + character);
+                }
+            }
+            prevCombinations = combinations;
+        }
+        return combinations;
     }
 
     private static class FailedComplicatedSlowApproachUsingCollections {
