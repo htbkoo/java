@@ -5,6 +5,7 @@ import online.leetcode.util.TreeNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hey on 23/1/16
@@ -46,42 +47,70 @@ Subscribe to see which companies asked this question
  */
 
 public class BinaryTreePaths {
+//    4ms
     public List<String> binaryTreePaths(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
-        final List<StringBuilder> stringBuilderList = findPaths(root);
-        final ArrayList<String> paths = new ArrayList<>();
-        //noinspection ConstantConditions // Impossible to be null
-        for (StringBuilder sb : stringBuilderList) {
-            paths.add(sb.toString());
+        return findPaths(root);
+    }
+
+    private List<String> findPaths(TreeNode node) {
+        final String pathHead = String.valueOf(node.val);
+        final TreeNode left = node.left;
+        final TreeNode right = node.right;
+        if ((left == null) && (right == null)) {
+            return Collections.singletonList(pathHead);
         }
+        final List<String> paths = new ArrayList<>();
+        addPathsToList(pathHead, left, paths);
+        addPathsToList(pathHead, right, paths);
+
         return paths;
     }
 
-    private List<StringBuilder> findPaths(TreeNode node) {
-        if ((node.left == null) && (node.right == null)) {
-            final StringBuilder nodeSB = new StringBuilder(String.valueOf(node.val));
-            return Collections.singletonList(nodeSB);
-//            return Collections.singletonList(String.valueOf(node.val));
-        }
-
-        List<StringBuilder> paths = new ArrayList<>();
-        if (node.left != null) {
-            final List<StringBuilder> leftPaths = findPaths(node.left);
-            for (StringBuilder sb:leftPaths){
-                final StringBuilder leftPathHead = new StringBuilder(String.valueOf(node.val));
-                paths.add(leftPathHead.append("->").append(sb));
+    private void addPathsToList(String pathHead, TreeNode node, List<String> paths) {
+        if (node != null) {
+            final List<String> leftPaths = findPaths(node);
+            for (String path : leftPaths) {
+                paths.add(pathHead + "->" + path);
             }
         }
-        if (node.right != null) {
-            final List<StringBuilder> rightPaths = findPaths(node.right);
-            for (StringBuilder sb:rightPaths){
-                final StringBuilder rightPathHead = new StringBuilder(String.valueOf(node.val));
-                paths.add(rightPathHead.append("->").append(sb));
+    }
+
+    private class SlowApproachUsingStringBuilder {
+//        7ms
+        public List<String> binaryTreePaths(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>();
             }
+            final List<StringBuilder> stringBuilderList = findPaths(root);
+            return stringBuilderList.stream().map(StringBuilder::toString).collect(Collectors.toCollection(ArrayList::new));
         }
 
-        return paths;
+        private List<StringBuilder> findPaths(TreeNode node) {
+            if ((node.left == null) && (node.right == null)) {
+                final StringBuilder nodeSB = new StringBuilder(String.valueOf(node.val));
+                return Collections.singletonList(nodeSB);
+            }
+
+            List<StringBuilder> paths = new ArrayList<>();
+            if (node.left != null) {
+                final List<StringBuilder> leftPaths = findPaths(node.left);
+                for (StringBuilder sb : leftPaths) {
+                    final StringBuilder leftPathHead = new StringBuilder(String.valueOf(node.val));
+                    paths.add(leftPathHead.append("->").append(sb));
+                }
+            }
+            if (node.right != null) {
+                final List<StringBuilder> rightPaths = findPaths(node.right);
+                for (StringBuilder sb : rightPaths) {
+                    final StringBuilder rightPathHead = new StringBuilder(String.valueOf(node.val));
+                    paths.add(rightPathHead.append("->").append(sb));
+                }
+            }
+
+            return paths;
+        }
     }
 }
