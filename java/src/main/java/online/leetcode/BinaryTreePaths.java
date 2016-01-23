@@ -69,10 +69,12 @@ public class BinaryTreePaths {
         return paths;
     }
 
+//    will use 5ms if method is not used
     private void addPathsToList(String pathHead, TreeNode node, List<String> paths) {
         if (node != null) {
             final List<String> leftPaths = findPaths(node);
             for (String path : leftPaths) {
+//                String.format will use 35ms
                 paths.add(pathHead + "->" + path);
             }
         }
