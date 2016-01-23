@@ -61,22 +61,23 @@ public class BinaryTreePaths {
 
     private List<StringBuilder> findPaths(TreeNode node) {
         if ((node.left == null) && (node.right == null)) {
-            return Collections.singletonList(new StringBuilder(String.valueOf(node.val)));
+            final StringBuilder nodeSB = new StringBuilder(String.valueOf(node.val));
+            return Collections.singletonList(nodeSB);
 //            return Collections.singletonList(String.valueOf(node.val));
         }
 
         List<StringBuilder> paths = new ArrayList<>();
         if (node.left != null) {
-            final StringBuilder leftPathHead = new StringBuilder(String.valueOf(node.left.val));
             final List<StringBuilder> leftPaths = findPaths(node.left);
             for (StringBuilder sb:leftPaths){
+                final StringBuilder leftPathHead = new StringBuilder(String.valueOf(node.val));
                 paths.add(leftPathHead.append("->").append(sb));
             }
         }
         if (node.right != null) {
-            final StringBuilder rightPathHead = new StringBuilder(String.valueOf(node.right.val));
             final List<StringBuilder> rightPaths = findPaths(node.right);
             for (StringBuilder sb:rightPaths){
+                final StringBuilder rightPathHead = new StringBuilder(String.valueOf(node.val));
                 paths.add(rightPathHead.append("->").append(sb));
             }
         }
