@@ -49,29 +49,34 @@ Subscribe to see which companies asked this question
  */
 
 public class BinaryTreeLevelOrderTraversalII {
+    //         2ms
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> levelOrder = new ArrayList<>();
-        List<TreeNode> row = new ArrayList<>();
 
+        TreeNode[] row = new TreeNode[1];
+        int pointer = 0;
         levelOrder.add(Collections.singletonList(root.val));
-        row.add(root);
+        row[pointer++] = root;
 
-        while (!row.isEmpty()) {
-            List<TreeNode> prevRow = row;
-            row = new ArrayList<>();
+        while (pointer > 0) {
+            TreeNode[] prevRow = row;
+            final int lastRowLength = pointer;
+            row = new TreeNode[pointer * 2];
+            pointer = 0;
             List<Integer> rowVal = new ArrayList<>();
-            for (TreeNode node : prevRow) {
+            for (int i = 0; i < lastRowLength; ++i) {
+                TreeNode node = prevRow[i];
                 if (node.left != null) {
                     rowVal.add(node.left.val);
-                    row.add(node.left);
+                    row[pointer++] = node.left;
                 }
                 if (node.right != null) {
                     rowVal.add(node.right.val);
-                    row.add(node.right);
+                    row[pointer++] = node.right;
                 }
             }
             if (!rowVal.isEmpty()) {
@@ -80,7 +85,44 @@ public class BinaryTreeLevelOrderTraversalII {
         }
 
         Collections.reverse(levelOrder);
-
         return levelOrder;
+    }
+
+    private class SlowApproachUsingCollection {
+        //        4ms
+        public List<List<Integer>> levelOrderBottom(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>();
+            }
+
+            List<List<Integer>> levelOrder = new ArrayList<>();
+            List<TreeNode> row = new ArrayList<>();
+
+            levelOrder.add(Collections.singletonList(root.val));
+            row.add(root);
+
+            while (!row.isEmpty()) {
+                List<TreeNode> prevRow = row;
+                row = new ArrayList<>();
+                List<Integer> rowVal = new ArrayList<>();
+                for (TreeNode node : prevRow) {
+                    if (node.left != null) {
+                        rowVal.add(node.left.val);
+                        row.add(node.left);
+                    }
+                    if (node.right != null) {
+                        rowVal.add(node.right.val);
+                        row.add(node.right);
+                    }
+                }
+                if (!rowVal.isEmpty()) {
+                    levelOrder.add(rowVal);
+                }
+            }
+
+            Collections.reverse(levelOrder);
+
+            return levelOrder;
+        }
     }
 }
