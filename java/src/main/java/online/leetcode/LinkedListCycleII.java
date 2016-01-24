@@ -6,9 +6,11 @@ package online.leetcode;
 
 /*
 
-https://leetcode.com/problems/linked-list-cycle/
+https://leetcode.com/problems/linked-list-cycle-ii/
 
-Given a linked list, determine if it has a cycle in it.
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+Note: Do not modify the linked list.
 
 Follow up:
 Can you solve it without using extra space?
@@ -28,24 +30,31 @@ import online.leetcode.util.ListNode;
  * }
  */
 
-public class LinkedListCycle {
+public class LinkedListCycleII {
     // Floyd's cycle-finding algorithm
     // https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare
-    public boolean hasCycle(ListNode head) {
+
+    // And same idea as 287 - Find the Duplicate Number
+    // http://keithschwarz.com/interesting/code/find-duplicate/FindDuplicate.python.html
+    public ListNode detectCycle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
 
         while (fast!=null){
             fast = fast.next;
             if (fast==null){
-                return false;
+                return null;
             }
             fast=fast.next;
             slow=slow.next;
             if (slow==fast){
-                return true;
+                while (head!=slow){
+                    head=head.next;
+                    slow=slow.next;
+                }
+                return head;
             }
         }
-        return false;
+        return null;
     }
 }
