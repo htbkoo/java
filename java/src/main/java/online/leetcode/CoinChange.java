@@ -35,13 +35,11 @@ Subscribe to see which companies asked this question
 */
 
 public class CoinChange {
-
     //        28ms, without sort and skip
     //        -rolling array
     public int coinChange(int[] coins, int amount) {
-        int count = 0;
         if (amount == 0) {
-            return count;
+            return 0;
         }
 
         int[] minCoinNeeded = new int[amount + 1];
@@ -69,9 +67,8 @@ public class CoinChange {
         //        Only start the core part after LCM, replace previous with ((int)Amount/largest)*largest
         //        even slower, 30ms
         public int coinChange(int[] coins, int amount) {
-            int count = 0;
             if (amount == 0) {
-                return count;
+                return 0;
             }
 
             int lcm = 1;
@@ -117,9 +114,8 @@ public class CoinChange {
         //        28ms, without sort and skip
         //        -rolling array
         public int coinChange(int[] coins, int amount) {
-            int count = 0;
             if (amount == 0) {
-                return count;
+                return 0;
             }
 
             int[] minCoinNeeded = new int[amount + 1];
@@ -149,9 +145,8 @@ public class CoinChange {
         //        +sort and skip
         //        -rolling array
         public int coinChange(int[] coins, int amount) {
-            int count = 0;
             if (amount == 0) {
-                return count;
+                return 0;
             }
 
             //        Optional?
@@ -181,13 +176,12 @@ public class CoinChange {
         }
     }
 
-    private class temp {
+    private class BottomUpApproach {
         //    bottom-up approach
         //    much faster than top-down, though still slow, 50 ms
         public int coinChange(int[] coins, int amount) {
-            int count = 0;
             if (amount == 0) {
-                return count;
+                return 0;
             }
 
             int arraySize = 0;
