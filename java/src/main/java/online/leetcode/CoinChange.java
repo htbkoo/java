@@ -35,7 +35,83 @@ Subscribe to see which companies asked this question
 */
 
 public class CoinChange {
-    //        Only start the core part after LCM, replace previous with ((int)Amount/largest)*largest
+
+    //        28ms, without sort and skip
+    //        -rolling array
+    public int coinChange(int[] coins, int amount) {
+        int count = 0;
+        if (amount == 0) {
+            return count;
+        }
+
+        int[] minCoinNeeded = new int[amount + 1];
+        minCoinNeeded[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            minCoinNeeded[i] = -1;
+            for (int c : coins) {
+                final int prev = i - c;
+                if (prev >= 0) {
+                    if (minCoinNeeded[prev] != -1) {
+                        if (minCoinNeeded[i] != -1) {
+                            minCoinNeeded[i] = Math.min(minCoinNeeded[prev] + 1, minCoinNeeded[i]);
+                        } else {
+                            minCoinNeeded[i] = minCoinNeeded[prev] + 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return minCoinNeeded[amount];
+    }
+
+    private class TriedPrematureOptimization {
+        //        Only start the core part after LCM, replace previous with ((int)Amount/largest)*largest
+        //        even slower, 30ms
+        public int coinChange(int[] coins, int amount) {
+            int count = 0;
+            if (amount == 0) {
+                return count;
+            }
+
+            int lcm = 1;
+            int maxCoin = coins[0];
+
+            for (int c : coins) {
+                maxCoin = Math.max(c, maxCoin);
+                if (lcm > amount) {
+                    lcm = amount + 1;
+                } else {
+                    lcm *= c;
+                }
+            }
+
+            int[] minCoinNeeded = new int[amount + 1];
+
+            if (amount >= lcm) {
+                minCoinNeeded[0] = (amount / lcm) * lcm / maxCoin;
+                amount -= (amount / lcm) * lcm;
+            } else {
+                minCoinNeeded[0] = 0;
+            }
+            for (int i = 1; i <= amount; ++i) {
+                minCoinNeeded[i] = -1;
+                for (int c : coins) {
+                    final int prev = i - c;
+                    if (prev >= 0) {
+                        if (minCoinNeeded[prev] != -1) {
+                            if (minCoinNeeded[i] != -1) {
+                                minCoinNeeded[i] = Math.min(minCoinNeeded[prev] + 1, minCoinNeeded[i]);
+                            } else {
+                                minCoinNeeded[i] = minCoinNeeded[prev] + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            return minCoinNeeded[amount];
+        }
+    }
 
     private class SlightImprovementWithoutSortingAndSkipping {
         //        28ms, without sort and skip
