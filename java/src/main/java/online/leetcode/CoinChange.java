@@ -1,9 +1,8 @@
 package online.leetcode;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,7 +34,7 @@ Subscribe to see which companies asked this question
 */
 
 public class CoinChange {
-
+    //    223ms, extremely slow
     //    BFS with memoization
     public int coinChange(int[] coins, int amount) {
         int count = 0;
@@ -44,39 +43,29 @@ public class CoinChange {
         }
 
         Set<Integer> set = new HashSet<>();
-        Deque<Integer> queue= new ArrayDeque<>();
+        List<Integer> thisGen;
+        List<Integer> nextGen = new ArrayList<>();
         set.add(amount);
-        queue.add(amount);
+        nextGen.add(amount);
 
-        while (!queue.isEmpty()) {
+        while (!nextGen.isEmpty()) {
             ++count;
-            final int i = queue.poll();
-            for (final Iterator<Integer> iterator = set.iterator(); iterator.hasNext(); ) {
-//                int i = iterator.next();
-                iterator.remove();
-//                set.remove(i);
+            thisGen = nextGen;
+            nextGen = new ArrayList<>();
+            for (int i : thisGen) {
                 for (int c : coins) {
                     final int remainingAmount = i - c;
                     if (remainingAmount == 0) {
                         return count;
                     } else if (remainingAmount > 0) {
-                        set.add(remainingAmount);
+                        if (!set.contains(remainingAmount)) {
+                            set.add(remainingAmount);
+                            nextGen.add(remainingAmount);
+                        }
                     }
+
                 }
             }
-
-//            Core part, throw ConcurrentModificationException if iterator is not used
-//            for (Integer i : set) {
-//                set.remove(i);
-//                for (int c : coins) {
-//                    final int remainingAmount = i - c;
-//                    if (remainingAmount == 0){
-//                        return count;
-//                    }else if (remainingAmount>0){
-//                        set.add(remainingAmount);
-//                    }
-//                }
-//            }
         }
         return -1;
     }
