@@ -25,7 +25,7 @@ public class PerfectSquares {
     public int numSquares(int n) {
         final int ARRAY_SIZE = (int) Math.sqrt(n);
         final int[] squares = new int[ARRAY_SIZE];
-        for (int i = 1; i <= ARRAY_SIZE; i++) {
+        for (int i = 1; i <= ARRAY_SIZE; ++i) {
             squares[i - 1] = i * i;
         }
         return coinChange(squares, n);
