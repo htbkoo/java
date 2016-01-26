@@ -1,6 +1,7 @@
 package online.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,42 +35,113 @@ Subscribe to see which companies asked this question
 */
 
 public class CoinChange {
-    //    bottom-up approach
-    //    much faster than top-down, though still slow, 50 ms
-    public int coinChange(int[] coins, int amount) {
-        int count = 0;
-        if (amount == 0) {
-            return count;
-        }
+    //        Only start the core part after LCM, replace previous with ((int)Amount/largest)*largest
 
-        int arraySize = 0;
+    private class SlightImprovementWithoutSortingAndSkipping {
+        //        28ms, without sort and skip
+        //        -rolling array
+        public int coinChange(int[] coins, int amount) {
+            int count = 0;
+            if (amount == 0) {
+                return count;
+            }
 
-        for (int c : coins) {
-            arraySize = Math.max(c, arraySize);
-        }
-
-        int[] minCoinNeeded = new int[arraySize + 1];
-//        Arrays.fill(minCoinNeeded, -1);
-        minCoinNeeded[0] = 0;
-        for (int i = 1; i <= amount; ++i) {
-            final int curArrayPointer = i % (arraySize + 1);
-            minCoinNeeded[curArrayPointer] = -1;
-            for (int c : coins) {
-                final int prev = i - c;
-                if (prev >= 0) {
-                    final int prevArrayPointer = prev % (arraySize + 1);
-                    if (minCoinNeeded[prevArrayPointer] != -1) {
-                        if (minCoinNeeded[curArrayPointer] != -1) {
-                            minCoinNeeded[curArrayPointer] = Math.min(minCoinNeeded[prevArrayPointer] + 1, minCoinNeeded[curArrayPointer]);
-                        } else {
-                            minCoinNeeded[curArrayPointer] = minCoinNeeded[prevArrayPointer] + 1;
+            int[] minCoinNeeded = new int[amount + 1];
+            minCoinNeeded[0] = 0;
+            for (int i = 1; i <= amount; ++i) {
+                minCoinNeeded[i] = -1;
+                for (int c : coins) {
+                    final int prev = i - c;
+                    if (prev >= 0) {
+                        if (minCoinNeeded[prev] != -1) {
+                            if (minCoinNeeded[i] != -1) {
+                                minCoinNeeded[i] = Math.min(minCoinNeeded[prev] + 1, minCoinNeeded[i]);
+                            } else {
+                                minCoinNeeded[i] = minCoinNeeded[prev] + 1;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        return minCoinNeeded[amount % (arraySize + 1)];
+            return minCoinNeeded[amount];
+        }
+    }
+
+    private class PrematureOptimizationWithBottomUpApproach {
+        //        29ms
+        //        +sort and skip
+        //        -rolling array
+        public int coinChange(int[] coins, int amount) {
+            int count = 0;
+            if (amount == 0) {
+                return count;
+            }
+
+            //        Optional?
+            Arrays.sort(coins);
+
+            int[] minCoinNeeded = new int[amount + 1];
+            minCoinNeeded[0] = 0;
+            for (int i = 1; i <= amount; ++i) {
+                minCoinNeeded[i] = -1;
+                for (int c : coins) {
+                    final int prev = i - c;
+                    if (prev >= 0) {
+                        if (minCoinNeeded[prev] != -1) {
+                            if (minCoinNeeded[i] != -1) {
+                                minCoinNeeded[i] = Math.min(minCoinNeeded[prev] + 1, minCoinNeeded[i]);
+                            } else {
+                                minCoinNeeded[i] = minCoinNeeded[prev] + 1;
+                            }
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            return minCoinNeeded[amount];
+        }
+    }
+
+    private class temp {
+        //    bottom-up approach
+        //    much faster than top-down, though still slow, 50 ms
+        public int coinChange(int[] coins, int amount) {
+            int count = 0;
+            if (amount == 0) {
+                return count;
+            }
+
+            int arraySize = 0;
+
+            for (int c : coins) {
+                arraySize = Math.max(c, arraySize);
+            }
+
+            int[] minCoinNeeded = new int[arraySize + 1];
+            minCoinNeeded[0] = 0;
+            for (int i = 1; i <= amount; ++i) {
+                final int curArrayPointer = i % (arraySize + 1);
+                minCoinNeeded[curArrayPointer] = -1;
+                for (int c : coins) {
+                    final int prev = i - c;
+                    if (prev >= 0) {
+                        final int prevArrayPointer = prev % (arraySize + 1);
+                        if (minCoinNeeded[prevArrayPointer] != -1) {
+                            if (minCoinNeeded[curArrayPointer] != -1) {
+                                minCoinNeeded[curArrayPointer] = Math.min(minCoinNeeded[prevArrayPointer] + 1, minCoinNeeded[curArrayPointer]);
+                            } else {
+                                minCoinNeeded[curArrayPointer] = minCoinNeeded[prevArrayPointer] + 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return minCoinNeeded[amount % (arraySize + 1)];
+        }
     }
 
     private class TopDownBFSWithMemoizationApproach {
