@@ -47,6 +47,28 @@ public abstract class FirstBadVersion {
         }
     }
 
+    private class FailedAttemptForPrematureOptimizationByOmitOverflowCheck {
+        public int firstBadVersion(int n) {
+            int high = n;
+            int low = 1;
+
+            while (high - low > 1) {
+                int mid = (high + low) / 2;
+                if (isBadVersion(mid)) {
+                    high = mid;
+                } else {
+                    low = mid;
+                }
+            }
+
+            if (isBadVersion(low)) {
+                return low;
+            } else {
+                return high;
+            }
+        }
+    }
+
     //    External dependency
     protected abstract boolean isBadVersion(int version);
 }
