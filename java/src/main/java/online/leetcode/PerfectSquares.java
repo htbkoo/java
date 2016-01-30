@@ -52,4 +52,23 @@ public class PerfectSquares {
 
         return minCoinNeeded[amount];
     }
+
+    private class ReferenceApproachByNumberTheory {
+        //    Taking reference of
+        //      1. http://bookshadow.com/weblog/2015/09/09/leetcode-perfect-squares/
+        //      2. http://www.cnblogs.com/grandyang/p/4800552.html
+        //    By applying Lagrange's four-square theorem, https://en.wikipedia.org/wiki/Lagrange%27s_four-square_theorem
+        public int numSquares(int n) {
+            while (n % 4 == 0)
+                n /= 4;
+            if (n % 8 == 7)
+                return 4;
+            for (int a = 0; a * a <= n; ++a) {
+                int b = (int) Math.sqrt(n - a * a);
+                if (a * a + b * b == n)
+                    return ((a > 0) ? 1 : 0) + ((b > 0) ? 1 : 0);
+            }
+            return 3;
+        }
+    }
 }
