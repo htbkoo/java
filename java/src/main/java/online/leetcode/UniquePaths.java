@@ -24,42 +24,19 @@ Subscribe to see which companies asked this question
 */
 
 public class UniquePaths {
-
-    public class Simple2DArray {
-        private final int[][] matrix;
-
-        public Simple2DArray(int m, int n) {
-            //noinspection unchecked
-            this.matrix = new int[m + 1][n + 1];
-        }
-
-        public void put(int i, int j, int element) {
-            this.matrix[i][j] = element;
-        }
-
-        public int get(int i, int j) {
-            return this.matrix[i][j];
-        }
-    }
-
-
     public int uniquePaths(int m, int n) {
-        Simple2DArray dpTable;
-
-        dpTable = new Simple2DArray(m, n);
-
+        final int[][] matrix = new int[m + 1][n + 1];
         for (int i = 1; i <= m; i++) {
-            dpTable.put(i, 1, 1);
+            matrix[i][1] = 1;
         }
         for (int j = 1; j <= n; j++) {
-            dpTable.put(1, j, 1);
+            matrix[1][j] = 1;
         }
-
         for (int i = 2; i <= m; i++) {
             for (int j = 2; j <= n; j++) {
-                dpTable.put(i, j, dpTable.get(i - 1, j) + dpTable.get(i, j - 1));
+                matrix[i][j] = matrix[i-1][j]+matrix[i][j-1];
             }
         }
-        return dpTable.get(m, n);
+        return matrix[m][n];
     }
 }
