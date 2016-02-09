@@ -1,4 +1,5 @@
 # java
-Repo for java projects, usually practices
+Repo for java projects, most of them are practices and my attempts for solving online judges.
 
-So far not much that are interesting enough that worth looking at.
+e.g. 
+LeetCode (https://leetcode.com/problemset/algorithms/)
