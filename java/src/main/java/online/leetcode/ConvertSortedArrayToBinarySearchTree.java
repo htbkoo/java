@@ -25,8 +25,6 @@ Subscribe to see which companies asked this question
  * }
  */
 
-// [6,2,7,1,4,null,9,null,null,3,5,8]
-
 public class ConvertSortedArrayToBinarySearchTree {
     public TreeNode sortedArrayToBST(int[] nums) {
         if (nums.length == 0) {
