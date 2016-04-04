@@ -36,10 +36,14 @@ public class RangeSumQueryImmutable {
         public NumArray(int[] nums) {
             length = nums.length;
             width = length;
-            height = (int) (Math.log(length) / Math.log(2)) + 1;
-
-            sums = new int[height][];
-            buildSparseTable(nums);
+            if (length == 0) {
+                height = 0;
+                sums = new int[height][];
+            } else {
+                height = (int) (Math.log(length) / Math.log(2)) + 1;
+                sums = new int[height][];
+                buildSparseTable(nums);
+            }
         }
 
         public int sumRange(int i, int j) {
