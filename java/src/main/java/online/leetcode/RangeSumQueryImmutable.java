@@ -27,6 +27,27 @@ Subscribe to see which companies asked this question
 */
 
 public class RangeSumQueryImmutable {
+    //    3ms, cache sum-range approach
+    public class SuggestedFastNumArray {
+        private final int[] sums;
+        private final int length;
+
+        public SuggestedFastNumArray(int[] nums) {
+            length = nums.length;
+            sums = new int[length + 1];
+            sums[0] = 0;
+            for (int i = 0; i < length; ++i) {
+                sums[i + 1] = sums[i] + nums[i];
+            }
+        }
+
+        public int sumRange(int i, int j) {
+            return sums[j + 1] - sums[i];
+        }
+    }
+
+
+    //    Sparse Table, slow, 32ms, O(n lg n) + O(lg n)
     public class NumArray {
         private final int[][] sums;
         private final int length;
