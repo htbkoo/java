@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -21,39 +22,39 @@ import static org.junit.Assert.fail;
  * <p>
  * Update: migrating to composition instead of inheritance
  */
-public class LeetCodeUnitTestInfrastructureForOneInput<L, R> extends LeetCodeUnitTestInfrastructure<R> {
+public class LeetCodeUnitTestInfrastructureForOneInput<I, E> extends LeetCodeUnitTestInfrastructure<E> {
     private static Logger logger = LogManager.getLogger(LeetCodeUnitTestInfrastructureForOneInput.class);
 
-    protected final L fInput;
+    protected final I fInput;
 
-    private LeetCodeUnitTestInfrastructureForOneInput(Class<?> classUnderTest, L fInput, R fExpected) {
+    private LeetCodeUnitTestInfrastructureForOneInput(Class<?> classUnderTest, I fInput, E fExpected) {
         super(classUnderTest, fExpected);
         this.fInput = fInput;
     }
 
-    public static <L, R> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithInput(Class<?> classUnderTest, Pair<L, R> inputExpectedPair) {
+    public static <I, E> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithInput(Class<?> classUnderTest, Pair<I, E> inputExpectedPair) {
         return new LeetCodeUnitTestInfrastructureForOneInput<>(classUnderTest, inputExpectedPair.getLeft(), inputExpectedPair.getRight());
     }
 
-    public static <R> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithListOfInteger(Class<?> classUnderTest, Pair<Integer[], R> inputExpectedPair) {
+    public static <E> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithListOfInteger(Class<?> classUnderTest, Pair<Integer[], E> inputExpectedPair) {
         return new LeetCodeUnitTestInfrastructureForOneInput<>(classUnderTest, ArrayUtils.toPrimitive(inputExpectedPair.getLeft()), inputExpectedPair.getRight());
     }
 
-    public static <R> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithListOfCharacter(Class<?> classUnderTest, Pair<Character[], R> inputExpectedPair) {
+    public static <E> LeetCodeUnitTestInfrastructureForOneInput createLeetCodeUnitTestPairInfrastructureWithListOfCharacter(Class<?> classUnderTest, Pair<Character[], E> inputExpectedPair) {
         return new LeetCodeUnitTestInfrastructureForOneInput<>(classUnderTest, ArrayUtils.toPrimitive(inputExpectedPair.getLeft()), inputExpectedPair.getRight());
     }
 
-    public static <L, R extends Comparable<? super R>> LeetCodeUnitTestInfrastructureForOneInput createWithAssertionIgnoringOrder(Class<?> classUnderTest, Pair<L, Collection<? extends R>> inputExpectedPair) {
-        return new LeetCodeUnitTestInfrastructureForOneInput<L, Collection<? extends R>>(classUnderTest, inputExpectedPair.getLeft(), inputExpectedPair.getRight()) {
+    public static <I, E extends Comparable<? super E>> LeetCodeUnitTestInfrastructureForOneInput createWithAssertionIgnoringOrder(Class<?> classUnderTest, Pair<I, Collection<? extends E>> inputExpectedPair) {
+        return new LeetCodeUnitTestInfrastructureForOneInput<I, Collection<? extends E>>(classUnderTest, inputExpectedPair.getLeft(), inputExpectedPair.getRight()) {
             @Override
-            protected void assertExpectedEqualsToResult(Collection<? extends R> expected, Object returnValue) {
+            protected void assertExpectedEqualsToResult(Collection<? extends E> expected, Object returnValue) {
                 if (!(returnValue instanceof Collection)) {
                     assertEquals(expected, returnValue);
                 }
                 try {
-                    final List<R> expectedInList = new ArrayList<>(expected);
+                    final List<E> expectedInList = new ArrayList<>(expected);
                     //noinspection unchecked,ConstantConditions  // Caught to give a more meaningful error message to user
-                    final List<R> returnValueInList = new ArrayList<>((Collection<? extends R>) returnValue);
+                    final List<E> returnValueInList = new ArrayList<>((Collection<? extends E>) returnValue);
                     Collections.sort(expectedInList);
                     Collections.sort(returnValueInList);
                     assertEquals(expectedInList, returnValueInList);
@@ -64,8 +65,23 @@ public class LeetCodeUnitTestInfrastructureForOneInput<L, R> extends LeetCodeUni
         };
     }
 
+    public static <I, E> LeetCodeUnitTestInfrastructureForOneInput createWithExistenceAssertion(Class<?> classUnderTest, Pair<I, ? extends Collection<? extends E>> inputExpectedPair) {
+        return new LeetCodeUnitTestInfrastructureForOneInput<Object, Collection<? extends E>>(classUnderTest, ArrayUtils.toPrimitive((Integer[]) inputExpectedPair.getLeft()), inputExpectedPair.getRight()) {
+            @Override
+            protected void assertExpectedEqualsToResult(Collection<? extends E> expected, Object returnValue) {
+                try {
+                    //noinspection unchecked // Checked by catching ClassCastException
+                    E castedReturnValue = (E) returnValue;
+                    assertTrue("The expected does not contain the return value!",expected.contains(castedReturnValue));
+                }catch (ClassCastException e){
+                    fail(String.format("The type of Return Value is %s which does not match the expected type!", returnValue.getClass().getSimpleName()));
+                }
+            }
+        };
+    }
+
     @Override
-    protected L getFInput() {
+    protected I getFInput() {
         return fInput;
     }
 
@@ -75,7 +91,7 @@ public class LeetCodeUnitTestInfrastructureForOneInput<L, R> extends LeetCodeUni
     }
 
     @Override
-    protected void assertExpectedEqualsToResult(R expected, Object returnValue) {
+    protected void assertExpectedEqualsToResult(E expected, Object returnValue) {
         assertEquals(expected, returnValue);
     }
 
