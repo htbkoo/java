@@ -34,10 +34,7 @@ public class HumanReadableTime {
 
     public static String makeReadable(int seconds) {
         // Do something
-        int hh = 0, mm = 0, ss = 0;
-        ss = (seconds % 60);
-        mm = (seconds / 60) % 60;
-        hh = (seconds / 60) / 60;
+        int hh = (seconds / 60) / 60, mm = (seconds / 60) % 60, ss = (seconds % 60);
         return String.format("%s:%s:%s", getFormattedTime(hh), getFormattedTime(mm), getFormattedTime(ss));
 //        return Integer.toString(seconds);
     }
