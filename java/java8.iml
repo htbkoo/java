@@ -12,6 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test-system/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test-integration/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test-integration/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/tool/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/lib" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
