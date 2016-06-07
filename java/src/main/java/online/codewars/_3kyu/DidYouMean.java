@@ -56,10 +56,10 @@ public class DidYouMean {
                 if (word.equals(to)) {
                     return word;
                 }
-                final int editorialDistance = getEditorialDistance(to, word);
-                if (editorialDistance < min) {
+                final int editDistance = getEditDistance(to, word);
+                if (editDistance < min) {
                     mostSimilarString = word;
-                    min = editorialDistance;
+                    min = editDistance;
                 }
             }
 
@@ -67,7 +67,7 @@ public class DidYouMean {
             return mostSimilarString;
         }
 
-        private int getEditorialDistance(String to, String word) {
+        private int getEditDistance(String to, String word) {
             final int toLength = to.length();
             final int wordLength = word.length();
             final int[][] distance = new int[toLength][wordLength];
