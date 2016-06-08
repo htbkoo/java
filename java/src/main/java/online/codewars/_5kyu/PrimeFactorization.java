@@ -33,7 +33,7 @@ public class PrimeFactorization {
         public java.util.Map<Long, Integer> factor(long n) {
             final Map<Long, Integer> factors = new HashMap<>();
             final List<Long> primes = new ArrayList<>();
-            primeNumberGenerator = new NaivePrimeNumberGenerator();
+            primeNumberGenerator = new ImprovedWith6NRulePrimeNumberGenerator();
 
             long prevPrimeFactor = 1;
             while (n > 1) {
@@ -95,30 +95,47 @@ public class PrimeFactorization {
             }
 
             @Override
-            abstract public long getNextPrimeWithSieveAfter(final long i, final List<Long> sieve);
+            public long getNextPrimeWithSieveAfter(final long i, final List<Long> sieve) {
+                long next = getNextPrimeCandidateAfter(i);
+                while (true) {
+                    if (isPrime(next, sieve)) {
+                        return next;
+                    }
+                    next = getNextPrimeCandidateAfter(next);
+                }
+            }
+
+            abstract protected long getNextPrimeCandidateAfter(final long i);
 
         }
 
         private static class ImprovedWith6NRulePrimeNumberGenerator extends AbstractPrimeNumberGenerator {
 
             @Override
-            public long getNextPrimeWithSieveAfter(final long i, final List<Long> sieve) {
-                return 0;
+            protected long getNextPrimeCandidateAfter(long i) {
+                if (i <= 1) {
+                    return 2;
+                } else if (i == 2) {
+                    return 3;
+                } else if (i == 3) {
+                    return 5;
+                }
+                if (isSmallerTwin(i)){
+                    return i+2;
+                }
+                return i+4;
             }
 
+            private boolean isSmallerTwin(long i) {
+                return ((i + 1) % 6) == 0;
+            }
         }
 
         private static class NaivePrimeNumberGenerator extends AbstractPrimeNumberGenerator {
 
             @Override
-            public long getNextPrimeWithSieveAfter(final long i, final List<Long> sieve) {
-                long next = i + 1;
-                while (true) {
-                    if (isPrime(next, sieve)) {
-                        return next;
-                    }
-                    ++next;
-                }
+            protected long getNextPrimeCandidateAfter(long i) {
+                return i + 1;
             }
         }
 
