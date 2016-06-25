@@ -1,7 +1,7 @@
 package online.leetcode;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -102,7 +102,6 @@ public class DesignTwitter {
         }
 
         private interface TwitterDatabase {
-            boolean hasUser(int userId);
 
             void postTweet(int userId, int tweetId);
 
@@ -115,7 +114,7 @@ public class DesignTwitter {
 
         private class NaiveTwitterDatabase implements TwitterDatabase {
             private final Map<Integer, Set<Integer>> following;
-            private final List<TweetPair> tweets;
+            private final Deque<TweetPair> tweets;
 
             private class TweetPair {
                 private final int UserId;
@@ -137,31 +136,29 @@ public class DesignTwitter {
 
             public NaiveTwitterDatabase() {
                 following = new HashMap<>();
-                tweets = new ArrayList<>();
+                tweets = new ArrayDeque<>();
             }
 
-            @Override
-            public boolean hasUser(int userId) {
+            private boolean hasUser(int userId) {
                 return following.containsKey(userId);
             }
 
             @Override
             public void postTweet(int userId, int tweetId) {
                 createUserIfNotExist(userId);
-                tweets.add(new TweetPair(userId, tweetId));
+                tweets.push(new TweetPair(userId, tweetId));
             }
 
             @Override
             public List<Integer> getMostRecentTweet(int userId, int numTweet) {
+                createUserIfNotExist(userId);
                 final Set<Integer> followees = following.get(userId);
-                final List<Integer> mostRecentTweets = tweets.
+                return tweets.
                         stream().
                         filter(p -> followees.contains(p.getUserId())).
                         limit(10).
                         map(TweetPair::getTweetId).
                         collect(Collectors.toList());
-                Collections.reverse(mostRecentTweets);
-                return mostRecentTweets;
             }
 
             @Override
