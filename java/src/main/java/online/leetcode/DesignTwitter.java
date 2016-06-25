@@ -157,6 +157,7 @@ public class DesignTwitter {
                 return getMostRecentTweetWithFolloweesByIteration(followees);
             }
 
+            @SuppressWarnings("unused")
             private List<Integer> getMostRecentTweetWithFolloweesByStream(Set<Integer> followees) {
                 return tweets.
                         stream().
