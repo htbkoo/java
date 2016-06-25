@@ -1,6 +1,7 @@
 package online.leetcode;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -153,12 +154,29 @@ public class DesignTwitter {
             public List<Integer> getMostRecentTweet(int userId, int numTweet) {
                 createUserIfNotExist(userId);
                 final Set<Integer> followees = following.get(userId);
+                return getMostRecentTweetWithFolloweesByIteration(followees);
+            }
+
+            private List<Integer> getMostRecentTweetWithFolloweesByStream(Set<Integer> followees) {
                 return tweets.
                         stream().
                         filter(p -> followees.contains(p.getUserId())).
                         limit(10).
                         map(TweetPair::getTweetId).
                         collect(Collectors.toList());
+            }
+
+            private List<Integer> getMostRecentTweetWithFolloweesByIteration(Set<Integer> followees) {
+                List<Integer> mostRecentTweets = new ArrayList<>();
+                for (TweetPair tweetPair:tweets){
+                    if (mostRecentTweets.size()>=10){
+                        return mostRecentTweets;
+                    }
+                    if (followees.contains(tweetPair.getUserId())){
+                        mostRecentTweets.add(tweetPair.getTweetId());
+                    }
+                }
+                return mostRecentTweets;
             }
 
             @Override
