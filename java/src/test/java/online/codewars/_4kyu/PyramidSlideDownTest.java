@@ -19,7 +19,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class PyramidSlideDownTest {
 
-    @Parameterized.Parameters(name = "[{index}]")
+    @Parameterized.Parameters(name = "[{0}]LongestSlideDown.longestSlideDown()={2}")
     public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[]{
