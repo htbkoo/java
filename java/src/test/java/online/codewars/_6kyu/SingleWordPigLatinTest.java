@@ -34,4 +34,18 @@ public class SingleWordPigLatinTest {
         assertEquals("aghettispay", p.translate("spaghetti"));
     }
 
+    /*
+
+  expected:<[cccc]ay> but was:<[CCCC]ay>
+
+ testXYZE(TestPigLatin)
+
+  expected:<[exyz]ay> but was:<[XYZE]ay>
+
+ testYA(TestPigLatin)
+
+  expected:<[ay]ay> but was:<[YA]ay>
+
+    * */
+
 }

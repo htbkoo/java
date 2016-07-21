@@ -34,35 +34,34 @@ public class SingleWordPigLatin {
 
         public String translate(String str) {
             //good code
-//            for (int i = 0; i < str.length(); ++i) {
-//                if (!isAlpha(str.charAt(i))) {
-//                    return null;
-//                }
-//            }
-
-            // case 5
+            // case 3
             if (!(str.chars().allMatch(this::isAlpha))) {
                 return null;
             }
+
+            str = str.toLowerCase();
 
             // case 5
             if ((str.chars().noneMatch(this::isVowel))) {
                 return str + "ay";
             }
 
-
             final StringBuilder answer = new StringBuilder();
-            str = str.toLowerCase();
-//            if (str.isEmpty()){
-//                return "ay";
-//            }
 
+            // case 1
             final char firstChar = str.charAt(0);
             if (isVowel(firstChar)) {
                 return str + "way";
+            } else {
+//                case 2
+                int index = 0;
+                final int strLen = str.length();
+                while (!isVowel(str.charAt(index)) && index < strLen) {
+                    answer.append(str.charAt(index));
+                    ++index;
+                }
+                return str.substring(index) + answer.toString() + "ay";
             }
-
-            return answer.toString();
         }
 
         private boolean isVowel(int c) {
@@ -78,8 +77,8 @@ public class SingleWordPigLatin {
             }
         }
 
-        private boolean isAlpha(int c) {
-            return ((c >= 'A') && (c <= 'Z') && (c >= 'a') && (c <= 'z'));
+        public boolean isAlpha(int c) {
+            return ((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z'));
         }
 
     }
