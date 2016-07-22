@@ -1,5 +1,8 @@
 package online.codewars._6kyu;
 
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
+
 /**
  * Created by Hey on 21 Jul 2016.
  * <p>
@@ -35,14 +38,15 @@ public class SingleWordPigLatin {
         public String translate(String str) {
             //good code
             // case 3
-            if (!(str.chars().allMatch(this::isAlpha))) {
+            final Supplier<IntStream> streamSupplier = str::chars;
+            if (!(streamSupplier.get().allMatch(this::isAlpha))) {
                 return null;
             }
 
             str = str.toLowerCase();
 
             // case 5
-            if ((str.chars().noneMatch(this::isVowel))) {
+            if ((streamSupplier.get().noneMatch(this::isVowel))) {
                 return str + "ay";
             }
 
