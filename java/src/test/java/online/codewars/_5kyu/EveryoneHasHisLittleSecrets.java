@@ -20,7 +20,7 @@ Will you find it ?
 
 public class EveryoneHasHisLittleSecrets {
     public static class Guesser {
-        //        public void guess() {
+//        public void guess() {
 //            LittleClass.isMySecret("thatILoveUnicorns");
 //        }
         public void guess() {
