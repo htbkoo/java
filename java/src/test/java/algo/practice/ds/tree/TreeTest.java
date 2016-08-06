@@ -29,7 +29,7 @@ public abstract class TreeTest<T> {
     protected abstract T getDeleteParam();
 
     @Test
-    public void shouldCheckIsExistAndSimpleCase() throws Exception {
+    public void shouldCheckIsExist() throws Exception {
         assertThat(binaryTree.isExist(getInsertParam()), is(false));
 
         assertThat(binaryTree.isExist(getIsExistParam()), is(false));

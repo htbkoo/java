@@ -30,4 +30,8 @@ public abstract class AbstractBinaryTree<T> implements Tree<T> {
     }
 
     protected abstract void binaryTreeDelete(T target);
+
+    protected boolean hasNoChildren() {
+        return (left == null) && (right == null);
+    }
 }

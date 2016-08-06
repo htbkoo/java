@@ -38,7 +38,8 @@ public class ObjectOrientedCompleteBinaryTreeIntegerTest extends ObjectOrientedC
 
 
     @Test
-    public void shouldCheckIsExistAndSimpleCase() throws Exception {
+    @Override
+    public void shouldCheckIsExist() throws Exception {
         exception.expect(UnsupportedOperationException.class);
         assertThat(binaryTree.isExist(getInsertParam()), is(false));
 
