@@ -36,7 +36,6 @@ public class ObjectOrientedCompleteBinaryTreeIntegerTest extends ObjectOrientedC
         binaryTree.delete(getDeleteParam());
     }
 
-
     @Test
     @Override
     public void shouldCheckIsExist() throws Exception {
@@ -48,5 +47,22 @@ public class ObjectOrientedCompleteBinaryTreeIntegerTest extends ObjectOrientedC
         assertThat(binaryTree.isExist(getIsExistParam()), is(true));
         binaryTree.delete(getIsExistParam());
         assertThat(binaryTree.isExist(getIsExistParam()), is(false));
+    }
+
+    @Test
+    @Override
+    public void shouldCheckSimpleCase() throws Exception {
+        assertThat(binaryTree.isExist(getIsExistParam()), is(false));
+        assertThat(binaryTree.isExist(getInsertParam()), is(false));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(false));
+
+
+        binaryTree.insert(getIsExistParam());
+        binaryTree.insert(getInsertParam());
+        binaryTree.insert(getDeleteParam());
+
+        assertThat(binaryTree.isExist(getIsExistParam()), is(true));
+        assertThat(binaryTree.isExist(getInsertParam()), is(true));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(true));
     }
 }

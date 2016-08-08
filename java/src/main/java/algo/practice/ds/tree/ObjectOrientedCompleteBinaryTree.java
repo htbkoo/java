@@ -11,10 +11,9 @@ public class ObjectOrientedCompleteBinaryTree<T> extends AbstractBinaryTree<T> {
         if (target.equals(value)) {
             return true;
         }
-        if (left != null) {
-            return left.isExist(target);
-        }
-        return right != null && right.isExist(target);
+        final boolean leftExist = (left != null) && left.isExist(target);
+        final boolean rightExist = right != null && right.isExist(target);
+        return leftExist || rightExist;
     }
 
     @Override
@@ -71,7 +70,7 @@ public class ObjectOrientedCompleteBinaryTree<T> extends AbstractBinaryTree<T> {
         throw new UnsupportedOperationException("Delete is unsupported for complete binary tree yet");
     }
 
-
+    @SuppressWarnings("unused")
     private int naiveCalculateSize() {
         if (value == null) {
             return 0;
@@ -84,6 +83,7 @@ public class ObjectOrientedCompleteBinaryTree<T> extends AbstractBinaryTree<T> {
         }
     }
 
+    @SuppressWarnings("unused")
     private int naiveCalculateHeight() {
         if (value == null) {
             return 0;
@@ -98,6 +98,7 @@ public class ObjectOrientedCompleteBinaryTree<T> extends AbstractBinaryTree<T> {
         }
     }
 
+    @SuppressWarnings("unused")
     private boolean isPerfect() {
         if (value == null) {
             return true;
@@ -109,6 +110,7 @@ public class ObjectOrientedCompleteBinaryTree<T> extends AbstractBinaryTree<T> {
         return false;
     }
 
+    @SuppressWarnings("unused")
     private HeightAndCorrespondingNumNodes getHeightAndCorrespondingNumNodes() {
 //        return (int) (Math.log(size()) / Math.log(2));
         if (size() == 0) {
