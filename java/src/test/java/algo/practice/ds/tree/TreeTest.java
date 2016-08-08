@@ -39,6 +39,43 @@ public abstract class TreeTest<T> {
         assertThat(binaryTree.isExist(getIsExistParam()), is(false));
     }
 
+    @Test
+    public void shouldCheckSimpleCase() throws Exception {
+        assertThat(binaryTree.isExist(getIsExistParam()), is(false));
+        assertThat(binaryTree.isExist(getInsertParam()), is(false));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(false));
+
+
+        binaryTree.insert(getIsExistParam());
+        binaryTree.insert(getInsertParam());
+        binaryTree.insert(getDeleteParam());
+
+        assertThat(binaryTree.isExist(getIsExistParam()), is(true));
+        assertThat(binaryTree.isExist(getInsertParam()), is(true));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(true));
+
+        binaryTree.delete(getIsExistParam());
+        assertThat(binaryTree.isExist(getIsExistParam()), is(false));
+        assertThat(binaryTree.isExist(getInsertParam()), is(true));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(true));
+
+        binaryTree.delete(getDeleteParam());
+        assertThat(binaryTree.isExist(getIsExistParam()), is(false));
+        assertThat(binaryTree.isExist(getInsertParam()), is(true));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(false));
+
+        binaryTree.insert(getIsExistParam());
+        assertThat(binaryTree.isExist(getIsExistParam()), is(true));
+        assertThat(binaryTree.isExist(getInsertParam()), is(true));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(false));
+
+        binaryTree.delete(getInsertParam());
+        binaryTree.insert(getIsExistParam());
+        assertThat(binaryTree.isExist(getIsExistParam()), is(true));
+        assertThat(binaryTree.isExist(getInsertParam()), is(false));
+        assertThat(binaryTree.isExist(getDeleteParam()), is(false));
+    }
+
     protected abstract T getIsExistParam();
 
     @Ignore
