@@ -48,15 +48,11 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
     }
 
     private SimpleBinarySearchTree<T> getTreeToApplyTargetTo(T target) {
-        switch (value.compareTo(target)) {
-            case 0:
-                return (SimpleBinarySearchTree<T>) left;
-            case -1:
-                return (SimpleBinarySearchTree<T>) right;
-            case 1:
-                return (SimpleBinarySearchTree<T>) left;
+        if (value.compareTo(target) < 0) {
+            return (SimpleBinarySearchTree<T>) right;
+        } else {
+            return (SimpleBinarySearchTree<T>) left;
         }
-        throw new IllegalStateException("Could not reach here unless the implementation for compareTo() has changed");
     }
 
     private void recursivelyPerformDelete() {
