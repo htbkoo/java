@@ -32,7 +32,7 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
                 right = new SimpleBinarySearchTree<>();
             }
         } else {
-            getTreeToApplyTargetTo(target).binaryTreeInsert(target);
+            getTreeToApplyTargetTo(target).insert(target);
         }
     }
 
