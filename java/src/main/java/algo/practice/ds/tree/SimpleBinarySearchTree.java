@@ -25,15 +25,14 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
     protected void binaryTreeInsert(T target) {
         if (value == null) {
             value = target;
+            if (left == null) {
+                left = new SimpleBinarySearchTree<>();
+            }
+            if (right == null) {
+                right = new SimpleBinarySearchTree<>();
+            }
         } else {
-            final Function<SimpleBinarySearchTree<T>, Void> insertTargetTo = (tree) -> {
-                if (tree == null) {
-                    tree = new SimpleBinarySearchTree<>();
-                }
-                tree.insert(target);
-                return null;
-            };
-            insertTargetTo.apply(getTreeToApplyTargetTo(target));
+            getTreeToApplyTargetTo(target).binaryTreeInsert(target);
         }
     }
 
@@ -41,6 +40,11 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
     protected void binaryTreeDelete(T target) {
         final SimpleBinarySearchTree<T> targetNode = findTargetNode(target);
         targetNode.recursivelyPerformDelete();
+    }
+
+    @Override
+    protected boolean hasNoChildren() {
+        return (left.value == null) && (right.value == null);
     }
 
     private SimpleBinarySearchTree<T> getTreeToApplyTargetTo(T target) {
@@ -65,9 +69,9 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
                 this.right = child.right;
                 return null;
             };
-            if (left == null) {
+            if (left.value == null) {
                 replaceByChild.apply((SimpleBinarySearchTree<T>) right);
-            } else if (right == null) {
+            } else if (right.value == null) {
                 replaceByChild.apply((SimpleBinarySearchTree<T>) left);
             } else {
 //                With 2 children
@@ -82,7 +86,7 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
     private SimpleBinarySearchTree<T> findParentOfInOrderPredecessor() {
         AbstractBinaryTree<T> parent = this;
         AbstractBinaryTree<T> cur = this.left;
-        while (cur.right != null) {
+        while (cur.right.value != null) {
             parent = cur;
             cur = cur.right;
         }
