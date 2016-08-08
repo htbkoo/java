@@ -43,7 +43,7 @@ public class WhichAreIn {
 
     public static String[] inArray(String[] array1, String[] array2) {
         Set<String> set1 = new HashSet<>(Arrays.asList(array1));
-        Set<String> set2 = Arrays.asList(array2).stream().collect(Collectors.toSet());
+        Set<String> set2 = Arrays.stream(array2).collect(Collectors.toSet());
         Set<String> resultSet = new TreeSet<>();
         set1.stream()
                 .filter(s1 -> !resultSet.contains(s1))
@@ -53,10 +53,11 @@ public class WhichAreIn {
         return resultSet.toArray(new String[resultSet.size()]);
     }
 
+    @SuppressWarnings("unused")
     public static class CaseInsensitiveWay {
         public static String[] inArray(String[] array1, String[] array2) {
             Set<String> set1 = new HashSet<>(Arrays.asList(array1));
-            Set<String> set2 = Arrays.asList(array2).stream().map(String::toUpperCase).collect(Collectors.toSet());
+            Set<String> set2 = Arrays.stream(array2).map(String::toUpperCase).collect(Collectors.toSet());
             Set<String> resultSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             set1.stream()
                     .filter(s1 -> !resultSet.contains(s1))
