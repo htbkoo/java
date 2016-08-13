@@ -26,14 +26,18 @@ public class SimpleBinarySearchTree<T extends Comparable<? super T>> extends Abs
         if (value == null) {
             value = target;
             if (left == null) {
-                left = new SimpleBinarySearchTree<>();
+                left = createNewBinarySearchTree();
             }
             if (right == null) {
-                right = new SimpleBinarySearchTree<>();
+                right = createNewBinarySearchTree();
             }
         } else {
             getTreeToApplyTargetTo(target).insert(target);
         }
+    }
+
+    protected SimpleBinarySearchTree<T> createNewBinarySearchTree() {
+        return new SimpleBinarySearchTree<>();
     }
 
     @Override
