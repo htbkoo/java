@@ -3,6 +3,7 @@ package online.leetcode;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * Created by Hey on 17/11/15
@@ -50,5 +51,24 @@ public class RomanToInteger {
             prevLetterValue = currentLetterValue;
         }
         return sum;
+    }
+
+    private class RomanToIntegerWithStreamAPI {
+        public int romanToInt(String s) {
+            if (s.isEmpty()) {
+                return 0;
+            }
+            return getLetterValue(s.charAt(0))
+                    + IntStream.range(1, s.length()).
+                    map(i -> {
+                        int prevLetterValue = getLetterValue(s.charAt(i - 1));
+                        int currentLetterValue = getLetterValue(s.charAt(i));
+                        int sum = currentLetterValue;
+                        if (currentLetterValue > prevLetterValue) {
+                            sum -= 2 * prevLetterValue;
+                        }
+                        return sum;
+                    }).sum();
+        }
     }
 }
