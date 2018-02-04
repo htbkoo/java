@@ -40,7 +40,7 @@ public class BinaryHeapTest {
     }
 
     @Theory
-    public void should_be_able_to_insert_3_items_and_sort_and_pop_from_a_heap_of_integer(@FromDataPoints("insertAndPopTestCases") BinaryHeapTestCase testCase) {
+    public void should_be_able_to_insert_and_pop_from_a_heap_of_integer(@FromDataPoints("insertAndPopTestCases") BinaryHeapTestCase testCase) {
         //        when
         Heap<Integer> integerHeap = fromList(testCase.givenItems);
 
