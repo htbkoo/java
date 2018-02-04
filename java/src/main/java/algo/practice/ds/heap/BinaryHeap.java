@@ -9,8 +9,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     @Override
     public void insert(T item) {
         list.add(item);
-        final int position = getLastPosition();
-        heapify(position, this::getParentPosition);
+        heapify(getLastPosition(), this::getParentPosition);
     }
 
     @Override
