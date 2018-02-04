@@ -35,4 +35,18 @@ public class BinaryHeapTest {
         final List<Integer> expectedItems = Arrays.asList(2, 3, 4);
         expectedItems.forEach(i -> assertThat(integerHeap.pop()).isEqualTo(i));
     }
+
+    @Test
+    public void should_be_able_to_peek_from_a_heap_of_integer() {
+        //        given
+        Heap<Integer> integerHeap = new BinaryHeap<>();
+        final List<Integer> givenItems = Arrays.asList(3, 4, 1);
+
+        //        when
+        givenItems.forEach(integerHeap::insert);
+
+        //        then
+        assertThat(integerHeap.peek()).isEqualTo(1);
+        assertThat(integerHeap.peek()).isEqualTo(1);
+    }
 }

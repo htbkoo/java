@@ -15,7 +15,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
 
     @Override
     public T peek() {
-        return null;
+        return list.get(0);
     }
 
     @Override
