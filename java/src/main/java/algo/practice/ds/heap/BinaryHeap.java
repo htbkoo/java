@@ -25,17 +25,17 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
         swap(0, lastPosition);
         list.remove(lastPosition);
 
-        heapifyTopDown(0);
+        pushDown(0);
 
         return topItem;
     }
 
-    private void heapifyTopDown(int position) {
+    private void pushDown(int position) {
         if (hasChild(position)) {
             final int betterChildrenPosition = findBetterChildrenPosition(position);
             if (isOrderWrong(betterChildrenPosition, position)) {
                 swap(betterChildrenPosition, position);
-                heapifyTopDown(betterChildrenPosition);
+                pushDown(betterChildrenPosition);
             }
         }
     }
