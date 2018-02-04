@@ -36,6 +36,10 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
         return size() - 1;
     }
 
+    private int getParentPosition(int position) {
+        return (position - 1) / 2;
+    }
+
     private void moveLastToFirst() {
         final int lastPosition = getLastPosition();
         swap(0, lastPosition);
@@ -78,10 +82,6 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
             swap(position, nextPosition);
             heapify(nextPosition, nextPositionSupplier);
         }
-    }
-
-    private int getParentPosition(int position) {
-        return (position - 1) / 2;
     }
 
     private boolean isOrderWrong(int position, int parentPosition) {
