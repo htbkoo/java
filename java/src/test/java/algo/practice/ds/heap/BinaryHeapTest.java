@@ -33,7 +33,9 @@ public class BinaryHeapTest {
     public static List<BinaryHeapTestCase> insertAndPopTestCases() {
         return of(
                 new BinaryHeapTestCase(of(), of()),
-                new BinaryHeapTestCase(asList(3, 4, 2), asList(2, 3, 4))
+                new BinaryHeapTestCase(of(1), of(1)),
+                new BinaryHeapTestCase(of(3, 4, 2), of(2, 3, 4)),
+                new BinaryHeapTestCase(of(3, 4, 2, 1, 8, 5, 7, 6), of(1, 2, 3, 4, 5, 6, 7, 8))
         );
     }
 
