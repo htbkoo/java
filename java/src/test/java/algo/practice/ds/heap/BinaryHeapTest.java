@@ -57,6 +57,27 @@ public class BinaryHeapTest {
         assertThat(integerHeap.peek()).isEqualTo(1);
     }
 
+    @DataPoints("sizeTestCases")
+    public static List<List<Integer>> sizeTestCases() {
+        return of(
+                of(),
+                of(1),
+                of(3, 4, 2),
+                of(3, 4, 2, 1, 8, 5, 7, 6)
+        );
+    }
+
+    @Theory
+    public void should_return_size_of_heap(@FromDataPoints("sizeTestCases") List<Integer> list) {
+        //        when
+        final Heap<Integer> heap = fromList(list);
+
+        //        then
+        final int expectedSize = list.size();
+        assertThat(heap.size()).isEqualTo(expectedSize);
+
+    }
+
     private <X extends Comparable<? super X>> Heap<X> fromList(List<? extends X> list) {
         Heap<X> heap = new BinaryHeap<>();
         list.forEach(heap::insert);

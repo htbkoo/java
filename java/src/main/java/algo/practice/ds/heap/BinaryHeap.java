@@ -32,6 +32,11 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
         return topItem;
     }
 
+    @Override
+    public int size() {
+        return list.size();
+    }
+
     private void pushDown(int position) {
         if (hasChild(position)) {
             final int betterChildrenPosition = findBetterChildrenPosition(position);
@@ -60,11 +65,6 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
                 return rightPosition;
             }
         }
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 
     private int getLastPosition() {
