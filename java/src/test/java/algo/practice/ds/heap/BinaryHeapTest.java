@@ -41,8 +41,6 @@ public class BinaryHeapTest {
 
     @Theory
     public void should_be_able_to_insert_3_items_and_sort_and_pop_from_a_heap_of_integer(@FromDataPoints("insertAndPopTestCases") BinaryHeapTestCase testCase) {
-        //        given
-
         //        when
         Heap<Integer> integerHeap = fromList(testCase.givenItems);
 
@@ -52,12 +50,7 @@ public class BinaryHeapTest {
 
     @Test
     public void should_be_able_to_peek_from_a_heap_of_integer() {
-        //        given
-        Heap<Integer> integerHeap = new BinaryHeap<>();
-        final List<Integer> givenItems = asList(3, 4, 1);
-
-        //        when
-        givenItems.forEach(integerHeap::insert);
+        Heap<Integer> integerHeap = fromList(asList(3, 4, 1));
 
         //        then
         assertThat(integerHeap.peek()).isEqualTo(1);
