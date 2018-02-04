@@ -8,9 +8,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     @Override
     public void insert(T item) {
         list.add(item);
-        //        if (position > 0) {
-        heapify(getLastPosition());
-//        }
+        pullUp(getLastPosition());
     }
 
     @Override
@@ -35,7 +33,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     private void heapifyTopDown(int position) {
         if (hasChild(position)) {
             final int betterChildrenPosition = findBetterChildrenPosition(position);
-            if (isOrderWrong(betterChildrenPosition, position)){
+            if (isOrderWrong(betterChildrenPosition, position)) {
                 swap(betterChildrenPosition, position);
                 heapifyTopDown(betterChildrenPosition);
             }
@@ -71,12 +69,20 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
         return list.size() - 1;
     }
 
-    private void heapify(int position) {
+    private void pullUp(int position) {
         int parentPosition = getParentPosition(position);
-        if (isOrderWrong(position, parentPosition)) {
-            swap(position, parentPosition);
-            heapify(parentPosition);
+        final boolean hasHeapified = heapify(position, parentPosition);
+        if (hasHeapified) {
+            pullUp(parentPosition);
         }
+    }
+
+    private boolean heapify(int position, int otherPosition) {
+        if (isOrderWrong(position, otherPosition)) {
+            swap(position, otherPosition);
+            return true;
+        }
+        return false;
     }
 
     private int getParentPosition(int position) {
