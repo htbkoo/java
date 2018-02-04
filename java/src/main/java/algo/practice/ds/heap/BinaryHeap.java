@@ -1,6 +1,7 @@
 package algo.practice.ds.heap;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     private ArrayList<T> list = new ArrayList<>();
@@ -8,7 +9,8 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     @Override
     public void insert(T item) {
         list.add(item);
-        pullUp(getLastPosition());
+        final int position = getLastPosition();
+        heapify(position, this::getParentPosition);
     }
 
     @Override
@@ -69,20 +71,12 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
         return list.size() - 1;
     }
 
-    private void pullUp(int position) {
-        int parentPosition = getParentPosition(position);
-        final boolean hasHeapified = heapify(position, parentPosition);
-        if (hasHeapified) {
-            pullUp(parentPosition);
+    private void heapify(int position, Function<Integer, Integer> nextPositionSupplier) {
+        int nextPosition = nextPositionSupplier.apply(position);
+        if (isOrderWrong(position, nextPosition)) {
+            swap(position, nextPosition);
+            heapify(nextPosition, nextPositionSupplier);
         }
-    }
-
-    private boolean heapify(int position, int otherPosition) {
-        if (isOrderWrong(position, otherPosition)) {
-            swap(position, otherPosition);
-            return true;
-        }
-        return false;
     }
 
     private int getParentPosition(int position) {
