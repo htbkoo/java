@@ -42,10 +42,9 @@ public class BinaryHeapTest {
     @Theory
     public void should_be_able_to_insert_3_items_and_sort_and_pop_from_a_heap_of_integer(@FromDataPoints("insertAndPopTestCases") BinaryHeapTestCase testCase) {
         //        given
-        Heap<Integer> integerHeap = new BinaryHeap<>();
 
         //        when
-        testCase.givenItems.forEach(integerHeap::insert);
+        Heap<Integer> integerHeap = fromList(testCase.givenItems);
 
         //        then
         testCase.expectedItems.forEach(i -> assertThat(integerHeap.pop()).isEqualTo(i));
@@ -63,6 +62,12 @@ public class BinaryHeapTest {
         //        then
         assertThat(integerHeap.peek()).isEqualTo(1);
         assertThat(integerHeap.peek()).isEqualTo(1);
+    }
+
+    private <X extends Comparable<? super X>> Heap<X> fromList(List<? extends X> list) {
+        Heap<X> heap = new BinaryHeap<>();
+        list.forEach(heap::insert);
+        return heap;
     }
 
     private static class BinaryHeapTestCase {
