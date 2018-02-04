@@ -21,11 +21,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     public T pop() {
         final T topItem = peek();
 
-        final int lastPosition = getLastPosition();
-
-        swap(0, lastPosition);
-        list.remove(lastPosition);
-
+        moveLastToFirst();
         pushDown(0);
 
         return topItem;
@@ -34,6 +30,16 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     @Override
     public int size() {
         return list.size();
+    }
+
+    private int getLastPosition() {
+        return size() - 1;
+    }
+
+    private void moveLastToFirst() {
+        final int lastPosition = getLastPosition();
+        swap(0, lastPosition);
+        list.remove(lastPosition);
     }
 
     private void pushDown(int position) {
@@ -64,10 +70,6 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
                 return rightPosition;
             }
         }
-    }
-
-    private int getLastPosition() {
-        return size() - 1;
     }
 
     private void heapify(int position, Function<Integer, Integer> nextPositionSupplier) {
