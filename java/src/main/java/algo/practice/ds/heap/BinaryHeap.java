@@ -19,7 +19,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
 
     @Override
     public T pop() {
-        final T topItem = list.get(0);
+        final T topItem = peek();
 
         final int lastPosition = getLastPosition();
 
@@ -47,12 +47,12 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     }
 
     private boolean hasChild(int position) {
-        return list.size() > (position * 2 + 1);
+        return size() > (position * 2 + 1);
     }
 
     private int findBetterChildrenPosition(int position) {
         final int leftPosition = position * 2 + 1, rightPosition = position * 2 + 2;
-        final boolean hasRightChild = list.size() > (position * 2 + 2);
+        final boolean hasRightChild = size() > (position * 2 + 2);
 
         if (!hasRightChild) {
             return leftPosition;
@@ -67,7 +67,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
     }
 
     private int getLastPosition() {
-        return list.size() - 1;
+        return size() - 1;
     }
 
     private void heapify(int position, Function<Integer, Integer> nextPositionSupplier) {
