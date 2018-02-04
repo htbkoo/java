@@ -14,7 +14,11 @@ public class BinaryHeap<T extends Comparable<? super T>> implements Heap<T> {
 
     @Override
     public T peek() {
-        return list.get(0);
+        if (size()>0){
+            return list.get(0);
+        }else{
+            throw new IllegalStateException("Heap is empty");
+        }
     }
 
     @Override

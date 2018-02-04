@@ -57,6 +57,14 @@ public class BinaryHeapTest {
         assertThat(integerHeap.peek()).isEqualTo(1);
     }
 
+    @Test (expected = IllegalStateException.class)
+    public void should_thrown_exception_to_peek_from_an_empty_heap_of_integer() {
+        Heap<Integer> integerHeap = new BinaryHeap<>();
+
+        //        then
+        integerHeap.peek();
+    }
+
     @DataPoints("sizeTestCases")
     public static List<List<Integer>> sizeTestCases() {
         return of(
