@@ -65,6 +65,14 @@ public class BinaryHeapTest {
         integerHeap.peek();
     }
 
+    @Test (expected = IllegalStateException.class)
+    public void should_thrown_exception_to_pop_from_an_empty_heap_of_integer() {
+        Heap<Integer> integerHeap = new BinaryHeap<>();
+
+        //        then
+        integerHeap.pop();
+    }
+
     @DataPoints("sizeTestCases")
     public static List<List<Integer>> sizeTestCases() {
         return of(
