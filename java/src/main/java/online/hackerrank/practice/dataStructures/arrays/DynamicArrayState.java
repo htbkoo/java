@@ -55,6 +55,16 @@ public class DynamicArrayState {
         return new DynamicArrayState(newSeqLists, copyOfAnswers(), lastAnswer);
     }
 
+    public int getN() {
+        return N;
+    }
+
+    public DynamicArrayState withAnswer(int answer) {
+        final ArrayList<Integer> newAnswers = copyOfAnswers();
+        newAnswers.add(answer);
+        return new DynamicArrayState(copyOfSeqLists(), newAnswers, answer);
+    }
+
     private List<List<Integer>> copyOfSeqLists() {
         return seqLists.stream()
                 .map(ArrayList::new)
@@ -63,9 +73,5 @@ public class DynamicArrayState {
 
     private ArrayList<Integer> copyOfAnswers() {
         return new ArrayList<>(answers);
-    }
-
-    public int getN() {
-        return N;
     }
 }

@@ -19,7 +19,7 @@ public abstract class DynamicArrayQuery implements StateUpdater {
             case 1:
                 return new AppendQuery(x, y);
             case 2:
-                return new AppendQuery(x, y);
+                return new FetchValueQuery(x, y);
             default:
                 throw new IllegalArgumentException(String.format("Unknown Query Type %d", type));
         }
