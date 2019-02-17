@@ -9,15 +9,24 @@ public class DynamicArrayState {
     private final List<List<Integer>> seqLists;
     private final List<Integer> answers;
     private final Integer lastAnswer;
+    private final int N;
 
     private DynamicArrayState(List<List<Integer>> seqLists, List<Integer> answers, Integer lastAnswer) {
         this.seqLists = seqLists;
         this.answers = answers;
         this.lastAnswer = lastAnswer;
+        this.N = seqLists.size();
+    }
+
+    private DynamicArrayState(int seqListsSize, List<Integer> answers, Integer lastAnswer) {
+        this.seqLists = newSeqLists(seqListsSize);
+        this.answers = answers;
+        this.lastAnswer = lastAnswer;
+        this.N = seqListsSize;
     }
 
     public static DynamicArrayState initialState(int seqListsSize) {
-        return new DynamicArrayState(newSeqLists(seqListsSize), new ArrayList<>(), 0);
+        return new DynamicArrayState(seqListsSize, new ArrayList<>(), 0);
     }
 
     private static List<List<Integer>> newSeqLists(int seqListsSize) {
@@ -54,5 +63,9 @@ public class DynamicArrayState {
 
     private ArrayList<Integer> copyOfAnswers() {
         return new ArrayList<>(answers);
+    }
+
+    public int getN() {
+        return N;
     }
 }

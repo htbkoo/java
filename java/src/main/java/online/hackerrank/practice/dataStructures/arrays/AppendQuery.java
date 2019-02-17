@@ -7,8 +7,7 @@ public class AppendQuery extends DynamicArrayQuery {
 
     @Override
     public DynamicArrayState update(DynamicArrayState prevState) {
-        final int N = prevState.getSeqLists().size();
-        final int index = getX() ^ prevState.getLastAnswer() % N;
+        final int index = getX() ^ prevState.getLastAnswer() % prevState.getN();
         return prevState.withAppendToSeqList(getY(), index);
     }
 }
