@@ -18,8 +18,13 @@ public class DynamicArray {
         // Complete the dynamicArray function below.
         static List<Integer> dynamicArray(int n, List<List<Integer>> queries) {
             List<DynamicArrayQuery> parsedQueries = queries.stream().map(DynamicArrayQuery::fromInts).collect(toList());
+            DynamicArrayState state = DynamicArrayState.initialState(n);
 
-            return null;
+            for (DynamicArrayQuery query : parsedQueries) {
+                state = query.update(state);
+            }
+
+            return state.getAnswers();
         }
 
         public static void main(String[] args) throws IOException {
