@@ -9,8 +9,7 @@ public class FetchValueQuery extends DynamicArrayQuery {
 
     @Override
     public DynamicArrayState update(DynamicArrayState prevState) {
-        // TODO: extact getIndex() to parent
-        final int index = getX() ^ prevState.getLastAnswer() % prevState.getN();
+        final int index = getIndex(prevState.getLastAnswer(), prevState.getN());
         final List<Integer> seqList = prevState.getSeqLists().get(index);
         final int size = seqList.size();
         final Integer answer = seqList.get(getY() % size);

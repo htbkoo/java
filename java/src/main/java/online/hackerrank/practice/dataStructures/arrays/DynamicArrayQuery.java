@@ -32,4 +32,8 @@ public abstract class DynamicArrayQuery implements StateUpdater {
     protected int getY() {
         return y;
     }
+
+    protected int getIndex(int lastAnswer, int N) {
+        return (getX() ^ lastAnswer) % N;
+    }
 }
