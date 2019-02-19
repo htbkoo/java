@@ -1,4 +1,4 @@
-package online.atCoder.practice;
+package online.atCoder.beginnerContext118;
 
 public class AMinusBPlusMinusA {
     public static void main(String[] args) {
