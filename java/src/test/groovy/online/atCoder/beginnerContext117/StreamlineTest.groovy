@@ -1,6 +1,5 @@
 package online.atCoder.beginnerContext117
 
-import online.atCoder.beginnerContext119.Streamline
 import spock.lang.Specification
 import spock.lang.Unroll
 
