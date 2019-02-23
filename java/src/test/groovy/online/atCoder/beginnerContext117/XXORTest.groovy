@@ -1,4 +1,5 @@
-package online.atCoder.yahooProgrammingContest2019
+package online.atCoder.beginnerContext117
+
 
 import spock.lang.Specification
 import spock.lang.Unroll
