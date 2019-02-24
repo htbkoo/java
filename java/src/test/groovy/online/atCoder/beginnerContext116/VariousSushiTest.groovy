@@ -7,7 +7,7 @@ class VariousSushiTest extends Specification {
     @Unroll
     def "should find"() {
         when:
-        def result = VariousSushi.process(new VariousSushi.TestCase(N, K, t, d))
+        def result = VariousSushi.process(new DpTleVariousSushi.TestCase(N, K, t, d))
 
         then:
         result == expected
