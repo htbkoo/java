@@ -22,18 +22,27 @@ public class XXOR {
         int[][] allDigits = covertToDigitsMatrix(A);
         final int N = A.size();
 
-        final int[] kInBinary = Long.toBinaryString(K).chars().map(Character::getNumericValue).toArray();
-        final int[] paddedK = new int[MAX_NUM_DIGIT_IN_BINARY];
-        System.arraycopy(kInBinary, 0, paddedK, MAX_NUM_DIGIT_IN_BINARY - kInBinary.length, kInBinary.length);
+//        final int[] kInBinary = Long.toBinaryString(K).chars().map(Character::getNumericValue).toArray();
+//        final int[] paddedK = new int[MAX_NUM_DIGIT_IN_BINARY];
+//        System.arraycopy(kInBinary, 0, paddedK, MAX_NUM_DIGIT_IN_BINARY - kInBinary.length, kInBinary.length);
+
+//        final int power = (int) (Math.log(K) / Math.log(2));
+//        Math.pow(2, power);
 
         long sum = 0;
         long base = 1L << MAX_NUM_DIGIT_IN_BINARY - 1;
         for (int j = 0; j < MAX_NUM_DIGIT_IN_BINARY; ++j) {
             int count = countOnes(allDigits, j);
-            boolean isWithinK = paddedK[j] == 1;
+            boolean isWithinK = base <= K; // TODO
             if (isWithinK) {
                 int flippedCount = N - count;
-                count = Math.max(count, flippedCount);
+
+                boolean shouldFlip = flippedCount > count;
+                if (shouldFlip) {
+                    count = flippedCount;
+                    K -= base;
+//                    boolean isWithinK = false; // TODO
+                }
             }
             sum += count * base;
             base = base >> 1;
