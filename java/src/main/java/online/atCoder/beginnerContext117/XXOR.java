@@ -1,6 +1,7 @@
 package online.atCoder.beginnerContext117;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,11 +44,9 @@ public class XXOR {
     }
 
     private static int countOnes(int[][] allDigits, int j) {
-        int count = 0;
-        for (int[] digits : allDigits) {
-            count += digits[j];
-        }
-        return count;
+        return Arrays.stream(allDigits)
+                .mapToInt(digits -> digits[j])
+                .sum();
     }
 
     private static int[][] covertToDigitsMatrix(List<Long> A) {
