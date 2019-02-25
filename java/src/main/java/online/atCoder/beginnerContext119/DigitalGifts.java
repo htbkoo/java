@@ -16,16 +16,19 @@ public class DigitalGifts {
         final List<BigDecimal> x = testCase.x;
         final List<String> u = testCase.u;
         for (int i = 0; i < N; ++i) {
-            final String currency = u.get(i);
-            final BigDecimal value = x.get(i);
-            BigDecimal valueInJPY = Currency.fromString(currency).asJPY(value);
-            sum = sum.add(valueInJPY);
+            sum = sum.add(valueInJPY(x, u, i));
         }
 
         return sum.toPlainString();
     }
 
-    private static enum Currency {
+    private static BigDecimal valueInJPY(List<BigDecimal> x, List<String> u, int i) {
+        final String currency = u.get(i);
+        final BigDecimal value = x.get(i);
+        return Currency.fromString(currency).asJPY(value);
+    }
+
+    private enum Currency {
         JPY(BigDecimal.ONE), BTC(BTC_TO_JPY_CONVERT_RATIO);
 
         private final BigDecimal toJpyConvertRatio;
