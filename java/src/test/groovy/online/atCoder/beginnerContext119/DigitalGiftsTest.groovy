@@ -10,7 +10,7 @@ class DigitalGiftsTest extends Specification {
         def result = DigitalGifts.process(new DigitalGifts.TestCase(N, x, u))
 
         then:
-        result == expected
+        new BigDecimal(result) == new BigDecimal(expected)
 
         where:
         N || x                                                                                            || u                      || expected
