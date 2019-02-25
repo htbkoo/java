@@ -14,6 +14,10 @@ public class Christmas {
     }
 
     private static long countNumPatty(int N, long X) {
+        if (X == 0) {
+            return 0L;
+        }
+
         final long burgerLength = burgerLength(N);
         boolean isWholeBurgerEaten = X >= burgerLength;
         if (isWholeBurgerEaten) {
@@ -25,7 +29,8 @@ public class Christmas {
             final long oneSmallerLayerLength = burgerLength(N - 1);
             final long oneSmallerLayerPatty = numPatty(N - 1);
             if (isOnlyTopSliceRemaining) {
-                return 2 * oneSmallerLayerPatty + MIDDLE_PATTY; // Top slice is bun
+//                return 2 * oneSmallerLayerPatty + MIDDLE_PATTY; // Top slice is bun
+                return numPatty(N); // Top slice is bun
             } else {
                 boolean canFinishHalfBurger = X >= (burgerLength - FIRST_SLICE_IS_BUN - oneSmallerLayerLength);
                 if (canFinishHalfBurger) {
