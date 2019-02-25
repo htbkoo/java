@@ -70,7 +70,7 @@ public class Christmas {
         Scanner sc = new Scanner(System.in);
 
         int N = sc.nextInt();
-        int X = sc.nextInt();
+        long X = sc.nextLong();
 
         sc.close();
         return new TestCase(N, X);
