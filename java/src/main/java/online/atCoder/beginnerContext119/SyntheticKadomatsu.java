@@ -37,10 +37,9 @@ public class SyntheticKadomatsu {
     }
 
     private static class Config {
-        //        private final List<Integer> assignedBamboos;
-        private final boolean isValid;
-        private final int[] occurrences;
         private final List<Integer> assignedBamboos;
+        private final int[] occurrences;
+        private final boolean isValid;
 
         public static Config fromInt(int N, int numPossibleValues, Integer i) {
             final String unpadded = toUnpaddedConfigString(numPossibleValues + 1, i);
@@ -81,7 +80,7 @@ public class SyntheticKadomatsu {
                 int combinedBambooLength = getCombinedBambooLength(i, l);
                 mpNeeded += Math.abs(target - combinedBambooLength);
             }
-            return mpNeeded; // todo
+            return mpNeeded;
         }
 
         private int getCombinedBambooLength(int i, List<Integer> l) {
@@ -115,11 +114,6 @@ public class SyntheticKadomatsu {
         private static String toUnpaddedConfigString(int N, Integer i) {
             return Integer.toString(i, N);
         }
-
-//        private static String padToLength(int N, String unpadded) {
-//            "0".
-//            return "00000000".substring(unpadded.length()) + unpadded;
-//        }
     }
 
     // Util func
