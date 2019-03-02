@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LinearApproximation {
-    public static int process(TestCase testCase) {
+    public static long process(TestCase testCase) {
         int N = testCase.N;
         List<Integer> A = testCase.A;
 
@@ -21,14 +21,15 @@ public class LinearApproximation {
         differences.sort(Integer::compareTo);
 
         int mid = N / 2;
+
         final int midDiff = differences.get(mid);
 
         return sadness(differences, midDiff);
     }
 
-    private static int sadness(Collection<Integer> differences, int midDiff) {
+    private static long sadness(Collection<Integer> differences, int midDiff) {
         return differences.stream()
-                .mapToInt(i -> Math.abs(i - midDiff))
+                .mapToLong(i -> Math.abs(i - midDiff))
                 .sum();
     }
 
@@ -37,7 +38,7 @@ public class LinearApproximation {
     public static void main(String[] args) {
         TestCase testCase = readFromInput();
 
-        final int result = process(testCase);
+        final long result = process(testCase);
 
         output(result);
     }
@@ -56,7 +57,7 @@ public class LinearApproximation {
         return new TestCase(N, A);
     }
 
-    private static void output(int result) {
+    private static void output(long result) {
         System.out.println(result);
     }
 
