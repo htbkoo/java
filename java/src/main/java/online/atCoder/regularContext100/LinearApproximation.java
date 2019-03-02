@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class LinearApproximation {
     public static long process(TestCase testCase) {
         int N = testCase.N;
         List<Integer> A = testCase.A;
 
-        List<Integer> differences = new ArrayList<>();
-
-        for (int i = 0; i < N; ++i) {
-            int target = (i + 1);
-            final int diff = target - A.get(i);
-            differences.add(diff);
-        }
-
-        differences.sort(Integer::compareTo);
+        List<Integer> differences = IntStream.range(0, N)
+                .map(i -> i - A.get(i))
+                .sorted()
+                .boxed()
+                .collect(toList());
 
         int mid = N / 2;
-
         final int midDiff = differences.get(mid);
 
         return sadness(differences, midDiff);
