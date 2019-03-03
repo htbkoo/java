@@ -7,7 +7,7 @@ class IsUnique1Test extends Specification {
     @Unroll
     def "should test if given string has all unique characters"() {
         when:
-        def actual = IsUnique1.isUnique(s)
+        def actual = IsUnique1.isUniqueWithoutAdditionDataStructure(s)
 
         then:
         actual == expected

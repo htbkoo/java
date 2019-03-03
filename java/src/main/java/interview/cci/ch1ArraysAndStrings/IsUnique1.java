@@ -8,14 +8,29 @@ public class IsUnique1 {
     private static final int ASCII_RANGE = 256;
 
     public static boolean isUnique(String s) {
-        boolean[] occurrences = new boolean[ASCII_RANGE];
-
         if (s.length() <= 1) {
             return true;
         } else {
+            boolean[] occurrences = new boolean[ASCII_RANGE];
             return Arrays.stream(s.split(""))
                     .map(c -> c.codePointAt(0))
                     .noneMatch(duplicatedCharCode(occurrences));
+        }
+    }
+
+    public static boolean isUniqueWithoutAdditionDataStructure(String s) {
+        if (s.length() <= 1) {
+            return true;
+        } else {
+            final String[] chars = s.split("");
+            for (int i = 0, length = chars.length; i < length; ++i) {
+                for (int j = 0; j < length; ++j) {
+                    if (i != j && chars[i].equals(chars[j])) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 
