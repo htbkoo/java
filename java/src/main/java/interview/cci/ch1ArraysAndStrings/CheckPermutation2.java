@@ -20,4 +20,18 @@ public class CheckPermutation2 {
 
         }
     }
+
+    public static boolean arePermutationBySort(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        } else {
+            return sort(s1).equals(sort(s2));
+        }
+    }
+
+    private static String sort(String s) {
+        final char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
 }

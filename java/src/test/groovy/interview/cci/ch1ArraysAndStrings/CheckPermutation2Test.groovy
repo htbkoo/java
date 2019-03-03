@@ -13,15 +13,15 @@ class CheckPermutation2Test extends Specification {
         actual == expected
 
         where:
-        s1            || s2            || expected
-        ""           || ""           || true
-        "a"          || "a"          || true
-        "ab"         || "ab"         || true
-        "ab"         || "ba"         || true
-        "Unique"     || "nUqeui"     || true
-        "aa"         || "ab"         || false
-        "aa"         || ""         || false
-        "aa"         || "a"         || false
-        "aa"         || "b"         || false
+        s1       || s2       || expected
+        ""       || ""       || true
+        "a"      || "a"      || true
+        "ab"     || "ab"     || true
+        "ab"     || "ba"     || true
+        "Unique" || "nUqeui" || true
+        "aa"     || "ab"     || false
+        "aa"     || ""       || false
+        "aa"     || "a"      || false
+        "aa"     || "b"      || false
     }
 }
