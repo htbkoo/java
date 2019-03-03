@@ -3,11 +3,11 @@ package interview.cci.ch1ArraysAndStrings
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class CheckPermutation2Test extends Specification {
+abstract class CheckPermutation2TestBase extends Specification {
     @Unroll
     def "should test if given string is permutation of another string"() {
         when:
-        def actual = CheckPermutation2.arePermutation(s1, s2)
+        def actual = arePermutation(s1, s2)
 
         then:
         actual == expected
@@ -23,5 +23,23 @@ class CheckPermutation2Test extends Specification {
         "aa"     || ""       || false
         "aa"     || "a"      || false
         "aa"     || "b"      || false
+    }
+
+    abstract boolean arePermutation(String s1, String s2)
+}
+
+class ArePermutationTest extends CheckPermutation2TestBase {
+
+    @Override
+    boolean arePermutation(String s1, String s2) {
+        CheckPermutation2.arePermutation(s1, s2)
+    }
+}
+
+class ArePermutationBySortTest extends CheckPermutation2TestBase {
+
+    @Override
+    boolean arePermutation(String s1, String s2) {
+        CheckPermutation2.arePermutationBySort(s1, s2)
     }
 }
