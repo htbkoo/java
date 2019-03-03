@@ -3,11 +3,11 @@ package interview.cci.ch1ArraysAndStrings
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class IsUnique1Test extends Specification {
+abstract class IsUnique1TestBase extends Specification {
     @Unroll
     def "should test if given string has all unique characters"() {
         when:
-        def actual = IsUnique1.isUniqueWithoutAdditionDataStructure(s)
+        def actual = isUnique(s)
 
         then:
         actual == expected
@@ -21,5 +21,23 @@ class IsUnique1Test extends Specification {
         "algorithm"  || true
         "aa"         || false
         "additional" || false
+    }
+
+    abstract boolean isUnique(String s)
+}
+
+class IsUniqueTest extends IsUnique1TestBase {
+
+    @Override
+    boolean isUnique(String s) {
+        IsUnique1.isUnique(s)
+    }
+}
+
+class IsUniqueWithoutAdditionDataStructureTest extends IsUnique1TestBase {
+
+    @Override
+    boolean isUnique(String s) {
+        IsUnique1.isUniqueWithoutAdditionDataStructure(s)
     }
 }
