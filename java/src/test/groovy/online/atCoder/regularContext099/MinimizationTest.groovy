@@ -1,4 +1,4 @@
-package online.atCoder.beginnerContext112
+package online.atCoder.regularContext099
 
 import spock.lang.Specification
 import spock.lang.Unroll
