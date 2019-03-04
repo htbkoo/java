@@ -10,21 +10,24 @@ public class Minimization {
     public static String process(TestCase testCase) {
         final int N = testCase.N;
         final int K = testCase.K;
-        final List<Integer> A = testCase.A;
 
-        long count = 0, op = 0;
-        for (int i = 0; i < N; ++i) {
-            if (A.get(i) == MINIMUM) {
-                if (count >= K - 2) {
-                    op = op + numOpsNeeded(K, count);
-                    count = 0;
-                }
-            } else {
-                count++;
-            }
-        }
-        op = op + numOpsNeeded(K, count);
-        return String.valueOf(op);
+        return String.valueOf(numOpsNeeded(K, N - 1));
+
+//        final List<Integer> A = testCase.A;
+//
+//        long count = 0, op = 0;
+//        for (int i = 0; i < N; ++i) {
+//            if (A.get(i) == MINIMUM) {
+//                if (count >= K - 2) {
+//                    op = op + numOpsNeeded(K, count);
+//                    count = 0;
+//                }
+//            } else {
+//                count++;
+//            }
+//        }
+//        op = op + numOpsNeeded(K, count);
+//        return String.valueOf(op);
     }
 
     private static long numOpsNeeded(int k, long count) {
