@@ -10,13 +10,13 @@ public class URLify3 {
         for (int i = trueLength - 1; i > 0; --i) {
             count++;
             if (SPACE == chars[i]) {
-                end = copyAndReplace(chars, end, count, i);
+                end = getNewEndAfterCopyAndReplace(chars, end, count, i);
                 count = 0;
             }
         }
     }
 
-    private static int copyAndReplace(char[] chars, int end, int count, int i) {
+    private static int getNewEndAfterCopyAndReplace(char[] chars, int end, int count, int i) {
         final int destPos = end - (count - 1);
         System.arraycopy(chars, i, chars, destPos, count);
         System.arraycopy(ENCODED_SPACE, 0, chars, destPos - (ENCODED_SPACE.length - 1), ENCODED_SPACE.length);
