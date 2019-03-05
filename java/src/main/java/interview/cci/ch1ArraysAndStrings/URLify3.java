@@ -3,7 +3,6 @@ package interview.cci.ch1ArraysAndStrings;
 public class URLify3 {
     private static final char SPACE = ' ';
     private static final char[] ENCODED_SPACE = "%20".toCharArray();
-//    private static final char[] ENCODED_SPACE = {'%','2','0'};
 
     public static void urlifyInPlace(char[] chars, int trueLength) {
         int end = chars.length - 1;
