@@ -15,8 +15,11 @@ abstract class URLify3TestBase extends Specification {
         new String(actual) == expected
 
         where:
-        s                   || trueLength || expected
-        "Mr John Smith    " || 13         || "Mr%20John%20Smith"
+        s                         || trueLength || expected
+        "Mr John Smith    "       || 13         || "Mr%20John%20Smith"
+        "Mr John  Smith      "    || 14         || "Mr%20John%20%20Smith"
+        "Mr John  Smith         "  || 15         || "Mr%20John%20%20Smith%20"
+        " Mr John  Smith        " || 15         || "%20Mr%20John%20%20Smith"
     }
 }
 
