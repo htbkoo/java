@@ -19,11 +19,11 @@ public class ValidateBST5 {
         if (root == null) {
             return ASSUME_EMPTY_TREE_IS_VALID;
         } else {
-            return isValid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
         }
     }
 
-    private boolean isValid(TreeNode node, int lo, int hi) {
+    private boolean isValid(TreeNode node, long lo, long hi) {
         if (node == null) {
             return true;
         } else {
@@ -32,7 +32,7 @@ public class ValidateBST5 {
         }
     }
 
-    private boolean isWithInRange(int val, int lo, int hi) {
+    private boolean isWithInRange(int val, long lo, long hi) {
         return lo < val && val < hi;
     }
 }
