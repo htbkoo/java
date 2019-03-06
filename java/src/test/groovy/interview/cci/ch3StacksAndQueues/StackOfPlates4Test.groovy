@@ -26,6 +26,7 @@ class SetOfStacksTest extends Specification {
         where:
         stacks                                     || input                          || expected
         new StackOfPlates4.SetOfStacks<Integer>(3) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || [s(0, 4), s(9, 3),]
+        new StackOfPlates4.SetOfStacks<Integer>(5) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || [s(0, 2), s(9, 2), s(8, 2), s(7, 2), s(6, 2), s(5, 1), s(4, 1), s(3, 1), s(2, 1), s(1, 1),]
     }
 
     // state to compare
