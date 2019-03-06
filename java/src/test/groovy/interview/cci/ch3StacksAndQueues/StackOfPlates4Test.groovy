@@ -30,7 +30,7 @@ class SetOfStacksTest extends Specification {
     }
 
     @Unroll
-    def "should throw exception when #actionName if stack is empty"() {
+    def "#actionName when stack is empty should throw exception"() {
         given:
         def stacks = new StackOfPlates4.SetOfStacks<Object>(1)
 
