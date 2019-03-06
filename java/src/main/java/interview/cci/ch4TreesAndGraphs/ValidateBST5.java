@@ -33,6 +33,6 @@ public class ValidateBST5 {
     }
 
     private boolean isWithInRange(int val, int lo, int hi) {
-        return lo <= val && val <= hi;
+        return lo < val && val < hi;
     }
 }
