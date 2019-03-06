@@ -29,6 +29,23 @@ class SetOfStacksTest extends Specification {
         new StackOfPlates4.SetOfStacks<Integer>(5) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || [s(0, 2), s(9, 2), s(8, 2), s(7, 2), s(6, 2), s(5, 1), s(4, 1), s(3, 1), s(2, 1), s(1, 1),]
     }
 
+    @Unroll
+    def "should throw exception when #actionName if stack is empty"() {
+        given:
+        def stacks = new StackOfPlates4.SetOfStacks<Object>(1)
+
+        when:
+        action.call(stacks)
+
+        then:
+        thrown Exception
+
+        where:
+        actionName || action
+        "pop"      || { it.pop() }
+        "peek"     || { it.peek() }
+    }
+
     // state to compare
     def s(item, numStacks) {
         return [item, numStacks]
