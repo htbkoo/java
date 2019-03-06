@@ -3,10 +3,6 @@ package interview.cci.ch3StacksAndQueues
 import spock.lang.Specification
 import spock.lang.Unroll
 
-abstract class StackOfPlates4TestBase extends Specification {
-    abstract char[] urlify(char[] chars, int trueLength)
-}
-
 class SetOfStacksTest extends Specification {
 
     @Unroll
