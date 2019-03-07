@@ -21,33 +21,33 @@ public class Equals {
         final List<Integer> x = testCase.x;
         final List<Integer> y = testCase.y;
 
-        Map<Integer, Set<Integer>> disjointSets = buildDisjointSets(N, M, x, y);
+        Map<Integer, Set<Integer>> disjointSet = buildDisjointSet(N, M, x, y);
 
         return "";
     }
 
-    private static Map<Integer, Set<Integer>> buildDisjointSets(int N, int M, List<Integer> x, List<Integer> y) {
-        final Map<Integer, Set<Integer>> disjointSets = new HashMap<>();
-        range(0, N).forEach(initializeDisjointSets(disjointSets));
+    private static Map<Integer, Set<Integer>> buildDisjointSet(int N, int M, List<Integer> x, List<Integer> y) {
+        final Map<Integer, Set<Integer>> disjointSet = new HashMap<>();
+        range(0, N).forEach(initializeDisjointSet(disjointSet));
 
         range(0, M).forEach(i -> {
             final int xi = x.get(i);
             final int yi = y.get(i);
 
-            final Set<Integer> setXi = disjointSets.get(xi);
-            final Set<Integer> setYi = disjointSets.get(yi);
+            final Set<Integer> setXi = disjointSet.get(xi);
+            final Set<Integer> setYi = disjointSet.get(yi);
 
             mergeSets(setXi, setYi);
             final Set<Integer> newSet = mergeSets(setXi, setYi);
-            disjointSets.put(xi, newSet);
-            disjointSets.put(yi, newSet);
+            disjointSet.put(xi, newSet);
+            disjointSet.put(yi, newSet);
         });
 
-        return disjointSets;
+        return disjointSet;
     }
 
-    private static IntConsumer initializeDisjointSets(Map<Integer, Set<Integer>> disjointSets) {
-        return i -> disjointSets.put(i + 1, new HashSet<>(singletonList(i + 1)));
+    private static IntConsumer initializeDisjointSet(Map<Integer, Set<Integer>> disjointSet) {
+        return i -> disjointSet.put(i + 1, new HashSet<>(singletonList(i + 1)));
     }
 
         private static Set<Integer> mergeSets(Set<Integer> setXi, Set<Integer> setYi) {
