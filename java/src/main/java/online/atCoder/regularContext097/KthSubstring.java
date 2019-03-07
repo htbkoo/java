@@ -3,24 +3,28 @@ package online.atCoder.regularContext097;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
-import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 
 public class KthSubstring {
     public static String process(TestCase testCase) {
         final String s = testCase.s;
         final int K = testCase.K;
 
-        TreeSet<String> set = new TreeSet<>();
-        final int length = s.length();
-        IntStream.range(0, K + 1)
-                .forEach(i ->
-                        IntStream.range(0, length - i)
-                                .forEach(j ->
-                                        set.add(s.substring(j, j + i + 1))
-                                )
-                );
+        TreeSet<String> set = toSortedSubStringsSet(s, K);
 
         return new ArrayList<>(set).get(K - 1);
+    }
+
+    private static TreeSet<String> toSortedSubStringsSet(String s, int K) {
+        final TreeSet<String> set = new TreeSet<>();
+        final int length = s.length();
+        range(0, K + 1).forEach(i ->
+                range(0, length - i).forEach(j ->
+                        set.add(s.substring(j, j + i + 1))
+                )
+        );
+        return set;
     }
 
     // Util func
