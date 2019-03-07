@@ -28,7 +28,7 @@ public class Equals {
         }
 
         boolean areInSameSet(int x, int y) {
-            return trees.get(x).find() == trees.get(y).find();
+            return trees.get(x).isInSameSet(trees.get(y));
         }
 
         static DisjointSet buildDisjointSet(int N, int M, List<Integer> x, List<Integer> y) {
@@ -46,7 +46,6 @@ public class Equals {
         private static class DisjointSetTree {
             DisjointSetTree parent = this;
             int rank = 0;
-//            int size = 1;
 
             // Find, with path-compression
             // Reference: https://en.wikipedia.org/wiki/Disjoint-set_data_structure#Path_compression
@@ -75,6 +74,10 @@ public class Equals {
                         xRoot.rank = xRoot.rank + 1;
                     }
                 }
+            }
+
+            boolean isInSameSet(DisjointSetTree other) {
+                return find() == other.find();
             }
         }
     }
