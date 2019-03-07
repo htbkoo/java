@@ -3,6 +3,7 @@ package online.atCoder.beginnerContext110;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class StringTransformation {
     public static final String YES = "Yes";
@@ -22,20 +23,16 @@ public class StringTransformation {
     }
 
     private static Map<Character, Integer> countCharFrequencies(String str) {
-        Map<Character, Integer> map = new HashMap<>();
-        str.chars().mapToObj(i -> (char) i).forEach(c -> {
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) + 1);
-            } else {
-                map.put(c, 1);
-            }
-        });
-        return map;
+        return countAsMap(str.chars().mapToObj(i -> (char) i));
     }
 
     private static Map<Integer, Integer> toFreqMap(Map<Character, Integer> charFreq) {
-        Map<Integer, Integer> map = new HashMap<>();
-        charFreq.values().forEach(c -> {
+        return countAsMap(charFreq.values().stream());
+    }
+
+    private static <T> Map<T, Integer> countAsMap(Stream<T> values) {
+        Map<T, Integer> map = new HashMap<>();
+        values.forEach(c -> {
             if (map.containsKey(c)) {
                 map.put(c, map.get(c) + 1);
             } else {
