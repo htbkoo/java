@@ -1,16 +1,10 @@
 package online.atCoder.regularContext097;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.function.IntConsumer;
-import java.util.stream.Collectors;
 
-import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class Equals {
@@ -21,40 +15,68 @@ public class Equals {
         final List<Integer> x = testCase.x;
         final List<Integer> y = testCase.y;
 
-        Map<Integer, Set<Integer>> disjointSet = buildDisjointSet(N, M, x, y);
+        DisjointSet disjointSet = DisjointSet.buildDisjointSet(N, M, x, y);
 
-        return "";
+        return String.valueOf(range(0, N).filter(i -> disjointSet.areInSameSet(i + 1, p.get(i))).count());
     }
 
-    private static Map<Integer, Set<Integer>> buildDisjointSet(int N, int M, List<Integer> x, List<Integer> y) {
-        final Map<Integer, Set<Integer>> disjointSet = new HashMap<>();
-        range(0, N).forEach(initializeDisjointSet(disjointSet));
+    private static class DisjointSet {
+        private final List<DisjointSetTree> trees;
 
-        range(0, M).forEach(i -> {
-            final int xi = x.get(i);
-            final int yi = y.get(i);
+        DisjointSet(List<DisjointSetTree> trees) {
+            this.trees = trees;
+        }
 
-            final Set<Integer> setXi = disjointSet.get(xi);
-            final Set<Integer> setYi = disjointSet.get(yi);
+        boolean areInSameSet(int x, int y) {
+            return trees.get(x).find() == trees.get(y).find();
+        }
 
-            mergeSets(setXi, setYi);
-            final Set<Integer> newSet = mergeSets(setXi, setYi);
-            disjointSet.put(xi, newSet);
-            disjointSet.put(yi, newSet);
-        });
+        static DisjointSet buildDisjointSet(int N, int M, List<Integer> x, List<Integer> y) {
+            final List<DisjointSetTree> trees = range(0, N + 1).mapToObj(i -> new DisjointSetTree()).collect(toList());
+            range(0, M).forEach(i -> {
+                final int xi = x.get(i);
+                final int yi = y.get(i);
 
-        return disjointSet;
-    }
+                trees.get(xi).union(trees.get(yi));
+            });
 
-    private static IntConsumer initializeDisjointSet(Map<Integer, Set<Integer>> disjointSet) {
-        return i -> disjointSet.put(i + 1, new HashSet<>(singletonList(i + 1)));
-    }
+            return new DisjointSet(trees);
+        }
 
-        private static Set<Integer> mergeSets(Set<Integer> setXi, Set<Integer> setYi) {
-//    private static void mergeSets(Set<Integer> setXi, Set<Integer> setYi) {
-        setXi.addAll(setYi);
-        setYi.addAll(setXi);
-        return setXi;
+        private static class DisjointSetTree {
+            DisjointSetTree parent = this;
+            int rank = 0;
+//            int size = 1;
+
+            // Find, with path-compression
+            // Reference: https://en.wikipedia.org/wiki/Disjoint-set_data_structure#Path_compression
+            DisjointSetTree find() {
+                if (this.parent != this) {
+                    this.parent = parent.find();
+                }
+                return this.parent;
+            }
+
+            // Union, by-rank
+            // Reference: https://en.wikipedia.org/wiki/Disjoint-set_data_structure#by_rank
+            void union(DisjointSetTree other) {
+                DisjointSetTree xRoot = find();
+                DisjointSetTree yRoot = other.find();
+                if (xRoot != yRoot) {
+                    if (xRoot.rank < yRoot.rank) {
+                        DisjointSetTree temp = xRoot;
+                        // swapping in Java, sigh
+                        //noinspection SuspiciousNameCombination
+                        xRoot = yRoot;
+                        yRoot = temp;
+                    }
+                    yRoot.parent = xRoot;
+                    if (xRoot.rank == yRoot.rank) {
+                        xRoot.rank = xRoot.rank + 1;
+                    }
+                }
+            }
+        }
     }
 
     // Util func
@@ -86,7 +108,7 @@ public class Equals {
     }
 
     private static List<Integer> readList(Scanner sc, int N) {
-        return range(0, N).mapToObj(i -> sc.nextInt()).collect(Collectors.toList());
+        return range(0, N).mapToObj(i -> sc.nextInt()).collect(toList());
     }
 
     private static void output(String result) {
