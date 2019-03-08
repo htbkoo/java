@@ -40,7 +40,6 @@ Note:
 
 public class FriendCirclesDFS {
     public int findCircleNum(int[][] M) {
-//        Set<Integer> visited = new HashSet<>();
         final int N = M.length;
         boolean[] visited = new boolean[N];
 
@@ -54,11 +53,6 @@ public class FriendCirclesDFS {
         }
 
         return count;
-//        range(0, N).forEach(i -> {
-//            range(0, N).filter(j -> i != j).forEach(j -> {
-//                return DFS(i, M, visited);
-//            });
-//        });
     }
 
     private void DFS(int i, int[][] M, boolean[] visited) {
