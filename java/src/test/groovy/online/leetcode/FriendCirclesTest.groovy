@@ -3,11 +3,11 @@ package online.leetcode
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class FriendCirclesTest extends Specification {
+abstract class FriendCirclesTestBase extends Specification {
     @Unroll
     def "should find total number of friend circles"() {
         when:
-        def num = new FriendCircles().findCircleNum(M as int[][])
+        def num = findCircleNum(M as int[][])
 
         then:
         num == expected
@@ -26,5 +26,14 @@ class FriendCirclesTest extends Specification {
         [[1, 1, 0],
          [1, 1, 1],
          [0, 1, 1]] || 1
+    }
+
+    abstract int findCircleNum(int[][] M)
+}
+
+class FriendCirclesTest extends FriendCirclesTestBase {
+    @Override
+    int findCircleNum(int[][] M) {
+        new FriendCircles().findCircleNum(M)
     }
 }
