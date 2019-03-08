@@ -65,7 +65,7 @@ public class FriendCircles {
             final List<DisjointSetTree> trees = range(0, N).mapToObj(i -> new DisjointSetTree()).collect(Collectors.toList());
 
             range(0, N).forEach(i ->
-                    range(0, N).filter(j -> M[i][j] == 1)
+                    range(0, N).filter(j -> i != j && M[i][j] == 1)
                             .forEach(j ->
                                     trees.get(i).union(trees.get(j))
                             )
