@@ -37,3 +37,10 @@ class FriendCirclesTest extends FriendCirclesTestBase {
         new FriendCircles().findCircleNum(M)
     }
 }
+
+class FriendCirclesDFSTest extends FriendCirclesTestBase {
+    @Override
+    int findCircleNum(int[][] M) {
+        new FriendCirclesDFS().findCircleNum(M)
+    }
+}
