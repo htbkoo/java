@@ -38,29 +38,37 @@ Note:
 
 */
 
-import java.util.stream.IntStream;
+import java.util.function.IntUnaryOperator;
+
+import static java.util.stream.IntStream.range;
 
 public class FriendCirclesStreamDFS {
+
+    private static final int ANY = 0;
+
     public int findCircleNum(int[][] M) {
         final int N = M.length;
         boolean[] visited = new boolean[N];
 
-        return (int) IntStream.range(0, N)
+        return (int) range(0, N)
                 .filter(i -> !visited[i])
-                .map(i -> {
-                    visited[i] = true;
-                    DFS(i, M, visited);
-                    return 0;
-                })
+                .map(markVisitedAndPerformDfs(M, visited))
                 .count();
     }
 
+    private IntUnaryOperator markVisitedAndPerformDfs(int[][] M, boolean[] visited) {
+        return i -> {
+            visited[i] = true;
+            DFS(i, M, visited);
+            return ANY;
+        };
+    }
+
     private void DFS(int i, int[][] M, boolean[] visited) {
-        for (int j = 0, N = M.length; j < N; ++j) {
-            if (!visited[j] && M[i][j] == 1) {
-                visited[j] = true;
-                DFS(j, M, visited);
-            }
-        }
+        // need a terminal function here
+        //noinspection ResultOfMethodCallIgnored
+        range(0, M.length).filter(j -> !visited[j] && M[i][j] == 1)
+                .map(markVisitedAndPerformDfs(M, visited))
+                .count();
     }
 }
