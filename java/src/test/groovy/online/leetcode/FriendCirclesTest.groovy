@@ -44,3 +44,10 @@ class FriendCirclesDFSTest extends FriendCirclesTestBase {
         new FriendCirclesDFS().findCircleNum(M)
     }
 }
+
+class FriendCirclesStreamDFSTest extends FriendCirclesTestBase {
+    @Override
+    int findCircleNum(int[][] M) {
+        new FriendCirclesStreamDFS().findCircleNum(M)
+    }
+}
