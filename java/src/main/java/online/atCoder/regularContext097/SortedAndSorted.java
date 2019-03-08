@@ -1,13 +1,18 @@
 package online.atCoder.regularContext097;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 
 public class SortedAndSorted {
@@ -19,35 +24,70 @@ public class SortedAndSorted {
         final List<String> c = testCase.c;
         final List<Integer> a = testCase.a;
 
-        final State initialState = State.newState(N, c, a, START_WITH_ZERO_OP);
+        final State initialState = State.newState(N, c, a);
 
-        return BFS(initialState);
+        return String.valueOf(BFS(initialState));
     }
 
-    private static String BFS(State initialState) {
+    private static int BFS(State initialState) {
+        Deque<State> queue = new ArrayDeque<>();
+        Set<State> visited = new HashSet<>();
 
+        State currentState = initialState;
+        while (!currentState.isValid()) {
+            visited.add(currentState);
+            queue.addAll(currentState.neighbourStates()
+                    .stream()
+                    .filter(state -> !visited.contains(state))
+                    .collect(toList())
+            );
+            currentState = queue.poll();
+            if (currentState == null) {
+                throw new IllegalStateException("no more unvisited states - queue is empty");
+            }
+        }
 
-        return null;
+        return currentState.opCount;
     }
 
     private static class State {
         final List<Ball> balls;
         final int opCount;
 
-        private State(List<Ball> balls, int opCount) {
-            this.balls = balls;
-            this.opCount = opCount;
+        static State newState(final int N, final List<String> c, final List<Integer> a) {
+            final List<Ball> balls = range(0, 2 * N).mapToObj(i -> toBall(i, c, a)).collect(toList());
+            return new State(balls, START_WITH_ZERO_OP);
         }
 
-        static State newState(final int N, final List<String> c, final List<Integer> a, final int opCount) {
-            final List<Ball> balls = range(0, 2 * N).mapToObj(i -> toBall(i, c, a)).collect(Collectors.toList());
-            return new State(balls, opCount);
+        public boolean isValid() {
+            int blackMax = 0, whiteMax = 0;
+            for (Ball ball : balls) {
+                switch (ball.colour) {
+                    case W: {
+                        if (whiteMax > ball.order) {
+                            return false;
+                        } else {
+                            whiteMax = ball.order;
+                        }
+                        break;
+                    }
+                    case B: {
+                        if (blackMax > ball.order) {
+                            return false;
+                        } else {
+                            blackMax = ball.order;
+                        }
+                        break;
+                    }
+                }
+            }
+            return true;
         }
 
-        private static Ball toBall(int i, List<String> c, List<Integer> a) {
-            final String ci = c.get(i);
-            final int ai = a.get(i);
-            return new Ball(ci, ai);
+        public Set<State> neighbourStates() {
+            return range(1, balls.size())
+                    .mapToObj(i -> new State(getNewBallsAfterSwapping(i - 1, i), opCount + 1))
+                    .collect(toSet());
         }
 
         @Override
@@ -66,6 +106,25 @@ public class SortedAndSorted {
         @Override
         public String toString() {
             return balls.stream().map(Ball::toString).collect(joining());
+        }
+
+        private State(List<Ball> balls, int opCount) {
+            this.balls = balls;
+            this.opCount = opCount;
+        }
+
+        private static Ball toBall(int i, List<String> c, List<Integer> a) {
+            final String ci = c.get(i);
+            final int ai = a.get(i);
+            return new Ball(ci, ai);
+        }
+
+        private List<Ball> getNewBallsAfterSwapping(int a, int b) {
+            List<Ball> newBalls = new ArrayList<>(balls);
+            Ball temp = newBalls.get(a);
+            newBalls.set(a, newBalls.get(b));
+            newBalls.set(b, temp);
+            return newBalls;
         }
     }
 
