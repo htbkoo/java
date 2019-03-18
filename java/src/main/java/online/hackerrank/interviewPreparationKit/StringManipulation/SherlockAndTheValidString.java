@@ -16,11 +16,8 @@ public class SherlockAndTheValidString {
     public static class Solution {
 
         private static final int ASCII_RANGE = 256;
-        private static final int ASCII_LOWER_A = Character.codePointAt("a", 0);
-        private static final int ASCII_LOWER_Z = Character.codePointAt("z", 0);
         private static final String YES = "YES";
         private static final String NO = "NO";
-        private static final int UNINITIALIZED = -1;
 
         // Complete the isValid function below.
         static String isValid(String s) {
@@ -62,8 +59,6 @@ public class SherlockAndTheValidString {
             if (reversedIndices.containsKey(1) && reversedIndices.get(1) == 1) {
                 return true;
             }
-
-//            frequencies.stream().collect(toMap(i -> i, i -> 1, (i, j) -> i + j + 1));
 
             int smallerKey = reversedIndices.keySet().stream().mapToInt(i -> i).min().orElseThrow(() -> new IllegalStateException("reversedIndices is empty"));
             int largerKey = reversedIndices.keySet().stream().mapToInt(i -> i).max().orElseThrow(() -> new IllegalStateException("reversedIndices is empty"));
