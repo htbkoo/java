@@ -1,4 +1,4 @@
-package online.hackerrank.interviewPreparationKit.StringManipulation;
+package online.hackerrank.interviewPreparationKit.warmUpChallenges;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

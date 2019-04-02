@@ -1,4 +1,4 @@
-package online.hackerrank.interviewPreparationKit.StringManipulation
+package online.hackerrank.interviewPreparationKit.warmUpChallenges
 
 import spock.lang.Specification
 import spock.lang.Unroll
