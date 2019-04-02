@@ -1,4 +1,4 @@
-package online.hackerrank.interviewPreparationKit.warmUpChallenges
+package online.hackerrank.interviewPreparationKit.RecursionAndBacktracking
 
 import online.hackerrank.interviewPreparationKit.RecursionAndBacktracking.RecursionFibonacciNumbers
 import spock.lang.Specification

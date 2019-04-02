@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class RecursionFibonacciNumbers {
     public static class Solution {
-        public static int fibonacci(int n) {
+        static int fibonacci(int n) {
             // Complete the function.
             if (n < 0) {
                 throw new IllegalArgumentException("n should be non-negative, but was: " + n);
@@ -24,7 +24,7 @@ public class RecursionFibonacciNumbers {
             }
         }
 
-        public static int fibonacciRecursion(int n) {
+        static int fibonacciRecursion(int n) {
             // Complete the function.
             if (n < 0) {
                 throw new IllegalArgumentException("n should be non-negative, but was: " + n);
