@@ -24,18 +24,6 @@ class RecursionDavisStaircaseTest extends Specification {
         15 || 5768
         20 || 121415
         27 || 8646064
-
-
-        35
-        30
-        33
-        36
-        20
-        1132436852
-        53798080
-        334745777
-        2082876103
-        121415
     }
 
 }
