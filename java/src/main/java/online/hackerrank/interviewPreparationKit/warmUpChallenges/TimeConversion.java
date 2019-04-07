@@ -9,26 +9,59 @@ import java.util.regex.Pattern;
 
 public class TimeConversion {
     public static class Solution {
-        private static final Pattern PATTERN_12_HOUR_FORMAT = Pattern.compile("(\\d{2}:\\d{2}:\\d{2})(\\w{2})");
-        private static final String MIDNIGHT = "12:00:00AM";
-        private static final String NOON = "12:00:00PM";
-        private static final String MIDNIGHT_24 = "00:00:00";
-        private static final String NOON_24 = "12:00:00";
-
         private static class Time {
+            private static final Pattern PATTERN_12_HOUR_FORMAT = Pattern.compile("(\\d{2}):(\\d{2}):(\\d{2})(\\w{2})");
+            private static final String MID_NIGHT_HOUR_24 = "00";
+            private static final int HOURS_IN_HALF_DAY = 12;
+
             final String hour;
             final String minute;
             final String second;
+            final AmPm amPm;
 
-            Time(String hour, String minute, String second) {
+            Time(String hour, String minute, String second, AmPm amPm) {
                 this.hour = hour;
                 this.minute = minute;
                 this.second = second;
+                this.amPm = amPm;
             }
 
-            static Time fromString(String t) {
-                String[] parts = t.split(":");
-                return new Time(parts[0], parts[1], parts[2]);
+            static Time fromString(String s) {
+                Matcher matcher = PATTERN_12_HOUR_FORMAT.matcher(s);
+                boolean matched = matcher.find();
+                if (matched) {
+                    String hour = matcher.group(1);
+                    String minute = matcher.group(2);
+                    String second = matcher.group(3);
+                    AmPm amPm = AmPm.valueOf(matcher.group(4));
+
+                    return new Time(hour, minute, second, amPm);
+                } else {
+                    throw new IllegalArgumentException("Unable to recognize string: " + s);
+                }
+            }
+
+            String in24HourFormat() {
+                String newHour = getNewHour();
+                return String.format("%s:%s:%s", newHour, this.minute, this.second);
+            }
+
+            private String getNewHour() {
+                if (isMidNightHour()) {
+                    return MID_NIGHT_HOUR_24;
+                } else if (isPM())
+                    return String.valueOf(((Integer.parseInt(this.hour) % HOURS_IN_HALF_DAY + this.amPm.adjustment)));
+                else {
+                    return this.hour;
+                }
+            }
+
+            private boolean isMidNightHour() {
+                return AmPm.AM.equals(this.amPm) && "12".equals(this.hour);
+            }
+
+            private boolean isPM() {
+                return AmPm.PM.equals(this.amPm);
             }
         }
 
@@ -49,24 +82,8 @@ public class TimeConversion {
             /*
              * Write your code here.
              */
-            if (MIDNIGHT.equals(s)) {
-                return MIDNIGHT_24;
-            }
-            if (NOON.equals(s)) {
-                return NOON_24;
-            }
-
-            Matcher matcher = PATTERN_12_HOUR_FORMAT.matcher(s);
-            matcher.find();
-            Time time = Time.fromString(matcher.group(1));
-            AmPm amPm = AmPm.valueOf(matcher.group(2));
-
-            String newHour = time.hour;
-            if (AmPm.PM.equals(amPm)) {
-                newHour = String.valueOf(Integer.parseInt(time.hour) + amPm.adjustment);
-            }
-
-            return String.format("%s:%s:%s", newHour, time.minute, time.second);
+            Time time = Time.fromString(s);
+            return time.in24HourFormat();
         }
 
         private static final Scanner scan = new Scanner(System.in);
