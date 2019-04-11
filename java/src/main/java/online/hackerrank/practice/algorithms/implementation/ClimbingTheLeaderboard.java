@@ -3,29 +3,45 @@ package online.hackerrank.practice.algorithms.implementation;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ClimbingTheLeaderboard {
     public static class Solution {
-
+        private static final Comparator<Integer> DESCENDING_ORDER = (a, b) -> Integer.compare(b, a);
+        //        private static final Collector<Integer, ?, TreeSet<Integer>> TO_TREE_SET_BY_DESCENDING_ORDER = Collectors.toCollection(() -> new TreeSet<>(DESCENDING_ORDER));
+        private static final Collector<Integer, ?, TreeSet<Integer>> TO_TREE_SET = Collectors.toCollection(TreeSet::new);
 
         // Complete the climbingLeaderboard function below.
         static int[] climbingLeaderboard(int[] scores, int[] alice) {
+            TreeSet<Integer> originalDenseScores = Arrays.stream(scores).boxed().collect(TO_TREE_SET);
+            List<Integer> denseScoresAsList = new ArrayList<>(originalDenseScores);
+
             return Arrays.stream(alice)
-                    .map(score -> toIndex(scores, score))
+                    .map(score -> toIndex(denseScoresAsList, score))
                     .toArray();
         }
 
-        private static int toIndex(int[] scores, int score) {
-            TreeSet<Integer> set = Arrays.stream(scores).boxed().collect(Collectors.toCollection(() -> new TreeSet<>((a, b) -> Integer.compare(b, a))));
-            set.add(score);
-
-            return set.contains(score) ? set.headSet(score).size() + 1 : -1;
+        private static int toIndex(List<Integer> scores, int score) {
+            int index = Collections.binarySearch(scores, score);
+            int numScoresInRank = scores.size();
+            if (isEqualScore(index)) {
+                return numScoresInRank - index;
+            } else {
+                return numScoresInRank + 2 + index;
+            }
         }
 
+        private static boolean isEqualScore(int index) {
+            return index >= 0;
+        }
 
         private static final Scanner scanner = new Scanner(System.in);
 
