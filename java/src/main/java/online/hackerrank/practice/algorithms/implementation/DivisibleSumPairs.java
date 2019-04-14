@@ -4,19 +4,20 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 
 public class DivisibleSumPairs {
     public static class Solution {
         // Complete the divisibleSumPairs function below.
         static int divisibleSumPairs(int n, int k, int[] ar) {
-            return IntStream.range(0, n)
+            return range(0, n)
                     .map(i -> countDivisibleSumPairs(i, n, k, ar))
                     .sum();
         }
 
         private static int countDivisibleSumPairs(int i, int n, int k, int[] ar) {
-            return (int) IntStream.range(i, n)
+            return (int) range(i + 1, n)
                     .filter(j -> keepIfPairSumDivisible(i, j, k, ar))
                     .count();
         }
