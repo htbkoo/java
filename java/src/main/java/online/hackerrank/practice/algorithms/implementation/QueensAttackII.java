@@ -9,12 +9,10 @@ import java.util.Scanner;
 public class QueensAttackII {
     public static class Solution {
         private static class Board {
-            private final Coordinates coor_q;
-            private final Coordinates[][] nearestObstacles;
+            private final int[][] numCanAttack;
 
             Board(int n, Coordinates coor_q, int[][] obstacles) {
-                this.coor_q = coor_q;
-                this.nearestObstacles = initializeNearestObstacles(n, coor_q);
+                this.numCanAttack = initialize(n, coor_q);
 
                 Arrays.stream(obstacles)
                         .map(Coordinates::fromInts)
@@ -23,15 +21,10 @@ public class QueensAttackII {
             }
 
             int count() {
-                int count = 0;
-                for (int dc = -1; dc <= 1; dc++) {
-                    for (int dr = -1; dr <= 1; dr++) {
-                        if (isValidDirection(dr, dc)) {
-                            count += countOneDirection(dr, dc);
-                        }
-                    }
-                }
-                return count;
+                return Arrays.stream(numCanAttack)
+                        .map(row -> Arrays.stream(row).sum())
+                        .mapToInt(i -> i)
+                        .sum();
             }
 
             private boolean isValidDirection(int dr, int dc) {
@@ -53,32 +46,32 @@ public class QueensAttackII {
             private void considerObstacle(Coordinates obstacle, Coordinates coor_q) {
                 int rowDirection = Integer.signum(obstacle.r - coor_q.r);
                 int columnDirection = Integer.signum(obstacle.c - coor_q.c);
-                Coordinates exist = getNearestObstacle(rowDirection, columnDirection);
-                setNearestObstacle(rowDirection, columnDirection, coor_q.getCloser(exist, obstacle));
+                int exist = getNumCanAttack(rowDirection, columnDirection);
+                setNumCanAttack(rowDirection, columnDirection, Math.min(exist, coor_q.linearDistanceFrom(rowDirection, columnDirection, obstacle) - 1));
             }
 
-            private Coordinates getNearestObstacle(int rowDirection, int columnDirection) {
-                return nearestObstacles[rowDirection + 1][columnDirection + 1];
+            private int getNumCanAttack(int rowDirection, int columnDirection) {
+                return numCanAttack[rowDirection + 1][columnDirection + 1];
             }
 
-            private void setNearestObstacle(int rowDirection, int columnDirection, Coordinates closer) {
-                nearestObstacles[rowDirection + 1][columnDirection + 1] = closer;
+            private void setNumCanAttack(int rowDirection, int columnDirection, int closer) {
+                numCanAttack[rowDirection + 1][columnDirection + 1] = closer;
             }
 
-            private Coordinates[][] initializeNearestObstacles(int n, Coordinates coor_q) {
-                Coordinates[][] nearestObstacles = new Coordinates[3][3];
+            private int[][] initialize(int n, Coordinates coor_q) {
+                int[][] numCanAttack = new int[3][3];
                 for (int dc = -1; dc <= 1; dc++) {
                     for (int dr = -1; dr <= 1; dr++) {
                         if (isValidDirection(dr, dc)) {
-                            nearestObstacles[dr + 1][dc + 1] = initialNearestObstaclesForDirection(n, coor_q, new Coordinates(dr, dc));
+                            numCanAttack[dr + 1][dc + 1] = initialNumCanAttackForDirection(n, coor_q, new Coordinates(dr, dc));
                         }
                     }
                 }
 
-                return nearestObstacles;
+                return numCanAttack;
             }
 
-            private Coordinates initialNearestObstaclesForDirection(int n, Coordinates coor_q, Coordinates direction) {
+            private int initialNumCanAttackForDirection(int n, Coordinates coor_q, Coordinates direction) {
                 int dr = direction.r;
                 int dc = direction.c;
 
@@ -86,39 +79,32 @@ public class QueensAttackII {
                 int c_q = coor_q.c;
 
                 if (dr < 0) {
+                    int numRowFromBoardSide = r_q - 1;
                     if (dc < 0) {
-                        int distance = Math.min(r_q, c_q);
-                        return new Coordinates(r_q - distance, c_q - distance);
+                        return Math.min(numRowFromBoardSide, c_q - 1);
                     } else if (dc == 0) {
-                        return new Coordinates(0, c_q);
+                        return numRowFromBoardSide;
                     } else {
-                        int distance = Math.min(r_q, n + 1 - c_q);
-                        return new Coordinates(r_q - distance, c_q + distance);
+                        return Math.min(numRowFromBoardSide, n - c_q);
                     }
                 } else if (dr == 0) {
                     if (dc < 0) {
-                        return new Coordinates(r_q, 1);
+                        return c_q - 1;
                     } else if (dc == 0) {
-                        return new Coordinates(r_q, c_q);
+                        return 0;
                     } else {
-                        return new Coordinates(r_q, n);
+                        return n - c_q;
                     }
                 } else {
+                    int numRowFromBoardSide = n - r_q;
                     if (dc < 0) {
-                        int distance = Math.min(n - r_q, c_q - 1);
-                        return new Coordinates(r_q + distance, c_q - distance);
+                        return Math.min(numRowFromBoardSide, c_q - 1);
                     } else if (dc == 0) {
-                        return new Coordinates(n, c_q);
+                        return numRowFromBoardSide;
                     } else {
-                        int distance = n - Math.max(r_q, c_q);
-                        return new Coordinates(r_q + distance, c_q + distance);
+                        return Math.min(numRowFromBoardSide, n - c_q);
                     }
                 }
-            }
-
-            private int countOneDirection(int dr, int dc) {
-                int linearDistance = getNearestObstacle(dr, dc).distanceFrom(coor_q) / (Math.abs(dr) + Math.abs(dc));
-                return Math.max(0, linearDistance - 1);
             }
         }
 
@@ -134,12 +120,8 @@ public class QueensAttackII {
                 return new Coordinates(ints[0], ints[1]);
             }
 
-            Coordinates getCloser(Coordinates exist, Coordinates obstacle) {
-                if (distanceFrom(obstacle) < distanceFrom(exist)) {
-                    return obstacle;
-                } else {
-                    return exist;
-                }
+            int linearDistanceFrom(int rowDirection, int columnDirection, Coordinates obstacle) {
+                return distanceFrom(obstacle) / (Math.abs(rowDirection) + Math.abs(columnDirection));
             }
 
             private int distanceFrom(Coordinates other) {
