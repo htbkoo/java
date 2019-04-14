@@ -35,28 +35,41 @@ public class BirthdayChocolate {
         // Complete the birthday function below.
         static int birthday(List<Integer> s, int d, int m) {
             int n = s.size();
-            State[][] states = initialStates(d, m);
+            int[][][] states = initialStates(d, m, n);
 
-
-            range(0, m + 1).forEach(i ->
-                    range(0, d + 1).forEach(j ->
-//                            states[i][j] = (int) range(0, n).filter(k -> State.isNewStateValid(s, k)).count()
-                                    System.out.println("")
+            range(1, m + 1).forEach(i ->
+                    range(1, d + 1).forEach(j ->
+                            range(1, n + 1).forEach(k -> {
+                                        Integer value = s.get(k - 1);
+                                        int newNumWays = states[i][j][k - 1] + (((j - value) >= 0) ? states[i - 1][j - value][k - 1] : 0);
+                                        states[i][j][k] = newNumWays;
+                                    }
+                            )
                     )
             );
 
-            return states[m][d].getNumWays();
+            return states[m][d][n];
         }
 
-        private static State[][] initialStates(int d, int m) {
-            State[][] states = new State[m + 1][d + 1];
+        private static int[][][] initialStates(int d, int m, int n) {
+            int[][][] states = new int[m + 1][d + 1][n + 1];
 
-            // states[0][:] and states[:][0] have no possible configurations because 1<=s[i]<=5
-            range(0, m + 1).forEach(i ->
-                    states[i][0] = State.EMPTY
+            // states[0][0][:] all have 1 possible configuration which is the empty set (i.e. picking no chocolate)
+//            range(0, d + 1).forEach(j ->
+            range(0, n + 1).forEach(k ->
+                            states[0][0][k] = 1
+//                    )
             );
-            range(0, d + 1).forEach(j ->
-                    states[0][j] = State.EMPTY
+
+            // states[1:][:][0] and states[1:][0][:] have no possible configurations because 1<=s[i]<=5
+            range(1, m + 1).forEach(i -> {
+                        range(0, d + 1).forEach(j ->
+                                states[i][j][0] = 0
+                        );
+                        range(0, n + 1).forEach(k ->
+                                states[i][0][k] = 0
+                        );
+                    }
             );
             return states;
         }
