@@ -14,9 +14,9 @@ class QueensAttackIITest extends Specification {
 
         where:
         n      | k | r_q   | c_q  | obstacles                 || expected
-        100000 | 0 | 50000 | 5000 | []                        || 0
         4      | 0 | 4     | 4    | []                        || 9
         5      | 3 | 4     | 3    | [[5, 5], [4, 2], [2, 3],] || 10
+        100000 | 0 | 50000 | 5000 | []                        || 0
         1      | 0 | 1     | 1    | []                        || 0
     }
 }
