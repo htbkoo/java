@@ -111,7 +111,7 @@ public class TheTimeInWords {
             if (unitDigit == 0) {
                 return tenthWord;
             } else {
-                return tenthWord + " " + SPECIAL_INT_TO_WORD_MAPPING[unitDigit];
+                return spaceSeparated(tenthWord, SPECIAL_INT_TO_WORD_MAPPING[unitDigit]);
             }
         }
 
