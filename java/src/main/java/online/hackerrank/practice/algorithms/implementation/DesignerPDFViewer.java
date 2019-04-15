@@ -19,9 +19,6 @@ public class DesignerPDFViewer {
                     .map(index -> h[index])
                     .max()
                     .orElseThrow(() -> new IllegalArgumentException("word is empty"));
-
-//            HashSet<String> allUniqueChars = new HashSet<>(Arrays.asList(word.split("")));
-//            allUniqueChars.stream().
             return width * maxHeight;
         }
 
