@@ -23,60 +23,63 @@ public class TheTimeInWords {
         private static final String QUARTER = "quarter";
         private static final String PAST = "past";
         private static final String TO = "to";
+        private static final String ONE_MINUTE = "one minute";
+        private static final String SPACE_SEPARATED = " ";
+        private static final String MINUTES = "minutes";
 
-        // Complete the timeInWords function below.
-        static String timeInWords(int h, int m) {
-            boolean isOClock = m == 0;
-            boolean isHalfHour = m == 30;
-            boolean isFirstHalfHour = m < 30;
-            if (isOClock) {
-                return asOClock(h);
-            } else if (isHalfHour) {
-                return asHalfPast(h);
-            } else if (isFirstHalfHour) {
-                return asMinutesOrQuarterPast(h, m);
-            } else {
-                int mFromNextHour = MINUTES_IN_HOUR - m;
-                return asMinutesOrQuarterTo(h + 1, mFromNextHour);
-            }
-        }
-
-        private static String asMinutesOrQuarterPast(int h, int m) {
+        private static String asMinutesOrQuarter(String descriptor, int h, int m) {
             if (isQuarter(m)) {
-                return asQuarter(PAST, h);
+                return asQuarter(descriptor, h);
             } else if (isOneMinute(m)) {
-
+                return asOneMinute(descriptor, h);
+            } else {
+                return asMinutes(descriptor, h, m);
             }
-
-            return null;
         }
 
         private static boolean isOneMinute(int m) {
             return m == 1;
         }
 
-        private static String asMinutesOrQuarterTo(int hNext, int mFromNextHour) {
-            if (isQuarter(mFromNextHour)) {
-                return asQuarter(TO, hNext);
-            }
-
-            return null;
-        }
-
         private static boolean isQuarter(int m) {
             return m % MINUTES_IN_QUARTER == 0;
         }
 
+
+        private static boolean isHalfHour(int m) {
+            return m == 30;
+        }
+
+        private static boolean isOClock(int m) {
+            return m == 0;
+        }
+
+        private static boolean isFirstHalfHour(int m) {
+            return m < 30;
+        }
+
+        private static String spaceSeparated(String... parts) {
+            return String.join(SPACE_SEPARATED, parts);
+        }
+
         private static String asOClock(int h) {
-            return intToWord(h) + " " + O_CLOCK;
+            return spaceSeparated(intToWord(h), O_CLOCK);
         }
 
         private static String asHalfPast(int h) {
-            return HALF_PAST + " " + intToWord(h);
+            return spaceSeparated(HALF_PAST, intToWord(h));
         }
 
         private static String asQuarter(String descriptor, int h) {
-            return QUARTER + " " + descriptor + " " + intToWord(h);
+            return spaceSeparated(QUARTER, descriptor, intToWord(h));
+        }
+
+        private static String asOneMinute(String descriptor, int h) {
+            return spaceSeparated(ONE_MINUTE, descriptor, intToWord(h));
+        }
+
+        private static String asMinutes(String descriptor, int h, int m) {
+            return spaceSeparated(intToWord(m), MINUTES, descriptor, intToWord(h));
         }
 
         static String intToWord(int i) {
@@ -84,16 +87,6 @@ public class TheTimeInWords {
                 return SPECIAL_INT_TO_WORD_MAPPING[i];
             } else {
                 return ordinaryMapping(i);
-            }
-        }
-
-        private static String ordinaryMapping(int i) {
-            String tenthWord = getTenthWord(i / 10);
-            int unitDigit = i % 10;
-            if (unitDigit == 0) {
-                return tenthWord;
-            } else {
-                return tenthWord + " " + SPECIAL_INT_TO_WORD_MAPPING[unitDigit];
             }
         }
 
@@ -109,6 +102,33 @@ public class TheTimeInWords {
                     return FIFTY;
                 default:
                     throw new IllegalArgumentException("Unrecognized tenthDigit: " + tenthDigit);
+            }
+        }
+
+        private static String ordinaryMapping(int i) {
+            String tenthWord = getTenthWord(i / 10);
+            int unitDigit = i % 10;
+            if (unitDigit == 0) {
+                return tenthWord;
+            } else {
+                return tenthWord + " " + SPECIAL_INT_TO_WORD_MAPPING[unitDigit];
+            }
+        }
+
+        // Complete the timeInWords function below.
+        static String timeInWords(int h, int m) {
+            if (isOClock(m)) {
+                return asOClock(h);
+            } else if (isHalfHour(m)) {
+                return asHalfPast(h);
+            } else {
+                if (isFirstHalfHour(m)) {
+                    return asMinutesOrQuarter(PAST, h, m);
+                } else {
+                    int hNext = h + 1;
+                    int mFromNextHour = MINUTES_IN_HOUR - m;
+                    return asMinutesOrQuarter(TO, hNext, mFromNextHour);
+                }
             }
         }
 
