@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 public class JesseAndCookies {
     public static class Solution {
-
         private static final int IMPOSSIBLE = -1;
 
         /*
@@ -23,21 +22,26 @@ public class JesseAndCookies {
             PriorityQueue<Integer> pq = Arrays.stream(A).boxed().collect(Collectors.toCollection(PriorityQueue::new));
             int count = 0;
             do {
-                if (pq.isEmpty()) {
-//                    return IMPOSSIBLE; // did not specify
-                    return count;
+                if (pq.size() < 2) {
+                    if (pq.isEmpty()) {
+                        return count;
+                    } else {
+                        Integer least = pq.poll();
+                        if (least >= k) {
+                            return count;
+                        } else {
+                            return IMPOSSIBLE;
+                        }
+                    }
                 } else {
                     Integer least = pq.poll();
                     if (least >= k) {
                         return count;
                     } else {
-                        if (pq.isEmpty()) {
-                            return IMPOSSIBLE;
-                        } else {
-                            Integer secondLeast = pq.poll();
-                            pq.add(least + 2 * secondLeast);
-                            count++;
-                        }
+                        Integer secondLeast = pq.poll();
+                        //noinspection ConstantConditions
+                        pq.add(least + 2 * secondLeast);
+                        count++;
                     }
                 }
             } while (true);
