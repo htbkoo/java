@@ -1,7 +1,5 @@
 package online.leetcode;
 
-import java.util.Arrays;
-
 /**
  * Created by Hey on 29/10/15
  */
@@ -23,9 +21,27 @@ Subscribe to see which companies asked this question
 
 public class BinarySearch {
     static class Solution {
+        private static final int NOT_EXIST = -1;
+
         public int search(int[] nums, int target) {
-            int index = Arrays.binarySearch(nums, target);
-            return index >= 0 ? index : -1;
+            int length = nums.length;
+            if (length == 0) {
+                return NOT_EXIST;
+            } else {
+                int lo = 0, hi = length - 1;
+                while (lo <= hi) {
+                    int mid = (lo + hi) / 2;
+                    int midValue = nums[mid];
+                    if (target == midValue) {
+                        return mid;
+                    } else if (target < midValue) {
+                        hi = mid - 1;
+                    } else {
+                        lo = mid + 1;
+                    }
+                }
+                return NOT_EXIST;
+            }
         }
     }
 }
