@@ -51,8 +51,9 @@ Note:
 
 package online.leetcode;
 
-public class MinimumCostForTickets {
+public class MinimumCostForTickets_fast_days_variant {
     class Solution {
+        private final int[] passDays = new int[]{1, 7, 30};
         private static final int ONE_DAY = 1;
         private static final int SEVEN_DAY = 7;
         private static final int THIRTY_DAY = 30;
@@ -66,12 +67,8 @@ public class MinimumCostForTickets {
                 this.cost = cost;
             }
 
-            int costIfBought(int travel, int d, int[] days, int[] minCosts) {
-                int earliestDayCanBuy = d - this.numDays;
-                while (travel >= 0 && days[travel] > earliestDayCanBuy) {
-                    travel--;
-                }
-                return minCosts[travel + 1] + this.cost;
+            int costIfBought(int d, int[] minCosts) {
+                return minCosts[Math.max(0, d - this.numDays)] + this.cost;
             }
         }
 
@@ -80,18 +77,24 @@ public class MinimumCostForTickets {
             Pass sevenDay = new Pass(SEVEN_DAY, costs[1]);
             Pass thirtyDay = new Pass(THIRTY_DAY, costs[2]);
 
-            int numTravels = days.length;
-            final int[] minCosts = new int[numTravels + 1];
+            int numDays = days[days.length - 1];
+            final int[] minCosts = new int[numDays + 1];
 
-            for (int travel = 0; travel < numTravels; ++travel) {
-                int d = days[travel];
-                int newMinCost = oneDay.costIfBought(travel, d, days, minCosts);
-                newMinCost = Math.min(newMinCost, sevenDay.costIfBought(travel, d, days, minCosts));
-                newMinCost = Math.min(newMinCost, thirtyDay.costIfBought(travel, d, days, minCosts));
-                minCosts[travel + 1] = newMinCost;
+            int daysPointer = 0;
+
+            for (int d = 1; d <= numDays; ++d) {
+                if (days[daysPointer] == d) {
+                    daysPointer++;
+                    int newMinCost = oneDay.costIfBought(d, minCosts);
+                    newMinCost = Math.min(newMinCost, sevenDay.costIfBought(d, minCosts));
+                    newMinCost = Math.min(newMinCost, thirtyDay.costIfBought(d, minCosts));
+                    minCosts[d] = newMinCost;
+                } else {
+                    minCosts[d] = minCosts[d - 1];
+                }
             }
 
-            return minCosts[numTravels];
+            return minCosts[numDays];
         }
     }
 }
