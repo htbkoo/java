@@ -32,8 +32,6 @@ Note:
 
 */
 
-import java.util.Arrays;
-
 public class MinimumFallingPathSum {
     static class Solution {
         public int minFallingPathSum(int[][] A) {
@@ -42,20 +40,23 @@ public class MinimumFallingPathSum {
                 return 0;
             } else {
                 int width = A[0].length;
-                int[] prevRow = new int[width];
-                System.arraycopy(A[0], 0, prevRow, 0, width);
-
                 for (int i = 1; i < height; ++i) {
-                    int[] currentRow = new int[width];
                     for (int j = 0; j < width; ++j) {
-                        int from = Math.max(0, j - 1);
-                        int to = Math.min(width, j + 1 + 1);
-                        int min = Arrays.stream(prevRow, from, to).min().orElseThrow(() -> new IllegalStateException("Defect, nums are empty"));
-                        currentRow[j] = A[i][j] + min;
+                        int best = A[i - 1][j];
+                        if (j > 0) {
+                            best = Math.min(best, A[i - 1][j - 1]);
+                        }
+                        if (j < width - 1) {
+                            best = Math.min(best, A[i - 1][j + 1]);
+                        }
+                        A[i][j] = A[i][j] + best;
                     }
-                    prevRow = currentRow;
                 }
-                return Arrays.stream(prevRow).min().orElseThrow(() -> new IllegalStateException("Defect, prevRow is empty"));
+                int min = A[height - 1][0];
+                for (int j = 1; j < width; ++j) {
+                    min = Math.min(min, A[height - 1][j]);
+                }
+                return min;
             }
         }
     }
