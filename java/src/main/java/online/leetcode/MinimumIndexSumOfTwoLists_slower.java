@@ -38,18 +38,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MinimumIndexSumOfTwoLists {
+public class MinimumIndexSumOfTwoLists_slower {
     static class Solution {
         public String[] findRestaurant(String[] list1, String[] list2) {
+            Map<String, Integer> fav1 = toMap(list1);
             Map<String, Integer> fav2 = toMap(list2);
 
             List<String> mins = new ArrayList<>();
             int minSum = Integer.MAX_VALUE;
-
-            for (int i = 0, length = list1.length; i < length; ++i) {
-                String key = list1[i];
+            for (Map.Entry<String, Integer> entry : fav1.entrySet()) {
+                String key = entry.getKey();
                 if (fav2.containsKey(key)) {
-                    int sum = i + fav2.get(key);
+                    Integer index1 = entry.getValue();
+                    Integer index2 = fav2.get(key);
+                    int sum = index1 + index2;
                     if (sum == minSum) {
                         mins.add(key);
                     } else if (sum < minSum) {
@@ -64,11 +66,11 @@ public class MinimumIndexSumOfTwoLists {
         }
 
         private Map<String, Integer> toMap(String[] list) {
-            Map<String, Integer> fav = new HashMap<>();
+            Map<String, Integer> fav1 = new HashMap<>();
             for (int i = 0, length = list.length; i < length; ++i) {
-                fav.put(list[i], i);
+                fav1.put(list[i], i);
             }
-            return fav;
+            return fav1;
         }
     }
 }
