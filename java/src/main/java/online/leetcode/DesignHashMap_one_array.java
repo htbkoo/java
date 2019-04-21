@@ -34,94 +34,41 @@ Note:
 
 package online.leetcode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
-public class DesignHashMap {
+public class DesignHashMap_one_array {
     class MyHashMap {
-        private class Bucket {
-            private class Entry {
-                final int key;
-                final int value;
-
-                private Entry(int key, int value) {
-                    this.key = key;
-                    this.value = value;
-                }
-            }
-
-            final List<Entry> bucket;
-
-            private Bucket() {
-                this.bucket = new ArrayList<>();
-            }
-
-            public void put(int key, int value) {
-                Entry e = new Entry(key, value);
-                if (bucket.isEmpty()) {
-                    addToBucket(e);
-                } else {
-                    Optional<Integer> index = findIndex(key);
-                    if (index.isPresent()) {
-                        bucket.add(index.get(), e);
-                    } else {
-                        addToBucket(e);
-                    }
-                }
-            }
-
-            private void addToBucket(Entry e) {
-                bucket.add(e);
-            }
-
-            private Optional<Integer> findIndex(int key) {
-                for (int i = 0; i < bucket.size(); ++i) {
-                    if (bucket.get(i).key == key) {
-                        return Optional.of(i);
-                    }
-                }
-                return Optional.empty();
-            }
-        }
-
-        private static final int NUM_BUCKETS = 1000;
         private static final int KEY_RANGE = 1000000;
         private static final int NOT_FOUND = -1;
-        private final Bucket[] buckets;
+        private final int[] ints;
 
         /**
          * Initialize your data structure here.
          */
         public MyHashMap() {
-            this.buckets = new Bucket[NUM_BUCKETS];
-            Arrays.fill(buckets, new Bucket());
+            this.ints = new int[KEY_RANGE + 1];
+            Arrays.fill(ints, NOT_FOUND);
         }
 
         /**
          * value will always be non-negative.
          */
         public void put(int key, int value) {
-            this.buckets[getBucketId(key)].put(key, value);
+            this.ints[key] = value;
         }
 
         /**
          * Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
          */
         public int get(int key) {
-            return this.buckets[getBucketId(key)].get(key);
+            return this.ints[key];
         }
 
         /**
          * Removes the mapping of the specified value key if this map contains a mapping for the key
          */
         public void remove(int key) {
-            return this.buckets[getBucketId(key)].remove(key);
-        }
-
-        private int getBucketId(int key) {
-            return key % NUM_BUCKETS;
+            this.ints[key] = NOT_FOUND;
         }
     }
 
