@@ -35,13 +35,16 @@ Note:
 package online.leetcode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.IntStream.range;
 
 public class DesignHashMap {
     class MyHashMap {
         private class Bucket {
+            private static final int NOT_FOUND = -1;
+
             private class Entry {
                 final int key;
                 final int value;
@@ -60,16 +63,25 @@ public class DesignHashMap {
 
             public void put(int key, int value) {
                 Entry e = new Entry(key, value);
-                if (bucket.isEmpty()) {
-                    addToBucket(e);
+                Optional<Integer> index = findIndex(key);
+                if (index.isPresent()) {
+                    Integer i = index.get();
+                    bucket.remove((int) i);
+                    bucket.add(i, e);
                 } else {
-                    Optional<Integer> index = findIndex(key);
-                    if (index.isPresent()) {
-                        bucket.add(index.get(), e);
-                    } else {
-                        addToBucket(e);
-                    }
+                    addToBucket(e);
                 }
+            }
+
+            public int get(int key) {
+                Optional<Integer> index = findIndex(key);
+                return index.map(bucket::get).map(entry -> entry.value)
+                        .orElse(NOT_FOUND);
+            }
+
+            public void remove(int key) {
+                Optional<Integer> index = findIndex(key);
+                index.ifPresent(i -> bucket.remove((int) i));
             }
 
             private void addToBucket(Entry e) {
@@ -88,7 +100,6 @@ public class DesignHashMap {
 
         private static final int NUM_BUCKETS = 1000;
         private static final int KEY_RANGE = 1000000;
-        private static final int NOT_FOUND = -1;
         private final Bucket[] buckets;
 
         /**
@@ -96,7 +107,7 @@ public class DesignHashMap {
          */
         public MyHashMap() {
             this.buckets = new Bucket[NUM_BUCKETS];
-            Arrays.fill(buckets, new Bucket());
+            range(0, NUM_BUCKETS).forEach(i -> this.buckets[i] = new Bucket());
         }
 
         /**
@@ -117,7 +128,7 @@ public class DesignHashMap {
          * Removes the mapping of the specified value key if this map contains a mapping for the key
          */
         public void remove(int key) {
-            return this.buckets[getBucketId(key)].remove(key);
+            this.buckets[getBucketId(key)].remove(key);
         }
 
         private int getBucketId(int key) {
