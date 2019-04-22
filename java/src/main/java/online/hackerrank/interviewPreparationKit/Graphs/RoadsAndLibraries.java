@@ -95,7 +95,7 @@ public class RoadsAndLibraries {
                 Set<DisjointSetForest.DisjointSetTree> disjointTress = forest.getAllDisjoint();
                 long totalCost = 0;
                 for (DisjointSetForest.DisjointSetTree tree : disjointTress) {
-                    long numRoadsNeeded = tree.size - 1;
+                    long numRoadsNeeded = tree.find().size - 1;
                     long cost = numRoadsNeeded * (long) c_road + (long) c_lib;
                     totalCost += cost;
                 }
