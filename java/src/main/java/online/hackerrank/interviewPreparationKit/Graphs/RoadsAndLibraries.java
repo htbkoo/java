@@ -60,9 +60,7 @@ public class RoadsAndLibraries {
                 DisjointSetTree shouldBeLarger = trees[u - 1].find();
                 DisjointSetTree shouldBeSmaller = trees[v - 1].find();
 
-                if (shouldBeLarger == shouldBeSmaller) {
-                    return;
-                } else {
+                if (shouldBeLarger != shouldBeSmaller) {
                     if (shouldBeLarger.size < shouldBeSmaller.size) {
                         // swap
                         DisjointSetTree temp = shouldBeLarger;
