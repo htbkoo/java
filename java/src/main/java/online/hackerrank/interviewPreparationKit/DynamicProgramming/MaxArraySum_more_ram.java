@@ -5,24 +5,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class MaxArraySum {
+public class MaxArraySum_more_ram {
     public static class Solution {
         // Complete the maxSubsetSum function below.
         static int maxSubsetSum(int[] arr) {
             int n = arr.length;
-            int nonAdjacent = 0;
-            int adjacent = atLeastZero(arr, 0);
+            int[] maxSums = new int[n + 1];
+            maxSums[1] = Math.max(0, arr[0]);
             for (int i = 1; i < n; ++i) {
-                int current = atLeastZero(arr, i);
-                int max = Math.max(current + nonAdjacent, adjacent);
-                nonAdjacent = adjacent;
-                adjacent = max;
+                int nonAdjacent = Math.max(0, arr[i]) + maxSums[i - 1];
+                int adjacent = maxSums[i];
+                maxSums[i + 1] = Math.max(nonAdjacent, adjacent);
             }
-            return adjacent;
-        }
-
-        private static int atLeastZero(int[] arr, int i) {
-            return Math.max(0, arr[i]);
+            return maxSums[n];
         }
 
         private static final Scanner scanner = new Scanner(System.in);
