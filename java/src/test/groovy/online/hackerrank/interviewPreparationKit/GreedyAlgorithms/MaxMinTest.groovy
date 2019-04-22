@@ -7,7 +7,7 @@ class MaxMinTest extends Specification {
     @Unroll
     def "test"() {
         when:
-        def actual = GreedyFlorist.Solution.maxMin(k, arr as int[])
+        def actual = MaxMin.Solution.maxMin(k, arr as int[])
 
         then:
         actual == expected
