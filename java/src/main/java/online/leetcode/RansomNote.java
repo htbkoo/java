@@ -28,7 +28,7 @@ public class RansomNote {
             int[] magazineFrequencies = countFrequency(magazine);
 
             for (int i = 0; i < ransomNoteFrequencies.length; i++) {
-                if (ransomNoteFrequencies[i]>magazineFrequencies[i]){
+                if (ransomNoteFrequencies[i] > magazineFrequencies[i]) {
                     return false;
                 }
             }
@@ -38,7 +38,9 @@ public class RansomNote {
 
         private int[] countFrequency(String str) {
             int[] frequencies = new int[ASCII_RANGE];
-            str.chars().forEach(charCode -> frequencies[charCode]++);
+            for (int i = 0, length = str.length(); i < length; ++i) {
+                frequencies[str.codePointAt(i)]++;
+            }
             return frequencies;
         }
     }
