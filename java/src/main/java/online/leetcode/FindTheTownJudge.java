@@ -44,19 +44,17 @@ Note:
 
 */
 
-import java.util.Arrays;
-
 public class FindTheTownJudge {
     static class Solution {
         public int findJudge(int N, int[][] trust) {
             int[] numItTrusts = new int[N];
             int[] numTrustsIt = new int[N];
 
-
-            Arrays.stream(trust).forEach(pair -> {
+            for (int i = 0, length = trust.length; i < length; ++i) {
+                int[] pair = trust[i];
                 numItTrusts[pair[0] - 1]++;
                 numTrustsIt[pair[1] - 1]++;
-            });
+            }
 
             for (int i = 0; i < N; ++i) {
                 if (numItTrusts[i] == 0 && numTrustsIt[i] == N - 1) {
