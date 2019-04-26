@@ -1,45 +1,50 @@
 package online.atCoder.beginnerContext123;
 
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class FiveDishes {
     private static final int INTERVAL = 10;
 
-    private static class Dish{
+    private static class Dish {
         final int time;
         final int roundUp;
         final int timeWasted;
 
-        private Dish(int time, int roundUp, int timeWasted){
+        private Dish(int time, int roundUp, int timeWasted) {
             this.time = time;
             this.roundUp = roundUp;
             this.timeWasted = timeWasted;
         }
 
-        static Dish fromInt(int i){
-            int roundUp = ((i+INTERVAL -1)/INTERVAL)*INTERVAL;
-            int timeWasted = roundUp-i;
+        static Dish fromInt(int i) {
+            int roundUp = ((i + INTERVAL - 1) / INTERVAL) * INTERVAL;
+            int timeWasted = roundUp - i;
             return new Dish(i, roundUp, timeWasted);
         }
 
-        int getRoundUp(){
+        int getTimeWasted() {
+            return this.timeWasted;
+        }
+
+        int getRoundUp() {
             return this.roundUp;
         }
     }
 
     public static String process(int a, int b, int c, int d, int e) {
-        List<Integer> times = Arrays.asList(a,b,c,d,e);
-        List<Dish> dishes = times.stream().map(Dish::fromInt).collect(Collectors.toList());
-        dishes.sort((d1, d2)->Integer.compare(d1.timeWasted, d2.timeWasted));
+        List<Dish> dishes = Stream.of(a, b, c, d, e)
+                .map(Dish::fromInt)
+                .sorted(Comparator.comparing(Dish::getTimeWasted))
+                .collect(Collectors.toList());
 
-        int sum = 0;
-        int lastDish = dishes.size()-1;
+        int lastDish = dishes.size() - 1;
         int lastDishTime = dishes.get(lastDish).time;
-        int totalTime = lastDishTime + IntStream.range(0, lastDish ).mapToObj(dishes::get).mapToInt(Dish::getRoundUp).sum();
+        int totalTime = lastDishTime + IntStream.range(0, lastDish).mapToObj(dishes::get).mapToInt(Dish::getRoundUp).sum();
 
         return String.valueOf(totalTime);
     }
