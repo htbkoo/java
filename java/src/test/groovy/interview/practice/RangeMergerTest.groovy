@@ -7,15 +7,18 @@ class RangeMergerTest extends Specification {
     @Unroll
     def "should manage ranges"() {
         given:
+        def ids = [1]
         def merger = new RangeMerger()
 
         when:
-        merger.put(1)
+        ids.each {
+            merger.put(it)
+            merger.contains(it)
+        }
 
         then:
-        merger.contains(1)
-        merger.size() == 1
-
-
+        def expectedSize = 1
+        ids.every { merger.contains(it) }
+        merger.size() == expectedSize
     }
 }
