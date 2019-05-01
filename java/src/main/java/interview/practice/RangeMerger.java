@@ -50,7 +50,6 @@ public class RangeMerger {
 
     private TreeSet<Range> createRangesTreeSet() {
         return new TreeSet<>(comparing(Range::getStart));
-//        return new TreeSet<>(Comparator.comparing(Range::getStart).thenComparing(Range::getEnd));
     }
 
     public void put(long id) {

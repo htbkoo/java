@@ -23,6 +23,7 @@ class RangeMergerTest extends Specification {
                 [op(1, 1), op(3, 2),],
                 [op(1, 1), op(3, 2), op(2, 1)],
                 [op(1, 1), op(3, 2), op(4, 2), op(2, 1)],
+                [op(1, 1), op(3, 2), op(5, 3), op(7, 4), op(2, 3), op(6, 2), op(4, 1),],
         ]
     }
 
