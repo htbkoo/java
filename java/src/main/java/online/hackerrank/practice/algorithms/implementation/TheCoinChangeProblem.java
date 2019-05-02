@@ -3,28 +3,46 @@ package online.hackerrank.practice.algorithms.implementation;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TheCoinChangeProblem {
     public static class Solution {
         // Complete the getWays function below.
         static long getWays(long n, long[] c) {
-            long[] ways = new long[(int) n + 1];
-            IntStream.range(1, (int) n + 1).forEach(i -> {
-                Arrays.stream(c).forEach(coin -> {
-                    if (i > coin) {
-                        ways[i] = Math.max(ways[i], 1 + ways[(int) (i - coin)]);
-                    } else if (i == coin) {
-                        ways[i] += 1;
+            List<Set<Set<Long>>> ways = new ArrayList<>();
+            ways.add(new HashSet<>());
+//long[] ways = new long[n+1];
+            IntStream.range(1, (int)n+1).forEach(i->{
+                Set<Set<Long>> combinations = new HashSet<>();
+                Arrays.stream(c).forEach(coin->{
+                    if (i>coin){
+                        combinations.addAll(ways.get((int)(i-coin)).stream().map(combination->withCoin(combination, coin)).collect(Collectors.toList()));
+//ways[i]+=ways[i-coin];
+                    }else if (i==coin){
+                        combinations.add(new HashSet<>(Collections.singletonList(coin)));
+//ways[i]+=1;
 //}else{
-
                     }
                 });
+                ways.add(combinations);
             });
 
-            return ways[(int) n];
+            return ways.get((int)n).size();
+//            return ways[n];
+        }
+
+        private static Set<Long> withCoin(Set<Long> combination, long coin){
+            Set<Long> newCombination = new HashSet<>(combination);
+            newCombination.add(coin);
+            return  newCombination;
         }
 
         private static final Scanner scanner = new Scanner(System.in);
@@ -52,6 +70,7 @@ public class TheCoinChangeProblem {
 
             long ways = getWays(n, c);
 
+            bufferedWriter.write(String.valueOf(ways));
             bufferedWriter.close();
 
             scanner.close();
