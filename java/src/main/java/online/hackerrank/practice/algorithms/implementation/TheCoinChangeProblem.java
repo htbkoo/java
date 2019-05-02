@@ -5,28 +5,32 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 
 public class TheCoinChangeProblem {
     public static class Solution {
         // Complete the getWays function below.
         static long getWays(long n, long[] c) {
-            List<Set<Set<Long>>> ways = new ArrayList<>();
+            int numCoin = c.length;
+            List<Set<List<Integer>>> ways = new ArrayList<>();
             ways.add(new HashSet<>());
-            IntStream.range(1, (int) n + 1).forEach(i -> {
-                Set<Set<Long>> combinations = new HashSet<>();
-                Arrays.stream(c).forEach(coin -> {
+            range(1, (int) n + 1).forEach(i -> {
+                Set<List<Integer>> combinations = new HashSet<>();
+                range(0, numCoin).forEach(ci -> {
+                    long coin = c[ci];
                     if (i > coin) {
-                        combinations.addAll(ways.get((int) (i - coin)).stream().map(combination -> withCoin(combination, coin)).collect(Collectors.toList()));
+                        Set<List<Integer>> newCombinations = ways.get((int) (i - coin)).stream().map(combination -> withCoin(combination, ci)).collect(Collectors.toSet());
+                        combinations.addAll(newCombinations);
                     } else if (i == coin) {
-                        combinations.add(new HashSet<>(Collections.singletonList(coin)));
+                        combinations.add(oneCoinCombination(numCoin, ci));
                     }
+
                 });
                 ways.add(combinations);
             });
@@ -34,10 +38,16 @@ public class TheCoinChangeProblem {
             return ways.get((int) n).size();
         }
 
-        private static Set<Long> withCoin(Set<Long> combination, long coin) {
-            Set<Long> newCombination = new HashSet<>(combination);
-            newCombination.add(coin);
+        private static List<Integer> withCoin(List<Integer> combination, int index) {
+            List<Integer> newCombination = new ArrayList<>(combination);
+            newCombination.set(index, combination.get(index) + 1);
             return newCombination;
+        }
+
+        private static List<Integer> oneCoinCombination(int numCoin, int index) {
+            int[] arr = new int[numCoin];
+            arr[index] = 1;
+            return Arrays.stream(arr).boxed().collect(Collectors.toList());
         }
 
         private static final Scanner scanner = new Scanner(System.in);
