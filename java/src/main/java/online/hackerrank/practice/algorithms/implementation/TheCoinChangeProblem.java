@@ -4,7 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 
 public class TheCoinChangeProblem {
     public static class Solution {
@@ -14,17 +15,17 @@ public class TheCoinChangeProblem {
             int numCoins = c.length;
 
             long[][] ways = new long[nInt + 1][numCoins + 1];
-            IntStream.range(0, numCoins + 1).forEach(i -> ways[0][i] = 1); // always have 1 way to build 0 value, i.e. no coins picked
+            range(0, numCoins + 1).forEach(i -> ways[0][i] = 1); // always have 1 way to build 0 value, i.e. no coins picked
 
-            IntStream.range(1, numCoins + 1).forEach(ci -> {
-                IntStream.range(1, nInt + 1).forEach(ni -> {
-                    long coin = c[ci - 1];
-                    ways[ni][ci] = ways[ni][ci - 1];
-                    if (ni >= coin) {
-                        ways[ni][ci] += ways[ni - (int)coin][ci];
-                    }
-                });
-            });
+            range(1, numCoins + 1).forEach(ci ->
+                    range(1, nInt + 1).forEach(ni -> {
+                        long coin = c[ci - 1];
+                        ways[ni][ci] = ways[ni][ci - 1];
+                        if (ni >= coin) {
+                            ways[ni][ci] += ways[ni - (int) coin][ci];
+                        }
+                    })
+            );
 
             return ways[nInt][numCoins];
         }
