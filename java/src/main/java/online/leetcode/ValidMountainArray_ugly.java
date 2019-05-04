@@ -39,25 +39,36 @@ Note:
 
 */
 
-public class ValidMountainArray {
+public class ValidMountainArray_ugly {
     static class Solution {
         public boolean validMountainArray(int[] A) {
             int length = A.length;
             if (length >= 3) {
-                int i = 0;
-                while (i < length - 1 && A[i + 1] > A[i]) {
-                    i++;
-                }
-
-                if (i == 0 || i == length - 1) {
+                if (A[0] >= A[1]) {
                     return false;
                 }
-
-                while (i < length - 1 && A[i + 1] < A[i]) {
-                    i++;
+                if (A[length - 2] <= A[length - 1]) {
+                    return false;
                 }
+                // we definitely have a peak after the above check
 
-                return i == length - 1;
+                boolean isPeaked = false;
+                for (int i = 2; i < length - 1; ++i) {
+                    if (A[i] == A[i - 1]) {
+                        return false;
+                    } else {
+                        if (!isPeaked) {
+                            if (A[i] < A[i - 1]) {
+                                isPeaked = true;
+                            }
+                        } else {
+                            if (A[i] > A[i - 1]) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
             } else {
                 return false;
             }
