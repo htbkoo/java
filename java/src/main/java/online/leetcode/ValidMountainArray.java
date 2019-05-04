@@ -50,22 +50,25 @@ public class ValidMountainArray {
                 if (A[length - 2] <= A[length - 1]) {
                     return false;
                 }
+                // we definitely have a peak after the above check
 
-                boolean hasPeak = false;
+                boolean isPeaked = false;
                 for (int i = 2; i < length - 1; ++i) {
-                    if (!hasPeak) {
-                        if (A[i] < A[i - 1]) {
-                            hasPeak = true;
-                        } else if (A[i] == A[i - 1]) {
-                            return false;
-                        }
+                    if (A[i] == A[i - 1]) {
+                        return false;
                     } else {
-                        if (A[i] >= A[i - 1]) {
-                            return false;
+                        if (!isPeaked) {
+                            if (A[i] < A[i - 1]) {
+                                isPeaked = true;
+                            }
+                        } else {
+                            if (A[i] > A[i - 1]) {
+                                return false;
+                            }
                         }
                     }
                 }
-                return hasPeak;
+                return true;
             } else {
                 return false;
             }
