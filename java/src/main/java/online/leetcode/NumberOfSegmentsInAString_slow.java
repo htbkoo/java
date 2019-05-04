@@ -15,17 +15,14 @@ Output: 5
 
 */
 
-public class NumberOfSegmentsInAString {
+import java.util.Arrays;
+
+public class NumberOfSegmentsInAString_slow {
     static class Solution {
         public int countSegments(String s) {
-            String[] substrs = s.split(" ");
-            int count = 0;
-            for (String substr : substrs) {
-                if (!substr.isEmpty()) {
-                    count++;
-                }
-            }
-            return count;
+            return (int) Arrays.stream(s.split(" "))
+                    .filter(substr -> !substr.isEmpty())
+                    .count();
         }
     }
 }
