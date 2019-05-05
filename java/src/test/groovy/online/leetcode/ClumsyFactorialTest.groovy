@@ -14,8 +14,18 @@ class ClumsyFactorialTest extends Specification {
         actual == expected
 
         where:
-        N  || expected
-        4  || 7
-        10 || 12
+        N     || expected
+        4     || 7
+        10    || 12
+
+        1     || 1
+        2     || 2
+        3     || 6
+        5     || 7
+        6     || 8
+        7     || 6
+        8     || 9
+        9     || 11
+        10000 || 10001
     }
 }

@@ -37,39 +37,40 @@ Note:
 
 */
 
-import java.util.function.BiFunction;
-
 public class ClumsyFactorial {
     static class Solution {
-        enum Operator {
-            MULTIPLY((a, b) -> a * b),
-            DIVIDE((a, b) -> a / b),
-            PLUS((a, b) -> a + b),
-            MINUS((a, b) -> a - b);
+        public int clumsy(int N) {
+            return (int) (firstPart(N) + plusParts(N - 3) - minusParts(N - 4));
+        }
 
-            private final BiFunction<Long, Long, Long> operation;
-
-            Operator(BiFunction<Long, Long, Long> operation) {
-                this.operation = operation;
-            }
-
-            long apply(long first, long second) {
-                return operation.apply(first, second);
+        private long firstPart(int n) {
+            if (n <= 0) {
+                return 0;
+            } else if (n == 1) {
+                return 1;
+            } else if (n == 2) {
+                return 2;
+            } else {
+                return n * (n - 1) / (n - 2);
             }
         }
 
-        private static final Operator[] operators = new Operator[]{Operator.MULTIPLY, Operator.DIVIDE, Operator.PLUS, Operator.MINUS};
-
-        public int clumsy(int N) {
-            long result = N;
-            int count = 0;
-            N--;
-            while (N > 0) {
-                result = operators[count % operators.length].apply(result, N);
-                N--;
-                count++;
+        private long plusParts(int n) {
+            long result = 0;
+            while (n > 0) {
+                result += n;
+                n -= 4;
             }
-            return (int) result;
+            return result;
+        }
+
+        private long minusParts(int n) {
+            long result = 0;
+            while (n > 0) {
+                result += firstPart(n);
+                n -= 4;
+            }
+            return result;
         }
     }
 }
