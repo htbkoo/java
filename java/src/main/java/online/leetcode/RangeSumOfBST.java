@@ -31,6 +31,9 @@ Note:
 
 import online.leetcode.util.TreeNode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -43,6 +46,35 @@ import online.leetcode.util.TreeNode;
 public class RangeSumOfBST {
     static class Solution {
         public int rangeSumBST(TreeNode root, int L, int R) {
+            return 0;
+        }
+
+        public int rangeSumBSTIterative(TreeNode root, int L, int R) {
+            if (root == null) {
+                return 0;
+            } else {
+                int sum = 0;
+                Deque<TreeNode> queue = new ArrayDeque<>();
+                queue.add(root);
+
+                while (!queue.isEmpty()) {
+                    TreeNode current = queue.poll();
+                    if (L <= current.val && current.val <= R) {
+                        sum += current.val;
+                    }
+                    if (L < current.val && current.left != null) {
+                        queue.add(current.left);
+                    }
+                    if (current.val < R && current.right != null) {
+                        queue.add(current.right);
+                    }
+                }
+
+                return sum;
+            }
+        }
+
+        public int rangeSumBSTRecursive(TreeNode root, int L, int R) {
             if (root == null) {
                 return 0;
             } else {
@@ -51,10 +83,10 @@ public class RangeSumOfBST {
                     sum += root.val;
                 }
                 if (L < root.val) {
-                    sum += rangeSumBST(root.left, L, R);
+                    sum += rangeSumBSTRecursive(root.left, L, R);
                 }
                 if (R > root.val) {
-                    sum += rangeSumBST(root.right, L, R);
+                    sum += rangeSumBSTRecursive(root.right, L, R);
                 }
                 return sum;
             }
