@@ -21,4 +21,4 @@ public class Employee {
         this.importance = importance;
         this.subordinates = subordinates;
     }
-};
+}

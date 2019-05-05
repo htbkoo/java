@@ -28,9 +28,10 @@ Note:
 
 import online.leetcode.util.Employee;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EmployeeImportance {
     static class Solution {
@@ -40,9 +41,8 @@ public class EmployeeImportance {
         }
 
         private Map<Integer, Employee> asMap(List<Employee> employees) {
-            Map<Integer, Employee> map = new HashMap<>();
-            employees.forEach(employee -> map.put(employee.id, employee));
-            return map;
+            return employees.stream()
+                    .collect(Collectors.toMap(employee -> employee.id, Function.identity(), (a, b) -> b));
         }
 
         private int getImportance(Map<Integer, Employee> map, int id) {
