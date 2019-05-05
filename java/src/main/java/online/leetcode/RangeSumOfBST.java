@@ -46,7 +46,12 @@ import java.util.Deque;
 public class RangeSumOfBST {
     static class Solution {
         public int rangeSumBST(TreeNode root, int L, int R) {
-            return 0;
+            if (root == null) {
+                return 0;
+            } else {
+                int val = root.val;
+                return ((L <= val && val <= R) ? val : 0) + rangeSumBST(root.left, L, R) + rangeSumBST(root.right, L, R);
+            }
         }
 
         public int rangeSumBSTIterative(TreeNode root, int L, int R) {
