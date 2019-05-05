@@ -41,7 +41,7 @@ import java.util.Map;
 public class NRepeatedElementInSize2NArray {
     static class Solution {
         public int repeatedNTimes(int[] A) {
-            Map<Integer, Integer> occurrences = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> occurrences = new HashMap<>();
 
             for (int a : A) {
                 occurrences.put(a, occurrences.getOrDefault(a, 0) + 1);
