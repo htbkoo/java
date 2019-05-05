@@ -35,23 +35,26 @@ Note:
 
 */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NRepeatedElementInSize2NArray {
     static class Solution {
         public int repeatedNTimes(int[] A) {
-            int element=0, count=0;
-            for (int a:A){
+            Map<Integer, Integer> occurrences = new HashMap<Integer, Integer>();
 
-                if (a==element){
-                    count++;
-                }else{
-                    if (count<=1){
-                        element=a;
-                        count=1;
-                    }    else{
-                        count--;
-                    }
+            for (int a : A) {
+                occurrences.put(a, occurrences.getOrDefault(a, 0) + 1);
+            }
+
+            int N = A.length / 2;
+            for (Map.Entry<Integer, Integer> entry : occurrences.entrySet()) {
+                if (entry.getValue() == N) {
+                    return entry.getKey();
                 }
             }
-            return element;
+
+            throw new IllegalArgumentException("not found");
         }
-    }}
+    }
+}
