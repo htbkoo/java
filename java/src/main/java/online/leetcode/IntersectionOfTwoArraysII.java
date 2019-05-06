@@ -29,47 +29,30 @@ Follow up:
 
 */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 
 public class IntersectionOfTwoArraysII {
     static class Solution {
         public int[] intersect(int[] nums1, int[] nums2) {
-            if (nums1.length > nums2.length) {
-                int[] temp = nums1;
-                nums1 = nums2;
-                nums2 = temp;
-            }
+            Arrays.sort(nums1);
+            Arrays.sort(nums2);
 
-            Map<Integer, Integer> freq1 = count(nums1);
+            int ptr1 = 0, ptr2 = 0, pos = 0;
 
-            return getIntersection(freq1, nums2);
-        }
-
-        private Map<Integer, Integer> count(int[] arr) {
-            Map<Integer, Integer> freq = new HashMap<>();
-            for (int element : arr) {
-                freq.put(element, freq.getOrDefault(element, 0) + 1);
-            }
-            return freq;
-        }
-
-        private int[] getIntersection(Map<Integer, Integer> freq1, int[] nums2) {
-            List<Integer> intersection = new ArrayList<>();
-            for (int n : nums2) {
-                if (freq1.containsKey(n) && freq1.get(n) > 0) {
-                    intersection.add(n);
-                    freq1.put(n, freq1.get(n) - 1);
+            while (ptr1 < nums1.length && ptr2 < nums2.length) {
+                if (nums1[ptr1] < nums2[ptr2]) {
+                    ptr1++;
+                } else if (nums1[ptr1] > nums2[ptr2]) {
+                    ptr2++;
+                } else {
+                    nums2[pos] = nums2[ptr2];
+                    ptr1++;
+                    ptr2++;
+                    pos++;
                 }
             }
-            int length = intersection.size();
-            int[] answer = new int[length];
-            for (int i = 0; i < length; ++i) {
-                answer[i] = intersection.get(i);
-            }
-            return answer;
+
+            return Arrays.copyOf(nums2, pos);
         }
     }
 }
