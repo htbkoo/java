@@ -30,46 +30,39 @@ Follow up:
 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IntersectionOfTwoArraysII {
+public class IntersectionOfTwoArraysII_slow {
     static class Solution {
         public int[] intersect(int[] nums1, int[] nums2) {
-            if (nums1.length > nums2.length) {
-                int[] temp = nums1;
-                nums1 = nums2;
-                nums2 = temp;
-            }
-
             Map<Integer, Integer> freq1 = count(nums1);
+            Map<Integer, Integer> freq2 = count(nums2);
 
-            return getIntersection(freq1, nums2);
+            return getIntersection(freq1, freq2);
         }
 
-        private Map<Integer, Integer> count(int[] arr) {
+        private Map<Integer, Integer> count(int[] arr){
             Map<Integer, Integer> freq = new HashMap<>();
-            for (int element : arr) {
-                freq.put(element, freq.getOrDefault(element, 0) + 1);
-            }
+            Arrays.stream(arr).forEach(element->freq.put(element, freq.getOrDefault(element, 0)+1));
             return freq;
         }
 
-        private int[] getIntersection(Map<Integer, Integer> freq1, int[] nums2) {
+        private int[] getIntersection(Map<Integer, Integer> freq1, Map<Integer, Integer> freq2){
             List<Integer> intersection = new ArrayList<>();
-            for (int n : nums2) {
-                if (freq1.containsKey(n) && freq1.get(n) > 0) {
-                    intersection.add(n);
-                    freq1.put(n, freq1.get(n) - 1);
+            for (Map.Entry<Integer, Integer> entry: freq1.entrySet()){
+                int element = entry.getKey();
+                int count1 = entry.getValue();
+                int count2 = freq2.getOrDefault(element, 0);
+                int count = Math.min(count1, count2);
+                for (int i=0;i<count;++i){
+                    intersection.add(element);
                 }
             }
-            int length = intersection.size();
-            int[] answer = new int[length];
-            for (int i = 0; i < length; ++i) {
-                answer[i] = intersection.get(i);
-            }
-            return answer;
+
+            return intersection.stream().mapToInt(i->i).toArray();
         }
     }
 }

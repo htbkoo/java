@@ -3,6 +3,8 @@ package online.leetcode
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.util.stream.Collectors
+
 class IntersectionOfTwoArraysIITest extends Specification {
 
     @Unroll
@@ -11,7 +13,8 @@ class IntersectionOfTwoArraysIITest extends Specification {
         def actual = new IntersectionOfTwoArraysII.Solution().intersect(nums1 as int[], nums2 as int[],)
 
         then:
-        actual == expected as int[]
+        actual.length == expected.size()
+        Arrays.stream(actual).boxed().collect(Collectors.toSet()) == new HashSet<>(expected)
 
         where:
         nums1        | nums2           || expected
