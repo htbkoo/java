@@ -42,7 +42,7 @@ public class SearchInRotatedSortedArray {
                 if (target > max) {
                     return NOT_FOUND;
                 } else if (target <= nums[length - 1]) {
-                    return binarySearchIndex(nums, target, maxIndex + 1, length - 1);
+                    return binarySearchIndex(nums, target, (maxIndex + 1) % length, length - 1);
                 } else {
                     return binarySearchIndex(nums, target, 0, maxIndex);
                 }
@@ -55,8 +55,16 @@ public class SearchInRotatedSortedArray {
                 return last;
             } else {
                 int lo = 0, hi = last;
-                //TODO
-                return 0;
+                while (hi - lo > 1) {
+                    int mid = (lo + hi) / 2;
+                    if (nums[mid] > nums[lo]) {
+                        lo = mid;
+                    } else {
+                        hi = mid - 1;
+                    }
+                }
+
+                return nums[hi]>nums[lo]?hi:lo;
             }
         }
 
