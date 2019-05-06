@@ -31,28 +31,28 @@ public class MedianOfTwoSortedArrays {
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
             int m = nums1.length, n = nums2.length;
 
-            if (m==0){
+            if (m == 0) {
                 return median(nums2);
-            }else if (n==0){
+            } else if (n == 0) {
                 return median(nums1);
             }
 
-            if (nums1[m-1]<=nums2[0]){
-                return median();
-            }else if (nums2[n-1]<=nums1[0]){
-                return median();
-            }else{
-
+            if (nums1[m - 1] <= nums2[0]) {
+                return median(nums1);
+            } else if (nums2[n - 1] <= nums1[0]) {
+                return median(nums1);
+            } else {
+                return 0d;
             }
         }
 
-        private double median(int[] arr){
+        private double median(int[] arr) {
             int length = arr.length;
-            boolean isOdd = length%2==1;
-            if (isOdd){
-                return Double.valueOf(arr[length/2]);
-            }else{
-                return (Double.valueOf(arr[length/2]) + Double.valueOf(arr[length/2-1]))/2d;
+            boolean isOdd = length % 2 == 1;
+            if (isOdd) {
+                return Double.valueOf(arr[length / 2]);
+            } else {
+                return (Double.valueOf(arr[length / 2]) + Double.valueOf(arr[length / 2 - 1])) / 2d;
             }
         }
     }
