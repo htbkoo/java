@@ -53,33 +53,33 @@ public class FindSmallestLetterGreaterThanTarget {
         public char nextGreatestLetter(char[] letters, char target) {
             int index = findIndex(letters, target);
 
-            if (index>=letters.length){
+            if (index >= letters.length) {
                 return letters[0];
-            }else{
+            } else {
                 return letters[index];
             }
         }
 
         private int findIndex(char[] letters, char target) {
-            int lo = 0, hi = letters.length-1;
+            int lo = 0, hi = letters.length - 1;
 
-            int mid = (lo+hi)/2;
-            while (hi-lo > 1){
-                if (target>=letters[mid]){
-                    lo=mid+1;
-                }else{
-                    hi=mid;
+            int mid = (lo + hi) / 2;
+            while (hi - lo > 1) {
+                if (target >= letters[mid]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
                 }
-                mid = (lo+hi)/2;
+                mid = (lo + hi) / 2;
             }
 
-            if (target<letters[lo]){
+            if (target < letters[lo]) {
                 return lo;
-            }else{
-                if (hi<letters.length && target<letters[hi]){
+            } else {
+                if (target < letters[hi]) {
                     return hi;
-                }else{
-                    return hi+1;
+                } else {
+                    return hi + 1;
                 }
             }
         }
