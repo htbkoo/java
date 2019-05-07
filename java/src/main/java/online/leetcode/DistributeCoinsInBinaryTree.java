@@ -51,12 +51,17 @@ import java.util.TreeMap;
 
 public class DistributeCoinsInBinaryTree {
     static class Solution {
-        private TreeMap<Integer, Integer> newDistributionMap() {
-            return new TreeMap<>((a, b) -> Integer.compare(b, a));
+        @SuppressWarnings("unused")
+        public int distributeCoins(TreeNode root) {
+            if (root == null) {
+                return 0; // assume zero moves needed for empty tree
+            } else {
+                return countDistribute(root).numMoves;
+            }
         }
 
-        private class Distribution {
-            final TreeMap<Integer, Integer> distribution = new TreeMap<>();
+        private TreeMap<Integer, Integer> newDistributionMap() {
+            return new TreeMap<>((a, b) -> Integer.compare(b, a));
         }
 
         private class Movement {
@@ -74,14 +79,6 @@ public class DistributeCoinsInBinaryTree {
                 this.lack = lack;
                 this.surplus = surplus;
                 this.numMoves = numMoves;
-            }
-        }
-
-        public int distributeCoins(TreeNode root) {
-            if (root == null) {
-                return 0; // assume zero moves needed for empty tree
-            } else {
-                return countDistribute(root).numMoves;
             }
         }
 
