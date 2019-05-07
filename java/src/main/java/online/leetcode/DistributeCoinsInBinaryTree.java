@@ -118,31 +118,38 @@ public class DistributeCoinsInBinaryTree {
         }
 
         private Movement resolveDistribution(TreeMap<Integer, Integer> lack, TreeMap<Integer, Integer> surplus, int numMoves) {
-            if (lack.isEmpty() && surplus.isEmpty()) {
-                return new Movement(numMoves);
-            } else if (lack.isEmpty() || surplus.isEmpty()) {
-                return new Movement(lack, surplus, numMoves);
-            } else {
+            boolean canRedistribute = !lack.isEmpty() && !surplus.isEmpty();
+            if (canRedistribute) {
                 Iterator<Map.Entry<Integer, Integer>> itrLack = lack.entrySet().iterator(), itrSurplus = surplus.entrySet().iterator();
+                Map.Entry<Integer, Integer> lackPair = itrLack.next(), surplusPair = itrSurplus.next();
+                int lackCount = lackPair.getValue(), surplusCount = surplusPair.getValue();
                 do {
-                    Map.Entry<Integer, Integer> lackPair = itrLack.next();
-                    Map.Entry<Integer, Integer> surplusPair = itrSurplus.next();
-
-                    int lackCount = lackPair.getValue(), surplusCount = surplusPair.getValue();
                     int lackDistance = lackPair.getKey(), surplusDistance = surplusPair.getKey();
 
                     int count = Math.min(lackCount, surplusCount);
                     numMoves += count * (lackDistance + surplusDistance);
                     lackCount -= count;
+                    lackPair.setValue(lackCount);
+
                     surplusCount -= count;
+                    surplusPair.setValue(surplusCount);
 
                     if (lackCount == 0) {
                         itrLack.remove();
+                        if (itrLack.hasNext()) {
+                            lackPair = itrLack.next();
+                            lackCount = lackPair.getValue();
+                        }
                     }
                     if (surplusCount == 0) {
                         itrSurplus.remove();
+                        if (itrSurplus.hasNext()) {
+                            surplusPair = itrSurplus.next();
+                            surplusCount = surplusPair.getValue();
+                        }
                     }
-                } while (itrLack.hasNext() && itrSurplus.hasNext());
+
+                } while (lackCount > 0 && surplusCount > 0);
             }
 
             return new Movement(lack, surplus, numMoves);

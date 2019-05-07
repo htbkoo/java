@@ -1,5 +1,6 @@
 package online.leetcode
 
+import online.leetcode.util.TreeNode
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -8,15 +9,40 @@ class DistributeCoinsInBinaryTreeTest extends Specification {
     @Unroll
     def "test"() {
         when:
-        def actual = new DIStringMatch.Solution().diStringMatch(S)
+        def actual = new DistributeCoinsInBinaryTree.Solution().distributeCoins(root)
 
         then:
-        actual == expected as int[]
+        actual == expected
 
         where:
-        S      || expected
-        "IDID" || [0, 4, 1, 3, 2]
-        "III"  || [0, 1, 2, 3]
-        "DDI"  || [3, 2, 0, 1]
+        root        || expected
+        testCase3() || 5
+        testCase1() || 3
+        testCase2() || 2
+    }
+
+    def testCase1() {
+        def root = new TreeNode(0)
+        root.left = new TreeNode(3)
+        root.right = new TreeNode(0)
+        root
+    }
+
+    def testCase2() {
+        def root = new TreeNode(3)
+        root.left = new TreeNode(0)
+        root.right = new TreeNode(0)
+        root
+    }
+
+    def testCase3() {
+        def root = new TreeNode(0)
+        root.left = new TreeNode(2)
+        root.left.left = new TreeNode(0)
+        root.left.right = new TreeNode(0)
+        root.left.left.left = new TreeNode(1)
+
+        root.right = new TreeNode(3)
+        root
     }
 }
