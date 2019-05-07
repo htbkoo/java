@@ -37,33 +37,29 @@ Note:
 
 */
 
-public class SumOfEvenNumbersAfterQueries {
+import java.util.Arrays;
+
+public class SumOfEvenNumbersAfterQueries_slow {
     static class Solution {
         public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
             int[] answers = new int[queries.length];
 
-            int sum = 0;
-            for (int a : A) {
-                if (a % 2 == 0) {
-                    sum += a;
-                }
-            }
+            int[] sum = new int[]{Arrays.stream(A).filter(i -> i % 2 == 0).sum()};
 
             int i = 0;
-            for (int[] query : queries) {
-                int val = query[0], index = query[1];
-                if (A[index] % 2 == 0) {
-                    sum -= A[index];
-                }
-                A[index] += val;
-                if (A[index] % 2 == 0) {
-                    sum += A[index];
-                }
-
-                answers[i] = sum;
-                i++;
-            }
-            return answers;
+            return Arrays.stream(queries)
+                    .mapToInt(query -> {
+                        int val = query[0], index = query[1];
+                        if (A[index] % 2 == 0) {
+                            sum[0] -= A[index];
+                        }
+                        A[index] += val;
+                        if (A[index] % 2 == 0) {
+                            sum[0] += A[index];
+                        }
+                        return sum[0];
+                    })
+                    .toArray();
         }
     }
 }
