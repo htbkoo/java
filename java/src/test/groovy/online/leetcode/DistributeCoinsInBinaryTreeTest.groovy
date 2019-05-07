@@ -16,6 +16,7 @@ class DistributeCoinsInBinaryTreeTest extends Specification {
 
         where:
         root        || expected
+        testCase4() || 6
         testCase3() || 5
         testCase1() || 3
         testCase2() || 2
@@ -43,6 +44,14 @@ class DistributeCoinsInBinaryTreeTest extends Specification {
         root.left.left.left = new TreeNode(1)
 
         root.right = new TreeNode(3)
+        root
+    }
+
+    def testCase4() {
+        def root = new TreeNode(4)
+        root.left = new TreeNode(0)
+        root.left.right = new TreeNode(0)
+        root.left.right.right = new TreeNode(0)
         root
     }
 }
