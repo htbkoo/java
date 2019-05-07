@@ -30,6 +30,7 @@ import java.util.Comparator;
 
 public class SortArrayByParity {
     static class Solution {
+        // sort_array_with_comparator approach
         public int[] sortArrayByParity_sort_stream(int[] A) {
             return Arrays.stream(A)
                     .boxed()
@@ -62,6 +63,43 @@ public class SortArrayByParity {
             }
 
             return sorted;
+        }
+
+        // quick_sort approach
+        public int[] sortArrayByParity_quick_sort(int[] A) {
+            int lo=0, hi=A.length-1;
+
+            // similar to quick sort
+            while (lo<=hi){
+                if (isEven(A[lo]) && isOdd(A[hi]) ){
+                    lo++;
+                    hi--;
+                }else if (isOdd(A[lo]) && isEven(A[hi])){
+                    // swap
+                    int temp = A[lo];
+                    A[lo] = A[hi];
+                    A[hi] = temp;
+
+                    lo++;
+                    hi--;
+                }else {
+                    if (isEven(A[lo]) && isEven(A[hi])){
+                        lo++;
+                    }else if (isOdd(A[lo]) && isOdd(A[hi])){
+                        hi--;
+                    }
+                }
+            }
+
+            return A;
+        }
+
+        private boolean isEven(int n){
+            return n%2==0;
+        }
+
+        private boolean isOdd(int n) {
+            return n % 2 != 0;
         }
     }
 }
