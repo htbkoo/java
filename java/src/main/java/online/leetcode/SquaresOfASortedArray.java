@@ -28,24 +28,28 @@ Note:
 
 */
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 public class SquaresOfASortedArray {
     static class Solution {
         public int[] sortedSquares(int[] A) {
-            PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.comparing(Integer::intValue).reversed());
-            Arrays.stream(A).forEach(a->heap.add(a*a));
+            int length = A.length;
+            int[] answers = new int[length];
+            int pos = length-1, lo = 0, hi = length -1;
 
-            int n = heap.size();
-            int[] answer = new int[n];
-            while (!heap.isEmpty()){
-                n--;
-                answer[n] = heap.poll();
+            while (lo<=hi){
+                int sq_lo = A[lo]*A[lo];
+                int sq_hi = A[hi]*A[hi];
+                if (sq_lo>sq_hi){
+                    answers[pos]=sq_lo;
+                    lo++;
+                    pos--;
+                }else{
+                    answers[pos]=sq_hi;
+                    hi--;
+                    pos--;
+                }
             }
 
-            return answer;
+            return answers;
         }
     }
 }
