@@ -25,8 +25,19 @@ Note:
 
 */
 
+import java.util.Arrays;
+
 public class SortArrayByParity {
     static class Solution {
+        public int[] sortArrayByParity_sort_stream(int[] A) {
+            return Arrays.stream(A)
+                    .boxed()
+                    .sorted((a, b) -> Integer.compare(a % 2, b % 2))
+                    .mapToInt(i -> i)
+                    .toArray();
+        }
+
+        // two_passes approach
         public int[] sortArrayByParity(int[] A) {
             int length = A.length;
             int[] sorted = new int[length];
@@ -34,17 +45,17 @@ public class SortArrayByParity {
             int current = 0;
 
             // populate even
-            for (int a: A){
-                if (a%2==0){
-                    sorted[current]=a;
+            for (int a : A) {
+                if (a % 2 == 0) {
+                    sorted[current] = a;
                     current++;
                 }
             }
 
             // populate odd
-            for (int a: A){
-                if (a%2!=0){
-                    sorted[current]=a;
+            for (int a : A) {
+                if (a % 2 != 0) {
+                    sorted[current] = a;
                     current++;
                 }
             }
