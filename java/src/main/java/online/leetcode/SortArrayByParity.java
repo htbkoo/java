@@ -26,13 +26,14 @@ Note:
 */
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortArrayByParity {
     static class Solution {
         public int[] sortArrayByParity_sort_stream(int[] A) {
             return Arrays.stream(A)
                     .boxed()
-                    .sorted((a, b) -> Integer.compare(a % 2, b % 2))
+                    .sorted(Comparator.comparingInt(a -> a % 2))
                     .mapToInt(i -> i)
                     .toArray();
         }
