@@ -45,11 +45,8 @@ Note:
 
 import online.leetcode.util.TreeNode;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class DistributeCoinsInBinaryTree {
@@ -130,19 +127,28 @@ public class DistributeCoinsInBinaryTree {
                 return new Movement(lack, surplus, numMoves);
             } else {
                 Iterator<Map.Entry<Integer, Integer>> itrLack = lack.entrySet().iterator(), itrSurplus = surplus.entrySet().iterator();
-                Map.Entry<Integer, Integer> lackPair = itrLack.next();
-                Map.Entry<Integer, Integer> surplusPair = itrSurplus.next();
                 do {
-                    numMoves += 1;
+                    Map.Entry<Integer, Integer> lackPair = itrLack.next();
+                    Map.Entry<Integer, Integer> surplusPair = itrSurplus.next();
+
+                    int lackCount = lackPair.getValue(), surplusCount = surplusPair.getValue();
+                    int lackDistance = lackPair.getKey(), surplusDistance = surplusPair.getKey();
+
+                    int count = Math.min(lackCount, surplusCount);
+                    numMoves += count * (lackDistance + surplusDistance);
+                    lackCount -= count;
+                    surplusCount -= count;
+
+                    if (lackCount == 0) {
+                        itrLack.remove();
+                    }
+                    if (surplusCount == 0) {
+                        itrSurplus.remove();
+                    }
                 } while (itrLack.hasNext() && itrSurplus.hasNext());
-                int lackCount = 0, surplusCount = 0;
-                for (int count : lack.values()) {
-                    lackCount += count;
-                }
-                for (int count : surplus.values()) {
-                    surplusCount += count;
-                }
             }
+
+            return new Movement(lack, surplus, numMoves);
         }
     }
 }
