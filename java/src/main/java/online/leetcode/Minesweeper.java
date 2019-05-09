@@ -164,32 +164,34 @@ public class Minesweeper {
 
             private void revealAll(Square[][] newBoard, Coordinates startCoordinates) {
                 Deque<Coordinates> queue = new ArrayDeque<>();
-                queue.add(startCoordinates);
-                int height = getHeight();
-                int width = getWidth();
-                boolean[][] visited = new boolean[height][width];
+                boolean[][] visited = new boolean[getHeight()][getWidth()];
+                populateAndFlood(newBoard, queue, visited, startCoordinates.row, startCoordinates.col);
                 while (!queue.isEmpty()) {
                     Coordinates coordinates = queue.poll();
                     int row = coordinates.row;
                     int col = coordinates.col;
                     if (!visited[row][col]) {
-                        visited[row][col] = true;
-                        range(Math.max(0, row - 1), Math.min(height - 1, row + 1) + 1).forEach(
-                                r -> range(Math.max(0, col - 1), Math.min(width - 1, col + 1) + 1).forEach(
-                                        c -> {
-                                            if (board[r][c].isEmpty()) {
-                                                int numAdjacentMines = countNumAdjacentMines(r, c);
-                                                newBoard[r][c] = Square.fromNumAdjacentMines(numAdjacentMines);
-                                                if (!visited[r][c] && numAdjacentMines == 0) {
-                                                    queue.add(new Coordinates(r, c));
-                                                }
-
-
-                                            }
-                                        }
-                                )
-                        );
+                        visit(row, col, newBoard, queue, visited);
                     }
+                }
+            }
+
+            private void visit(int row, int col, Square[][] newBoard, Deque<Coordinates> queue, boolean[][] visited) {
+                visited[row][col] = true;
+                for (int rFrom = Math.max(0, row - 1), rTo = Math.min(getHeight() - 1, row + 1), r = rFrom; r <= rTo; r++) {
+                    for (int cFrom = Math.max(0, col - 1), cTo = Math.min(getWidth() - 1, col + 1), c = cFrom; c <= cTo; c++) {
+                        if (board[r][c].isEmpty()) {
+                            populateAndFlood(newBoard, queue, visited, r, c);
+                        }
+                    }
+                }
+            }
+
+            private void populateAndFlood(Square[][] newBoard, Deque<Coordinates> queue, boolean[][] visited, int r, int c) {
+                int numAdjacentMines = countNumAdjacentMines(r, c);
+                newBoard[r][c] = Square.fromNumAdjacentMines(numAdjacentMines);
+                if (!visited[r][c] && numAdjacentMines == 0) {
+                    queue.add(new Coordinates(r, c));
                 }
             }
 
