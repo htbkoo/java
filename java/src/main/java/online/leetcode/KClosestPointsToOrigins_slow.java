@@ -38,10 +38,11 @@ Note:
 
 */
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class KClosestPointsToOrigin {
+public class KClosestPointsToOrigins_slow {
     static class Solution {
         static class Point {
             private final int[] point;
@@ -79,33 +80,29 @@ public class KClosestPointsToOrigin {
         public int[][] kClosest(int[][] points, int K) {
             PriorityQueue<Point> maxHeap = new PriorityQueue<>(Comparator.comparing(Point::sqDistFromOrigin).reversed());
 
-            for (int[] arr : points) {
-                Point point = Point.fromArray(arr);
-
-                // populate heap
-                if (maxHeap.size() < K) {
-                    maxHeap.add(point);
-                } else {
-                    if (maxHeap.isEmpty()) {
-                        throw new IllegalStateException("heap is empty");
-                    } else {
-                        Point farthest = maxHeap.peek();
-
-                        if (point.isCloserToOriginThan(farthest)) {
-                            maxHeap.poll();
+            Arrays.stream(points)
+                    .map(Point::fromArray)
+                    .forEach(point -> {
+                        // populate heap
+                        if (maxHeap.size() < K) {
                             maxHeap.add(point);
-                        }
-                    }
-                }
-            }
+                        } else {
+                            if (maxHeap.isEmpty()) {
+                                throw new IllegalStateException("heap is empty");
+                            } else {
+                                Point farthest = maxHeap.peek();
 
-            int[][] answer = new int[K][];
-            int i = 0;
-            for (Point point : maxHeap) {
-                answer[i] = point.asArray();
-                i++;
-            }
-            return answer;
+                                if (point.isCloserToOriginThan(farthest)) {
+                                    maxHeap.poll();
+                                    maxHeap.add(point);
+                                }
+                            }
+                        }
+                    });
+
+            return maxHeap.stream()
+                    .map(Point::asArray)
+                    .toArray(int[][]::new);
         }
     }
 }
