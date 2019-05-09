@@ -68,58 +68,169 @@ Note:
 
 */
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Objects;
+
+import static java.util.stream.IntStream.range;
+
 public class Minesweeper {
     static class Solution {
-        private static class Board {
-            private static final char[][] ZERO_SIZE_BOARD = new char[0][];
-            private static final char MINE = 'M';
-            private static final char REVEALED_MINE = 'X';
-            private final char[][] board;
+        private static class Square implements Cloneable {
+            private static final char CHAR_MINE = 'M';
+            private static final char CHAR_EMPTY = 'E';
+            private static final char CHAR_BLANK = 'B';
+            private static final char CHAR_REVEALED_MINE = 'X';
 
-            Board(char[][] board) {
+            static final Square MINE = new Square(CHAR_MINE);
+            static final Square BLANK = new Square(CHAR_BLANK);
+            static final Square EMPTY = new Square(CHAR_EMPTY);
+            static final Square REVEALED_MINE = new Square(CHAR_REVEALED_MINE);
+            final char value;
+
+            private Square(char value) {
+                this.value = value;
+            }
+
+            static Square fromNumAdjacentMines(int numAdjacentMines) {
+                if (numAdjacentMines == 0) {
+                    return BLANK;
+                } else {
+                    return new Square(Character.forDigit(numAdjacentMines, 10));
+                }
+            }
+
+            boolean isMine() {
+                return CHAR_MINE == value;
+            }
+
+            boolean isEmpty() {
+                return CHAR_EMPTY == value;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Square square = (Square) o;
+                return value == square.value;
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(value);
+            }
+        }
+
+        private static class Board {
+            private static final Square[][] ZERO_SIZE_BOARD = new Square[0][];
+            private final Square[][] board;
+
+            Board(Square[][] board) {
                 this.board = board;
             }
 
             static Board fromCharMatrix(char[][] board) {
-                return new Board(copyCharMatrix(board));
+                return new Board(copyMatrix(toSquare(board)));
             }
 
             Board click(Coordinates coordinates) {
-                char[][] newBoard = copyCharMatrix(board);
+                Square[][] newBoard = copyMatrix(board);
 
-                if (isMine(newBoard, coordinates)) {
+                int row = coordinates.row;
+                int col = coordinates.col;
+                if (newBoard[row][col].isMine()) {
                     gameover(newBoard, coordinates);
                 } else {
-                    reveal(newBoard, coordinates);
+                    revealAll(newBoard, coordinates);
                 }
 
                 return new Board(newBoard);
             }
 
-            private boolean isMine(char[][] board, Coordinates coordinates) {
-                return MINE == board[coordinates.row][coordinates.col];
-            }
-
-            private void gameover(char[][] board, Coordinates coordinates) {
-                board[coordinates.row][coordinates.col] = REVEALED_MINE;
-            }
-
-            private void reveal(char[][] newBoard, Coordinates coordinates) {
-
-            }
-
             char[][] asCharMatrix() {
-                return copyCharMatrix(board);
+                char[][] matrix = new char[getHeight()][getWidth()];
+                for (int i = 0, height = getHeight(); i < height; ++i) {
+                    for (int j = 0, width = getWidth(); j < width; ++j) {
+                        matrix[i][j] = board[i][j].value;
+                    }
+                }
+                return matrix;
             }
 
-            private static char[][] copyCharMatrix(char[][] board) {
+            private void gameover(Square[][] board, Coordinates coordinates) {
+                board[coordinates.row][coordinates.col] = Square.REVEALED_MINE;
+            }
+
+            private void revealAll(Square[][] newBoard, Coordinates startCoordinates) {
+                Deque<Coordinates> queue = new ArrayDeque<>();
+                queue.add(startCoordinates);
+                int height = getHeight();
+                int width = getWidth();
+                boolean[][] visited = new boolean[height][width];
+                while (!queue.isEmpty()) {
+                    Coordinates coordinates = queue.poll();
+                    int row = coordinates.row;
+                    int col = coordinates.col;
+                    if (!visited[row][col]) {
+                        visited[row][col] = true;
+                        range(Math.max(0, row - 1), Math.min(height - 1, row + 1) + 1).forEach(
+                                r -> range(Math.max(0, col - 1), Math.min(width - 1, col + 1) + 1).forEach(
+                                        c -> {
+                                            if (board[r][c].isEmpty()) {
+                                                int numAdjacentMines = countNumAdjacentMines(r, c);
+                                                newBoard[r][c] = Square.fromNumAdjacentMines(numAdjacentMines);
+                                                if (!visited[r][c] && numAdjacentMines == 0) {
+                                                    queue.add(new Coordinates(r, c));
+                                                }
+
+
+                                            }
+                                        }
+                                )
+                        );
+                    }
+                }
+            }
+
+            private int getHeight() {
+                return board.length;
+            }
+
+            private int getWidth() {
+                return board[0].length;
+            }
+
+            private int countNumAdjacentMines(int row, int col) {
+                return range(Math.max(0, row - 1), Math.min(getHeight() - 1, row + 1) + 1).map(
+                        r -> range(Math.max(0, col - 1), Math.min(getWidth() - 1, col + 1) + 1).map(
+                                c -> board[r][c].isMine() ? 1 : 0
+                        ).sum()
+                ).sum();
+            }
+
+            private static Square[][] toSquare(char[][] board) {
                 int length = board.length;
                 if (length == 0) {
                     return ZERO_SIZE_BOARD;
                 } else {
-                    char[][] newBoard = new char[length][];
+                    Square[][] newBoard = new Square[length][board[0].length];
+                    for (int i = 0, height = board.length; i < height; ++i) {
+                        for (int j = 0, width = board[i].length; j < width; ++j) {
+                            newBoard[i][j] = new Square(board[i][j]);
+                        }
+                    }
+                    return newBoard;
+                }
+            }
+
+            private static Square[][] copyMatrix(Square[][] board) {
+                int length = board.length;
+                if (length == 0) {
+                    return ZERO_SIZE_BOARD;
+                } else {
+                    Square[][] newBoard = new Square[length][];
                     for (int i = 0; i < length; ++i) {
-//                        newBoard[i] = Arrays.copyOf(row, row.length);
                         newBoard[i] = board[i].clone();
                     }
                     return newBoard;
