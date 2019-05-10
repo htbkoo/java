@@ -38,7 +38,7 @@ public class DetectCapital {
 
         private boolean isAllCapital(char[] chars) {
             for (char ch : chars) {
-                if (!isCapital(ch)) {
+                if (isNotCapital(ch)) {
                     return false;
                 }
             }
@@ -46,13 +46,13 @@ public class DetectCapital {
             return true;
         }
 
-        private boolean isCapital(char ch) {
-            return ('A' <= ch && ch <= 'Z');
+        private boolean isNotCapital(char ch) {
+            return ('A' > ch || ch > 'Z');
         }
 
         private boolean isAllSmall(char[] chars) {
             for (char ch : chars) {
-                if (!isSmall(ch)) {
+                if (isNotSmall(ch)) {
                     return false;
                 }
             }
@@ -61,19 +61,19 @@ public class DetectCapital {
         }
 
 
-        private boolean isSmall(char ch) {
-            return ('a' <= ch && ch <= 'z');
+        private boolean isNotSmall(char ch) {
+            return ('a' > ch || ch > 'z');
         }
 
         private boolean isOnlyFirstLetterCapital(char[] chars) {
             if (chars.length == 0) {
                 throw new IllegalArgumentException("word is empty");
             } else {
-                if (!isCapital(chars[0])) {
+                if (isNotCapital(chars[0])) {
                     return false;
                 }
                 for (int i = 1, length = chars.length; i < length; ++i) {
-                    if (!isSmall(chars[i])) {
+                    if (isNotSmall(chars[i])) {
                         return false;
                     }
                 }
