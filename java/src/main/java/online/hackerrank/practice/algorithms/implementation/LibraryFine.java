@@ -11,6 +11,7 @@ public class LibraryFine {
         private static final int FIXED_FINE = 10000;
         private static final int FINE_PER_DAY = 15;
         private static final int FINE_PER_MONTH = 500;
+        private static final int NO_FINE = 0;
 
         private static class Date {
             final int day;
@@ -62,7 +63,7 @@ public class LibraryFine {
             Date dueDate = new Date(d2, m2, y2);
 
             if (returnedDate.isOnOrBefore(dueDate)) {
-                return 0;
+                return NO_FINE;
             } else if (returnedDate.isSameMonthAndYearAs(dueDate)) {
                 return FINE_PER_DAY * returnedDate.getNumDaysLaterThan(dueDate);
             } else if (returnedDate.isSameYearAs(dueDate)) {
