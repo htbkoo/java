@@ -32,51 +32,42 @@ Note:
 
 */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class CourseSchedule {
     static class Solution {
         public boolean canFinish(int numCourses, int[][] prerequisites) {
-            List<Set<Integer>> dependencies = new ArrayList<>();
-            for (int i=0;i<numCourses;++i){
-                dependencies.add(new HashSet<>());
+            int[][] matrix = new int[numCourses][numCourses];
+            int[] indegrees = new int[numCourses];
+            for (int[] prerequisite : prerequisites) {
+                int to = prerequisite[1], from = prerequisite[0];
+                matrix[from][to]++;
+                indegrees[to]++;
             }
 
-            for (int[] prerequisite: prerequisites){
-                int after = prerequisite[0], before = prerequisite[1];
-                dependencies.get(after).add(before);
-            }
-
-            for (int i=0;i<numCourses;++i){
-                if (hasCycle(dependencies, i, numCourses)){
-                    return false;
+            Deque<Integer> queue = new ArrayDeque<>();
+            for (int i = 0; i < numCourses; ++i) {
+                if (indegrees[i] == 0) {
+                    queue.add(i);
                 }
             }
 
-            return true;
-        }
-
-        private boolean hasCycle(List<Set<Integer>> dependencies, int i, int numCourses){
-            boolean[] visited = new boolean[numCourses];
-            boolean[] visiting = new boolean[numCourses];
-            return hasCycle(visited, visiting, dependencies, i);
-        }
-
-        private boolean hasCycle(boolean[] visited, boolean[] visiting, List<Set<Integer>> dependencies, int current){
-            visiting[current] = true;
-            Set<Integer> dependency = dependencies.get(current);
-            for (int d: dependency){
-                if (!visited[d]){
-                    if (visiting[d] || hasCycle(visited, visiting, dependencies, d)){
-                        return true;
+            int count = 0;
+            while (!queue.isEmpty()) {
+                int current = queue.poll();
+                count++;
+                for (int i = 0; i < numCourses; ++i) {
+                    if (matrix[current][i] != 0) {
+                        indegrees[i] -= matrix[current][i];
+                        if (indegrees[i] == 0) {
+                            queue.add(i);
+                        }
+                        matrix[current][i] = 0;
                     }
                 }
             }
-            visited[current] = true;
-            return false;
+            return count == numCourses;
         }
     }
 }
