@@ -37,31 +37,34 @@ public class ThreeSum {
             int l = 0, r=n-1;
 
             while ((r-l)>1){
-                tryPair(nums, l, r, solutionSet);
+                boolean isFound;
+                do{
+                    isFound = tryPair(nums, l, r, solutionSet);
+                    r = getNextR(nums, r);
+                }while((r-l)>1);
 
-                int nextL = getNextL(nums, l);
-                tryPair(nums, nextL, r, solutionSet);
-                int nextR = getNextR(nums, r);
-                if (nums[nextL]!=nums[nextR]){
-                    tryPair(nums, l, nextR, solutionSet);
-                }
+                //if (nums[nextL]!=nums[nextR]){
+                //  tryPair(nums, l, nextR, solutionSet);
+                //}
 
-                l = nextL;
-                r = nextR;
+                l = getNextL(nums, l);
+                r = n-1;
             }
 
             return solutionSet;
         }
 
-        private void tryPair(int[] nums, int l, int r, List<List<Integer>> solutionSet){
+        private boolean tryPair(int[] nums, int l, int r, List<List<Integer>> solutionSet){
             if ((r-l)>1){
                 int targetValue = -(nums[l]+nums[r]);
                 int index = Arrays.binarySearch(nums, l+1, r, targetValue);
                 boolean isFound = index>=0;
                 if (isFound){
                     solutionSet.add(Arrays.asList(nums[l], nums[index], nums[r]));
+                    return true;
                 }
             }
+            return false;
         }
 
         private int getNextL(int[] nums, int l){
@@ -87,4 +90,5 @@ public class ThreeSum {
             return 0;
 
         }
-    }}
+    }
+}
