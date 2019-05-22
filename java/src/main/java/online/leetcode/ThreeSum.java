@@ -30,58 +30,44 @@ public class ThreeSum {
     static class Solution {
         public List<List<Integer>> threeSum(int[] nums) {
             Arrays.sort(nums);
-
-            List<List<Integer>> solutionSet = new ArrayList<>();
-
             int n = nums.length;
-            int l = 0, r=n-1;
-
-            while ((r-l)>1){
-                do{
-                    tryPair(nums, l, r, solutionSet);
-                    r = getNextR(nums, r);
-                }while((r-l)>1);
-
-                l = getNextL(nums, l);
-                r = n-1;
+            List<List<Integer>> solutionSet = new ArrayList<>();
+            for (int i = 0; i < n; ++i) {
+                if (isNotDuplicate(nums, i)) {
+                    int lo = i + 1, hi = n - 1;
+                    int target = -nums[i];
+                    while (lo < hi) {
+                        int value = nums[lo] + nums[hi];
+                        if (value == target) {
+                            solutionSet.add(Arrays.asList(nums[lo], nums[i], nums[hi]));
+                            lo++;
+                            hi--;
+                            while (lo < hi && nums[lo] == nums[lo - 1]) {
+                                lo++;
+                            }
+                            while (lo < hi && nums[hi] == nums[hi + 1]) {
+                                hi--;
+                            }
+                        } else if (value < target) {
+                            lo++;
+                            while (lo < hi && nums[lo] == nums[lo - 1]) {
+                                lo++;
+                            }
+                        } else {
+                            hi--;
+                            while (lo < hi && nums[hi] == nums[hi + 1]) {
+                                hi--;
+                            }
+                        }
+                    }
+                }
             }
 
             return solutionSet;
         }
 
-        private void tryPair(int[] nums, int l, int r, List<List<Integer>> solutionSet){
-            if ((r-l)>1){
-                int targetValue = -(nums[l]+nums[r]);
-                int index = Arrays.binarySearch(nums, l+1, r, targetValue);
-                boolean isFound = index>=0;
-                if (isFound){
-                    solutionSet.add(Arrays.asList(nums[l], nums[index], nums[r]));
-                }
-            }
-        }
-
-        private int getNextL(int[] nums, int l){
-            int n = nums.length;
-            while (l<n-1){
-                if (nums[l]!=nums[l+1]){
-                    return l+1;
-                }else{
-                    l++;
-                }
-            }
-            return n-1;
-        }
-
-        private int getNextR(int[] nums, int r){
-            while (r>0){
-                if (nums[r]!=nums[r-1]){
-                    return r-1;
-                }else{
-                    r--;
-                }
-            }
-            return 0;
-
+        private boolean isNotDuplicate(int[] nums, int i) {
+            return (i == 0) || (nums[i] != nums[i - 1]);
         }
     }
 }
