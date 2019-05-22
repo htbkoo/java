@@ -21,18 +21,16 @@ Output: 49
 
 */
 
-public class ContainerWithMostWater {
+public class ContainerWithMostWater_slow {
     static class Solution {
         public int maxArea(int[] height) {
             int n = height.length;
-            int l = 0, r = n - 1;
-            int max = Math.min(height[l], height[r]) * (r - l);
-            while (l < r) {
-                max = Math.max(max, Math.min(height[l], height[r]) * (r - l));
-                if (height[l] < height[r]) {
-                    l++;
-                } else {
-                    r--;
+            int max = Math.min(height[0], height[1]);
+            for (int i=0;i<n;++i){
+                for (int j=i+1;j<n;++j){
+                    int width = j-i;
+                    int h = Math.min(height[i], height[j]);
+                    max = Math.max(max, width*h);
                 }
             }
             return max;
