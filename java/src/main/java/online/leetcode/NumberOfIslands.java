@@ -33,32 +33,32 @@ import java.util.Deque;
 
 public class NumberOfIslands {
     static class Solution {
-        private class Coordinate{
+        private class Coordinate {
             final int x;
             final int y;
 
-            Coordinate(int x,int y){
-                this.x=x;
-                this.y=y;
+            Coordinate(int x, int y) {
+                this.x = x;
+                this.y = y;
             }
         }
 
         public int numIslands(char[][] grid) {
-            if (grid==null || grid.length==0){
+            if (grid == null || grid.length == 0) {
                 return 0;
-            }else{
+            } else {
                 int height = grid.length;
                 int width = grid[0].length;
-                if (width == 0){
+                if (width == 0) {
                     return 0;
-                }else{
+                } else {
                     int numIsland = 0;
-                    boolean[][] visited = new boolean[height][width];
-                    for (int i=0;i<height;++i){
-                        for (int j=0;j<width;++j){
-                            if (!visited[i][j] && isLand(grid[i][j])){
+                    boolean[][] added = new boolean[height][width];
+                    for (int i = 0; i < height; ++i) {
+                        for (int j = 0; j < width; ++j) {
+                            if (!added[i][j] && isLand(grid[i][j])) {
                                 numIsland++;
-                                bfs(i, j, grid, visited);
+                                bfs(i, j, grid, added);
                             }
                         }
                     }
@@ -67,35 +67,36 @@ public class NumberOfIslands {
             }
         }
 
-        private boolean isLand(char c){
-            return '1'==c;
+        private boolean isLand(char c) {
+            return '1' == c;
         }
 
-        private void bfs(int i, int j, char[][] grid, boolean[][] visited){
+        private void bfs(int i, int j, char[][] grid, boolean[][] added) {
             Deque<Coordinate> queue = new ArrayDeque<>();
-            queue.add(new Coordinate(i,j));
-            while (!queue.isEmpty()){
+            queue.add(new Coordinate(i, j));
+            added[i][j] = true;
+
+            while (!queue.isEmpty()) {
                 Coordinate coor = queue.poll();
                 int x = coor.x;
                 int y = coor.y;
 
-                addQueueIfValid(x-1, y, grid, visited, queue);
-                addQueueIfValid(x, y-1, grid, visited, queue);
-                addQueueIfValid(x+1, y, grid, visited, queue);
-                addQueueIfValid(x, y+1, grid, visited, queue);
-
-                visited[x][y] =true;
+                addQueueIfValid(x - 1, y, grid, added, queue);
+                addQueueIfValid(x, y - 1, grid, added, queue);
+                addQueueIfValid(x + 1, y, grid, added, queue);
+                addQueueIfValid(x, y + 1, grid, added, queue);
             }
         }
 
-        private void addQueueIfValid(int x, int y, char[][] grid, boolean[][] visited, Deque<Coordinate> queue){
-            if (isWithinRange(x,y, grid) && !visited[x][y] && isLand(grid[x][y])){
-                queue.add(new Coordinate(x,y));
+        private void addQueueIfValid(int x, int y, char[][] grid, boolean[][] added, Deque<Coordinate> queue) {
+            if (isWithinRange(x, y, grid) && !added[x][y] && isLand(grid[x][y])) {
+                queue.add(new Coordinate(x, y));
+                added[x][y] = true;
             }
         }
 
-        private boolean isWithinRange(int x, int y, char[][] grid){
-            return (x>=0) && (y>=0) && (x<grid.length) && (y<grid[0].length);
+        private boolean isWithinRange(int x, int y, char[][] grid) {
+            return (x >= 0) && (y >= 0) && (x < grid.length) && (y < grid[0].length);
         }
     }
 }
