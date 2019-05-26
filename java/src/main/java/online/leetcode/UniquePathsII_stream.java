@@ -31,7 +31,9 @@ There are two ways to reach the bottom-right corner:
 
 */
 
-public class UniquePathsII {
+import static java.util.stream.IntStream.range;
+
+public class UniquePathsII_stream {
     static class Solution {
         public int uniquePathsWithObstacles(int[][] obstacleGrid) {
             if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
@@ -42,11 +44,9 @@ public class UniquePathsII {
                 int[] answers = new int[width];
                 answers[0]=1;
 
-                for (int[] ints : obstacleGrid) {
-                    answers[0] = (ints[0] == 1) ? 0 : Math.min(1, answers[0]);
-                    for (int j = 1; j < width; ++j) {
-                        answers[j] = (ints[j] == 1) ? 0 : (answers[j] + answers[j - 1]);
-                    }
+                for (int[] row : obstacleGrid) {
+                    answers[0] = (row[0] == 1) ? 0 : Math.min(1, answers[0]);
+                    range(1, width).forEachOrdered(j -> answers[j] = (row[j] == 1) ? 0 : (answers[j] + answers[j - 1]));
                 }
 
                 return answers[width-1];
