@@ -69,8 +69,10 @@ public class FrogJump {
                     Set<Integer> newJump = new HashSet<>();
                     for (int j = i - 1; j > 0; --j) {
                         int distance = stones[i] - stones[j];
-                        if (canJump(jumps.get(j), distance)) {
-                            newJump.add(distance);
+                        if (distance<=n){
+                            if (canJump(jumps.get(j), distance)) {
+                                newJump.add(distance);
+                            }
                         }
                     }
                     jumps.add(i, newJump);
