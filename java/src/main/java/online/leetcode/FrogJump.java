@@ -54,11 +54,20 @@ public class FrogJump {
                 int n = stones.length;
 
                 List<Set<Integer>> jumps = new ArrayList<>();
-                jumps.add(0, new HashSet<>(Collections.singletonList(0)));
 
-                for (int i = 1; i < n; ++i) {
+                // jumps.add(0, new HashSet<>(Collections.singletonList(0)));
+                // Initially, the frog is on the first stone and assume the first jump must be 1 unit.
+
+                if (stones[1] != 1) {
+                    return false;
+                } else {
+                    jumps.add(new HashSet<>());
+                    jumps.add(new HashSet<>(Collections.singletonList(1)));
+                }
+
+                for (int i = 2; i < n; ++i) {
                     Set<Integer> newJump = new HashSet<>();
-                    for (int j = i - 1; j >= 0; --j) {
+                    for (int j = i - 1; j > 0; --j) {
                         int distance = stones[i] - stones[j];
                         if (canJump(jumps.get(j), distance)) {
                             newJump.add(distance);
