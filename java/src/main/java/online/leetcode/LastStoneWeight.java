@@ -34,36 +34,58 @@ Note:
 
 */
 
-import java.util.PriorityQueue;
-
 public class LastStoneWeight {
     static class Solution {
         public int lastStoneWeight(int[] stones) {
-            if (stones == null || stones.length == 0) {
+            if (stones==null || stones.length==0){
                 return 0;
-            } else {
-                PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+            }else{
+                int max = getMax(stones);
 
-                for (int s : stones) {
-                    heap.add(s);
-                }
+                int[] weights = toWeightsMap(stones, max);
 
-                while (heap.size() > 1) {
-                    int largest = heap.poll();
-                    //noinspection ConstantConditions
-                    int second = heap.poll();
-                    if (largest != second) {
-                        heap.add(largest - second);
+                while (max>0){
+                    weights[max] = weights[max]%2;
+                    if (weights[max]==1){
+                        int j=max-1;
+                        while (j>0 && weights[j]==0){
+                            j--;
+                        }
+
+                        if (j==0){
+                            return max;
+                        }else{
+                            weights[max]--;
+                            weights[j]--;
+                            weights[max-j]++;
+                        }
+
+                    }else{
+                        max--;
                     }
                 }
 
-                if (heap.size() == 0) {
-                    return 0;
-                } else {
-                    return heap.poll();
-                }
+                return 0;
+            }
+        }
+
+        private int getMax(int[] stones){
+            int max = stones[0];
+
+            for (int s: stones){
+                max = Math.max(max, s);
             }
 
+            return max;
         }
+
+        private int[] toWeightsMap(int[] stones, int max){
+            int[] weights = new int[max+1];
+            for (int s: stones){
+                weights[s]++;
+            }
+            return weights;
+        }
+
     }
 }
