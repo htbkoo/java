@@ -26,42 +26,32 @@ Note:
 
 */
 
-public class HeightChecker {
+import java.util.Arrays;
+
+public class HeightChecker_slow_nlgn {
     static class Solution {
         public int heightChecker(int[] heights) {
             if (heights == null || heights.length == 0) {
                 return 0;
             } else {
-                int max = getMax(heights);
-
-                int[] freq = new int[max + 1];
-
-                for (int h : heights) {
-                    freq[h]++;
-                }
-
-                int curr = 1;
+                int[] sortedHeights = sortedCopyOf(heights);
                 int count = 0;
-                for (int h : heights) {
-                    while (freq[curr] == 0) {
-                        curr++;
-                    }
-                    if (h != curr) {
+                for (int i = 0, length = heights.length; i < length; ++i) {
+                    if (heights[i] != sortedHeights[i]) {
                         count++;
                     }
-                    freq[curr]--;
                 }
 
                 return count;
             }
         }
 
-        private int getMax(int[] arr) {
-            int max = arr[0];
-            for (int a : arr) {
-                max = Math.max(max, a);
-            }
-            return max;
+        private int[] sortedCopyOf(int[] arr) {
+            int length = arr.length;
+            int[] newArr = new int[length];
+            System.arraycopy(arr, 0, newArr, 0, length);
+            Arrays.sort(newArr);
+            return newArr;
         }
     }
 }
