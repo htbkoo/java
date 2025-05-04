@@ -5,6 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Java Parent POM</name>
+    <modules>
+        <module>kotlin</module>
+    </modules>
 
     <groupId>com.heydev.java</groupId>
     <artifactId>java</artifactId>
