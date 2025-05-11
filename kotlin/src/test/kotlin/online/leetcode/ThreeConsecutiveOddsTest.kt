@@ -1,7 +1,7 @@
 package online.leetcode
 
 import ArgProvider
-import Solution
+import ThreeConsecutiveOdds
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.ArgumentsSource
@@ -11,7 +11,7 @@ class ThreeConsecutiveOddsTest {
     @ParameterizedTest
     @ArgumentsSource(ThreeConsecutiveOddsArgProvider::class)
     fun threeConsecutiveOdds(arr: List<Int>, expected: Boolean) {
-        val actual = Solution().threeConsecutiveOdds(arr.toIntArray())
+        val actual = ThreeConsecutiveOdds().threeConsecutiveOdds(arr.toIntArray())
         assert(actual == expected) {
             "Expected $expected but got $actual for input ${arr.joinToString(",")}"
         }

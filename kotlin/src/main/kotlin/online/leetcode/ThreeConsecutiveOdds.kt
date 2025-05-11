@@ -1,7 +1,7 @@
 // https://leetcode.com/classic/problems/three-consecutive-odds/description/
 // 1550. Three Consecutive Odds
 
-class Solution {
+class ThreeConsecutiveOdds {
     fun threeConsecutiveOdds(arr: IntArray): Boolean {
         var i = 2
         while (i < arr.size) {
