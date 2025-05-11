@@ -10,16 +10,16 @@ class ThreeConsecutiveOddsTest {
 
     @ParameterizedTest
     @ArgumentsSource(ThreeConsecutiveOddsArgProvider::class)
-    fun threeConsecutiveOdds(arr: List<Int>, expected: Boolean) {
-        val actual = ThreeConsecutiveOdds().threeConsecutiveOdds(arr.toIntArray())
+    fun threeConsecutiveOdds(arr: IntArray, expected: Boolean) {
+        val actual = ThreeConsecutiveOdds().threeConsecutiveOdds(arr)
         assert(actual == expected) {
             "Expected $expected but got $actual for input ${arr.joinToString(",")}"
         }
     }
 
     class ThreeConsecutiveOddsArgProvider : ArgProvider(
-        arguments(listOf(2, 6, 4, 1), false),
-        arguments(listOf(1, 2, 34, 3, 4, 5, 7, 23, 12), true),
+        arguments(intArrayOf(2, 6, 4, 1), false),
+        arguments(intArrayOf(1, 2, 34, 3, 4, 5, 7, 23, 12), true),
     )
 
 }
