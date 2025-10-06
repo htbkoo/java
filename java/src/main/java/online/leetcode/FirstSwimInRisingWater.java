@@ -1,8 +1,5 @@
 package online.leetcode;
 
-import java.util.List;
-import java.util.PriorityQueue;
-
 /**
  * Created by Hey on 06/Oct/2025
  */
@@ -50,7 +47,7 @@ Constraints:
 
 */
 
-class SwimInRisingWater {
+class FirstSwimInRisingWater {
     private static final int START_Y = 0;
     private static final int START_X = 0;
     private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -60,44 +57,51 @@ class SwimInRisingWater {
         final int HEIGHT = grid.length;
         final int WIDTH = grid[0].length;
 
-        final int targetY = HEIGHT - 1;
-        final int targetX = WIDTH - 1;
+        int lo = 0;
+        int hi = HEIGHT * WIDTH;
 
-        var t = 0;
-        var added = new boolean[HEIGHT][WIDTH];
-        PriorityQueue<List<Integer>> pq = new PriorityQueue<>((coordsA, coordsB) -> getHeight(grid, coordsA) - getHeight(grid, coordsB));
-        pq.offer(List.of(START_Y, START_X));
-        added[START_Y][START_X] = true;
-
-        while (!pq.isEmpty()) {
-            var coords = pq.poll();
-            int y = coords.get(0);
-            int x = coords.get(1);
-            t = Math.max(t, grid[y][x]);
-            if (y == targetY && x == targetX) {
-                return t;
-            }
-            for (var dir: DIRECTIONS) {
-                var ny = y + dir[0];
-                var nx = x + dir[1];
-                boolean isWithinBoundary = 0 <= ny && ny < HEIGHT && 0 <= nx && nx < WIDTH;
-                if (!isWithinBoundary) {
-                    continue;
-                }
-                if (added[ny][nx]) {
-                    continue;
-                }
-                added[ny][nx] = true;
-                pq.offer(List.of(ny, nx));
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            var visited = new boolean[HEIGHT][WIDTH];
+            if (canReach(grid, visited, mid, START_Y, START_X)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
             }
         }
 
-        throw new Error("unable to find");
+        return lo;
     }
 
-    private int getHeight(int[][] grid, List<Integer> coords) {
-        int y = coords.get(0);
-        int x = coords.get(1);
-        return grid[y][x];
+    private boolean canReach(int[][] grid, boolean[][] visited, int t, int y, int x) {
+        final int HEIGHT = grid.length;
+        final int WIDTH = grid[0].length;
+        final int targetY = HEIGHT - 1;
+        final int targetX = WIDTH - 1;
+
+        boolean isWithinBoundary = 0 <= y && y < HEIGHT && 0 <= x && x < WIDTH;
+        if (!isWithinBoundary) {
+            return false;
+        }
+        if (grid[y][x] > t) {
+            return false;
+        }
+
+        if (y == targetY && x == targetX) {
+            return true;
+        }
+
+        if (visited[y][x]) {
+            return false;
+        }
+        visited[y][x] = true;
+        for (var dir : DIRECTIONS) {
+            var ny = y + dir[0];
+            var nx = x + dir[1];
+            if (canReach(grid, visited, t, ny, nx)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
