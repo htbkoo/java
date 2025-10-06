@@ -1,11 +1,5 @@
 package online.leetcode;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.List;
-
 /**
  * Created by Hey on 06/Oct/2025
  */
@@ -60,41 +54,54 @@ class SwimInRisingWater {
 
     public int swimInWater(int[][] grid) {
         // TODO: validate grid is valid
+        final int HEIGHT = grid.length;
+        final int WIDTH = grid[0].length;
+
+        int lo = 0;
+        int hi = HEIGHT * WIDTH;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            var visited = new boolean[HEIGHT][WIDTH];
+            if (canReach(grid, visited, mid, START_Y, START_X)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return lo;
     }
 
-    private boolean canReach(int[][] grid, int t) {
+    private boolean canReach(int[][] grid, boolean[][] visited, int t, int y, int x) {
         final int HEIGHT = grid.length;
         final int WIDTH = grid[0].length;
         final int targetY = HEIGHT - 1;
         final int targetX = WIDTH - 1;
 
-        Deque<List<Integer>> q = new ArrayDeque<>(Arrays.asList(START_Y, START_X));
-
-        var visited = new boolean[HEIGHT][WIDTH];
-
-        while (!q.isEmpty()) {
-            var coors = q.pollFirst();
-            var y = coors.get(0);
-            var x = coors.get(1);
-
-            boolean isWithinBoundary = 0 <= y && y < HEIGHT && 0 <= x && x < WIDTH;
-            if (!isWithinBoundary) {
-                continue;
-            }
-            if (grid[y][x] > t) {
-                continue;
-            }
-            if (visited[y][x]) {
-                continue;
-            }
-            visited[y][x] = true;
-            for (var dir: DIRECTIONS) {
-                var ny = y + dir[0];
-                var nx = x + dir[0];
-            }
+        boolean isWithinBoundary = 0 <= y && y < HEIGHT && 0 <= x && x < WIDTH;
+        if (!isWithinBoundary) {
+            return false;
+        }
+        if (grid[y][x] > t) {
+            return false;
         }
 
+        if (y == targetY && x == targetX) {
+            return true;
+        }
 
-
+        if (visited[y][x]) {
+            return false;
+        }
+        visited[y][x] = true;
+        for (var dir : DIRECTIONS) {
+            var ny = y + dir[0];
+            var nx = x + dir[1];
+            if (canReach(grid, visited, t, ny, nx)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
