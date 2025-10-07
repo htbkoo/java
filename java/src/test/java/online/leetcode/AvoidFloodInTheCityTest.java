@@ -1,17 +1,16 @@
 package online.leetcode;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import online.leetcode.infrastructure.LeetCodeUnitTest;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+public class AvoidFloodInTheCityTest extends LeetCodeUnitTest<int[], int[]> {
 
-@RunWith(Parameterized.class)
-public class AvoidFloodInTheCityTest {
+    public AvoidFloodInTheCityTest(int[] input, int[] expected) {
+        super(input, expected);
+    }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -51,17 +50,8 @@ public class AvoidFloodInTheCityTest {
         });
     }
 
-    private final int[] fInput;
-    private final int[] fExpected;
-
-    public AvoidFloodInTheCityTest(int[] input, int[] expected) {
-        fInput = input;
-        fExpected = expected;
-    }
-
-    @Test
-    public void shouldFindCellsFlowingToBothOceans() {
-        var actual = new AvoidFloodInTheCity().avoidFlood(fInput);
-        assertThat(actual, is(fExpected));
+    @Override
+    protected int[] getActual() {
+        return new AvoidFloodInTheCity().avoidFlood(getInput());
     }
 }
