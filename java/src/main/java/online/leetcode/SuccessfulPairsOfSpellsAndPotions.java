@@ -67,8 +67,30 @@ class SuccessfulPairsOfSpellsAndPotions {
         if (spell == 0) {
             return 0;
         }
-        int need = (int) Math.ceil((double) success / spell) - 1; // TODO: confirm this - floating point error?
-        var idx = Arrays.binarySearch(potions, need);
+        var need = (success + spell - 1) / spell; // TODO: confirm this - floating point error?
+        var idx = bisectLeft(need, potions);
         return potions.length - idx;
+    }
+
+    private int bisectLeft(long need, int[] potions) {
+        if (potions.length == 0 || need < potions[0]) {
+            return 0;
+        }
+        if (need > potions[potions.length - 1]) {
+            return potions.length;
+        }
+
+        var lo = 0;
+        var hi = potions.length - 1;
+        while (lo < hi) {
+            var mid = lo + (hi - lo) / 2;
+            if (need <= potions[mid]) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return lo;
     }
 }
